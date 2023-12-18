@@ -716,7 +716,7 @@ footer .login {
     align-items: center;
     background: black;
     z-index: 2000;
-    opacity: 0.5;
+    opacity: 0.9;
     position: absolute;
     max-height:auto;
     top: 0;
@@ -755,6 +755,13 @@ footer .login {
         animation: rotate3 2s linear infinite;
     }
 
+.loading {
+    color: white;
+    font-size: 20px; /* Puedes ajustar el tamaño de la fuente según tus preferencias */
+    font-weight: bold; /* Hace que el texto sea negrita */
+    /*background: black;*/ /* Establece el fondo blanco */
+    /*opacity: 0.5;*/
+}
 
 @keyframes rotate1 {
     0% {
@@ -766,9 +773,7 @@ footer .login {
     }
 }
 
-.loading {
-    color: white;
-}
+
 
 @keyframes rotate2 {
     0% {

@@ -548,6 +548,22 @@
                                 '</tr>';
 
                             $('#tablaDiagnostico tbody').append(fila);
+                            // Verificar si hay una propiedad "enfermedad" en la respuesta
+                            if (response.enfermedad) {
+                                // ... (código existente)
+
+                                // Agregar el código para abrir el card después de agregar datos a la tabla
+                                $('#acor3').removeClass('collapsed'); // Elimina la clase 'collapsed' para expandir el botón
+                                $('#collapseThree').addClass('show'); // Agrega la clase 'show' para mostrar el contenido del card
+
+                                // Cerrar otros cards
+                                $('#acor1').addClass('collapsed'); // Agrega la clase 'collapsed' para cerrar el card DATOS PACIENTE
+                                $('#collapseOne').removeClass('show'); // Elimina la clase 'show' para ocultar el contenido del card DATOS PACIENTE
+
+                                $('#acor2').addClass('collapsed'); // Agrega la clase 'collapsed' para cerrar el card SINTOMAS
+                                $('#collapseTwo').removeClass('show'); // Elimina la clase 'show' para ocultar el contenido del card SINTOMAS
+                            }
+
                         }
 
                         // Manejar la respuesta del servidor si es necesario
@@ -559,7 +575,7 @@
                         console.error("Error en la solicitud AJAX: ", error);
                     }
                 });
-            }, 5000); // 10 segundos en milisegundos
+            }, 10000); // 10 segundos en milisegundos
         }
 
         function buscarCliente2() {

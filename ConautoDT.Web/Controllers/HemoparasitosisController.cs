@@ -130,7 +130,7 @@ namespace VET_ANIMAL.WEB.Controllers
                 if (tieneEpistaxis && tieneHemorragiasMucosas && !tieneSintomasExcluidos2)
                 {
                     // Si cumple con las condiciones, la predicción es BABESIOSIS
-                    return Json(new { idMascota, nombreMascota, enfermedad = "ICTERICIA" });
+                    return Json(new { idMascota, nombreMascota, enfermedad = "EHRLICHIOSIS" });
                 }
 
                 // Validación para BABESIOSIS
