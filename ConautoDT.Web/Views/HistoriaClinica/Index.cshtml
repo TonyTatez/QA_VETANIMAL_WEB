@@ -1,0 +1,398 @@
+﻿<!DOCTYPE html>
+@model VET_ANIMAL.WEB.Models.FichasControlViewModel
+@{
+    ViewData["Title"] = "HISTORIAL";
+}
+
+<html lang="en">
+<head >
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.css" />
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="~/Content/bootstrap.css" />
+   
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    
+</head>
+
+<body>
+    <div class="container" style="border: outset 3px">
+        <h2 class="mb-3" style="color: black; font-weight: bold; font-size: 2.2em;font-family: 'Young Serif', sans-serif;">HISTORIA CLINICA </h2>
+
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card p-4 border-0" style="border-radius: 15px; background: linear-gradient(180deg, #ffffff 0%, #f0f0f0 100%); box-shadow: 10px 10px 15px 10px #888888;">
+                        
+
+                        <form style="color: black;font-family: 'Young Serif', sans-serif;">
+                            <div class="mb-3">
+                                <label for="CI" class="form-label">Cédula del Cliente</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="CI" placeholder="Ingrese Cédula" onkeypress="return solo10Numeros(event)" required>
+                                    <button class="btn btn-primary" type="button" onclick="buscarCliente2()"><i class="bi bi-search"></i></button>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="cedCliente" class="form-label">Cliente</label>
+                                <input type="text" class="form-control" id="cedCliente" readonly style="color: red;">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="petDropdown" class="form-label">Mascota</label>
+                                <select class="form-select" id="petDropdown" readonly style="color: blue;">
+                                    <!-- Opciones de mascotas -->
+                                </select>
+                            </div>
+
+                            
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botones que ocupan toda la pantalla -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <button type="button" class="btn btn-primary btn-lg btn-block" onclick="mostrarFormulario('formulario1')">DATOS DEL CLIENTE</button>
+            </div>
+        </div>
+
+        <div class="row mt-2" id="formularioContainer1" style="display: none;">
+            <div class="row col-md-8" style="margin-left: 20%;margin-top: 2%;font-family: 'Young Serif', sans-serif; ">
+
+
+                <div class="form-group col-md-6">
+                    <label for="nombreCliente">Nombres</label>
+                    <input type="text" style="color: blue;font-size: 14px;" id="nombreCliente" class="form-control" readonly />
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label for="dirCliente">Dirección</label>
+                    <input type="text" style="color: blue;font-size: 14px;" id="dirCliente" class="form-control" readonly />
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label for="correoCliente">Correo</label>
+                    <input type="text" onkeypress="return validarCorreoElectronico(event)" style="color: blue;font-size: 14px;" id="correoCliente" class="form-control" required readonly />
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label for="telefono">Teléfono</label>
+                    <input type="text" onkeypress="return solo10Numeros(event)" style="color: blue;font-size: 14px;" id="telefono" class="form-control" readonly />
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <button type="button" class="btn btn-secondary btn-lg btn-block" onclick="mostrarFormulario('formulario2')">DATOS MASCOTA</button>
+            </div>
+        </div>
+
+        <div class="row mt-2" id="formularioContainer2" style="display: none;">
+
+
+            <div class="form-row" style="margin-left: 12%;margin-top: 2%;font-family: 'Young Serif', sans-serif; ">
+
+                    <div class="form-group col-md-6">
+                        <label for="">Nombre</label>
+                    <input type="text" style="color: blue;font-size: 16px;" class="form-control" id="editNombre2" readonly>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="">Dueño</label>
+                    <input id="editdueño22" type="text" class="form-control mb-3" style="width:100%!important; color: red" readonly>
+                    </div>
+                    <div class="form-group col-md-6" hidden >
+                        <label for="">idmasc</label>
+                        <input id="idmasc2" type="text" class="form-control mb-3" style="width:100%!important; color: red" readonly>
+                    </div>
+                 
+            
+                
+                    <div class="form-group col-md-6">
+                        <label for="">Peso</label>
+                    <input type="text" style="color: blue;font-size: 16px;" class="form-control" id="editPeso2" readonly onkeypress="return soloNumeros(event)" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="">Raza</label>
+                    <select readonly class="form-control" id="editRaza2" style="color: blue;font-size: 16px;" required>
+                            <option value="">Seleccione</option>
+                            <option value="Labrador">Labrador</option>
+                            <option value="Bulldog">Bulldog</option>
+                            <option value="Mestizo">Mestizo</option>
+                            <option value="Chihuahua">Chihuahua</option>
+                            <option value="French">French</option>
+                            <option value="Golden Retriever">Golden Retriever</option>
+                            <option value="Pitbull">Pitbull</option>
+                        </select>
+                    </div>
+               
+                
+                    <div class="form-group col-md-6">
+                        <label for="">Sexo</label>
+                    <select class="form-control" id="editSexo2" style="color: blue;font-size: 16px;" readonly required>
+                            <option value="">Seleccione</option>
+                            <option value="Macho">Macho</option>
+                            <option value="Hembra">Hembra</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="">Fecha de Nacimiento</label>
+                    <input style="color: blue;font-size: 16px;width: 89%" class="form-control" id="editFecha2" name="editFecha2" readonly  max="2024-12-31" type="text">
+                    </div>
+               
+
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <button type="button" class="btn btn-success btn-lg btn-block" onclick="mostrarFormulario('formulario3')">FICHAS CONSULTAS</button>
+            </div>
+        </div>
+
+        <div class="row mt-2" id="formularioContainer3" style="display: none;font-family: 'Young Serif', sans-serif;">
+
+            <div class="card text-center mt-5">
+                <div class="card-header" style="background: aqua; color: black; font-weight: bold; font-size: 1.2em;font-family: 'Young Serif', sans-serif;">
+                    FICHAS CONTROL
+                </div>
+                <div class="card-body">
+                    
+                    <div class="table-responsive" style="font-family: 'Young Serif', sans-serif; ">
+                        <table class="table table-bordered table-sm  dataTable table-striped" id="tablaMascotas">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Cod.
+                                    </th>
+                                    <th>
+                                        Historia Clinica
+                                    </th>
+                                    <th>
+                                        Motivo Consulta
+                                    </th>
+                                    <th>
+                                        Peso
+                                    </th>
+                                    <th>
+                                        Observacion
+                                    </th>
+                                    <th>
+                                        Fecha 
+                                    </th>
+
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                            </tbody>
+                            
+                        </table>
+                    </div>
+
+
+                </div>
+                <div class="card-footer text-muted">
+                    
+                </div>
+            </div>
+
+        
+
+            <div class="card text-center mt-5">
+                <div class="card-header" style="background: aqua; color: black; font-weight: bold; font-size: 1.2em;font-family: 'Young Serif', sans-serif;">
+                    FICHAS HEMOPARASITOSIS
+                </div>
+                <div class="card-body">
+                    
+                </div>
+                <div class="card-footer text-muted">
+                    2 days ago
+                </div>
+            </div>
+            
+
+        </div>
+    </div>
+
+    <script>
+        function mostrarFormulario(formulario) {
+            var container = $('#formularioContainer' + formulario.charAt(formulario.length - 1));
+
+            // Toggle la visibilidad del formulario
+            container.slideToggle();
+
+
+        }
+
+        
+
+        function buscarCliente2() {
+            
+            console.log("Iniciando función buscarCliente2");
+
+            // Obtener el valor del input de cédula
+            var identificacion = $("#CI").val();
+
+            console.log("Cédula del cliente:", identificacion);
+
+            // Hacer la solicitud al endpoint de tu API para consultar el cliente
+            $.ajax({
+                url: '/HistoriaClinica/BuscarClientePorCI',
+                method: 'GET',
+                data: { CI: identificacion },
+                contentType: 'application/json',
+                success: function (data) {
+                    console.log("Datos del cliente:", data);
+
+                    // Verifica si se está ejecutando y muestra los datos en la consola
+                    
+
+                    // Asegúrate de que los identificadores coincidan con los elementos HTML reales
+                    $("#nombreCliente").val(data.nombres);
+                    $("#dirCliente").val(data.direccion);
+                    $("#correoCliente").val(data.correo);
+                    $("#telefono").val(data.telefono);
+                    $("#cedCliente").val(data.nombres);
+                    $("#editdueño22").val(data.nombres);// Cambiado a data.cedula si es el nombre del cliente
+
+                },
+                error: function (error) {
+                    // Imprime el mensaje de error en la consola para facilitar la depuración
+                    console.error('Error en la solicitud AJAX:', error);
+                }
+            });
+
+            console.log("Finalizando función buscarCliente2");
+
+            var identificacion = $("#CI").val();
+            $.ajax({
+                url: '/HistoriaClinica/BuscarMascotaPorCI',
+                method: 'GET',
+                data: { CI: identificacion },
+                contentType: 'application/json',
+                success: function (data) {
+                    
+                    var dropdown = $("#petDropdown");
+                    dropdown.empty(); // Clear existing options
+
+                    // Agrega la opción por defecto "Seleccione"
+                    dropdown.append($('<option></option>').val('').html('Seleccione'));
+
+                    // Populate the dropdown with pet names
+                    data.forEach(function (pet) {
+                        dropdown.append($('<option></option>').val(pet.idMascota).html(pet.nombreMascota));
+                    });
+
+
+                    // Verifica si se está ejecutando y muestra los datos en la consola
+                    console.log("Datos MASCOTAAAA:", data);
+                    $("#petDropdown").off().change(function () {
+                        var selectedPetId = $(this).val();
+
+                        // Find the selected pet in the data array
+                        var selectedPet = data.find(function (pet) {
+                            return pet.idMascota == selectedPetId;
+                        });
+                        var longId = parseInt(selectedPet.idMascota); // Assuming it's an integer
+                        // Fill the form with the selected pet's details
+                        $("#editNombre2").val(selectedPet.nombreMascota);
+                        $("#editPeso2").val(selectedPet.peso);
+                        $("#editRaza2").val(selectedPet.raza);
+                        $("#editSexo2").val(selectedPet.sexo);
+                        $("#idmasc2").val(longId);
+                        // Verificar si la fecha de nacimiento es válida
+                        if (selectedPet.fechaNacimiento) {
+                            const fechaNacimiento = new Date(selectedPet.fechaNacimiento);
+
+                            // Verificar si la fecha es válida
+                            if (!isNaN(fechaNacimiento.getTime())) {
+                                // Formatear la fecha a 'YYYY-MM-DD' para asignarla al input
+                                const fechaFormateada = fechaNacimiento.toISOString().split('T')[0];
+                                $("#editFecha2").val(fechaFormateada);
+                                console.log("Fecha de nacimiento en el modal:", fechaFormateada);
+                            } else {
+                                console.error('Fecha de nacimiento no válida:', selectedPet.fechaNacimiento);
+                            }
+                        } else {
+                            console.error('La mascota seleccionada no tiene fecha de nacimiento.');
+                        }
+
+                        $.ajax({
+                            url: '/HistoriaClinica/BuscarFichasControlById',
+                            method: 'GET',
+                            data: { CI: longId },
+                            contentType: 'application/json',
+                            success: function (data) {
+                                console.log("aquiii historial", data)
+
+                                // Obtén la referencia del cuerpo de la tabla
+                                var tableBody = $("#tablaMascotas tbody");
+
+                                // Limpiar filas existentes
+                                tableBody.empty();
+
+                                if (data && data.fichasControl && data.fichasControl.length > 0) {
+                                    // Iterar sobre las fichas de control y agregar filas al cuerpo de la tabla
+                                    data.fichasControl.forEach(function (fichaControl) {
+                                        var row = $("<tr>");
+                                        row.append($("<td>").text(fichaControl.codigoFichaControl));
+                                        row.append($("<td>").text(data.idHistoriaClinica));
+                                        row.append($("<td>").text(fichaControl.motivo));
+                                        row.append($("<td>").text(fichaControl.peso));
+                                        row.append($("<td>").text(fichaControl.observacion));
+                                        // Manipula la cadena de fecha para mostrar solo la fecha
+                                        var fechaPartes = fichaControl.fecha.split('T');
+                                        var fechaSolo = fechaPartes[0];
+                                        row.append($("<td>").text(fechaSolo));
+                                        tableBody.append(row);
+                                    });
+                                } else {
+                                    console.log("No hay fichas de control para mostrar.");
+                                }
+
+
+                            },
+                            error: function (error) {
+                                // Imprime el mensaje de error en la consola para facilitar la depuración
+                                console.error('Error en la solicitud AJAX:', error);
+                            }
+                        });
+
+                        console.log("Finalizando función buscarCliente2");
+
+                    });
+                     
+                    
+
+                },
+                error: function (error) {
+                    // Imprime el mensaje de error en la consola para facilitar la depuración
+                    console.error('Error en la solicitud AJAX:', error);
+                }
+            });
+
+            console.log("Finalizando función buscarCliente2");
+
+            var idMascota = $("#idmasc2").val();
+            
+
+        }
+
+
+
+
+    </script>
+   
+</body>
+</html>

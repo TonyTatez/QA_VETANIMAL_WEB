@@ -1,0 +1,701 @@
+#miFormulario {
+    width: 100%; /* Ajusta el ancho del formulario al 100% */
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+#acor1 {
+    width: 400%;
+    color: black; /* Color del texto en los botones */
+    background: #0dcaf0;
+}
+#acor2 {
+    width: 542%;
+    color: black; /* Color del texto en los botones */
+    background: #28a745;
+}
+#acor3 {
+    width: 505%;
+    color: black; /* Color del texto en los botones */
+    background: #007bff;
+}
+#collapseOne .accordion-button {
+    background-color: #007bff; /* Color del primer botón */
+}
+
+#collapseTwo .accordion-button {
+    background-color: #28a745; /* Color del segundo botón */
+}
+
+#collapseThree .accordion-button {
+    background-color: #dc3545; /* Color del tercer botón */
+}
+
+.sintomas-header {
+    border-bottom: 1px solid #333;
+    margin-bottom: 10px;
+}
+
+.form-row {
+    font-family: 'Young Serif', sans-serif;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 -5px;
+}
+
+.checkbox-container {
+    flex: 1;
+    margin: 0 5px;
+    vertical-align: top; /* Alinea los elementos en la parte superior */
+}
+
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+}
+
+.estiloTextBox {
+    font-size: 14px;
+    text-align: center;
+    margin-left: 35%;
+}
+
+.modales {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-contents {
+    background-color: white;
+    width: 100%;
+    max-width: 1400px;
+    margin: 5% auto;
+    padding: 20px;
+    position: relative;
+}
+
+.closes {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.miDiv {
+    position: absolute;
+    z-index: 1050; /* Un valor mayor que el z-index del modal */
+    background-color: rgba(255, 255, 255, 0.9); /* Fondo semi-transparente */
+
+    top: 50%; /* Ajusta la posición verticalmente */
+    left: 50%; /* Ajusta la posición horizontalmente */
+    transform: translate(-50%, -80%);
+    border: 1px solid #ccc;
+}
+
+.miDivEspecial2 {
+    position: absolute;
+    z-index: 1550; /* Un valor mayor que el z-index del modal */
+    background-color: rgba(255, 255, 255, 0.9); /* Fondo semi-transparente */
+
+    top: 50%; /* Ajusta la posición verticalmente */
+    left: 70%; /* Ajusta la posición horizontalmente */
+    transform: translate(-50%, -80%);
+    border: 1px solid #ccc;
+}
+
+.miDivEspecial20 {
+    position: absolute;
+    z-index: 9050; /* Un valor mayor que el z-index del modal */
+    background-color: rgb(255, 0, 0); /* Fondo semi-transparente */
+
+    top: 40%; /* Ajusta la posición verticalmente */
+    left: 80%; /* Ajusta la posición horizontalmente */
+    transform: translate(-50%, -80%);
+    border: 1px solid #ccc;
+}
+
+.miDiv100 {
+    position: absolute;
+    z-index: 1550; /* Un valor mayor que el z-index del modal */
+    background-color: rgba(255, 255, 255, 0.9); /* Fondo semi-transparente */
+
+    top: 65%; /* Ajusta la posición verticalmente */
+    left: 55%; /* Ajusta la posición horizontalmente */
+    transform: translate(-50%, -80%);
+    border: 1px solid #ccc;
+    width: 1000px; /* Ancho del div */
+    height: 662px; /* Alto del div */
+}
+
+.miDiv2 {
+    position: absolute;
+    z-index: 1050; /* Un valor mayor que el z-index del modal */
+    background-color: rgba(255, 255, 255, 0.9); /* Fondo semi-transparente */
+
+    top: 50%; /* Ajusta la posición verticalmente */
+    left: 50%; /* Ajusta la posición horizontalmente */
+    transform: translate(-50%, -80%);
+    border: 1px solid #ccc;
+}
+
+.miDiv3 {
+    position: absolute;
+    z-index: 1050; /* Un valor mayor que el z-index del modal */
+    background-color: rgba(255, 255, 255, 0.9); /* Fondo semi-transparente */
+
+    top: 0%; /* Ajusta la posición verticalmente */
+    left: 0%; /* Ajusta la posición horizontalmente */
+    transform: translate(0%, 0%);
+    border: 1px solid #ccc;
+    width: 500px; /* Ancho del div */
+    height: 659px; /* Alto del div */
+}
+
+.miDiv4 {
+    position: absolute;
+    z-index: 1050; /* Un valor mayor que el z-index del modal */
+    background-color: rgba(255, 255, 255, 0.9); /* Fondo semi-transparente */
+
+    top: 0%; /* Ajusta la posición verticalmente */
+    left: 0%; /* Ajusta la posición horizontalmente */
+    transform: translate(0%, 0%);
+    border: 1px solid #ccc;
+    width: 500px; /* Ancho del div */
+    height: 659px; /* Alto del div */
+}
+
+.miDiv5 {
+    position: absolute;
+    z-index: 1050; /* Un valor mayor que el z-index del modal */
+    background-color: rgba(255, 255, 255, 0.9); /* Fondo semi-transparente */
+
+    top: 0%; /* Ajusta la posición verticalmente */
+    left: 0%; /* Ajusta la posición horizontalmente */
+    transform: translate(0%, 0%);
+    border: 1px solid #ccc;
+    width: 500px; /* Ancho del div */
+    height: 659px; /* Alto del div */
+}
+
+.miDiv6 {
+    position: absolute;
+    z-index: 1050; /* Un valor mayor que el z-index del modal */
+    background-color: rgba(255, 255, 255, 0.9); /* Fondo semi-transparente */
+
+    top: 0%; /* Ajusta la posición verticalmente */
+    left: 0%; /* Ajusta la posición horizontalmente */
+    transform: translate(0%, 0%);
+    border: 1px solid #ccc;
+    width: 950px; /* Ancho del div */
+    height: 659px; /* Alto del div */
+}
+
+.termico-message {
+    position: absolute;
+    left: 150px;
+    top: -20%;
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    display: none;
+}
+
+.miTextarea {
+    width: 30% !important; /* Ancho del textarea */
+    padding: 80px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    align-content: start;
+    margin-left: 71.5%; /* Mover el botón a la derecha */
+    margin-top: -100%;
+    margin-bottom: 15%;
+}
+
+.miText {
+    margin-left: 730px; /* Mover el botón a la derecha */
+    margin-top: -14%;
+    margin-bottom: 10%;
+    white-space: nowrap;
+}
+
+.error-border {
+    border: 2px solid red; /* Establece el borde en rojo */
+}
+
+body {
+    font-family: "Arial, sans-serif" !important;
+    font-family: "Poppins", sans-serif;
+    height: 100vh;
+}
+
+a {
+    color: #92badd;
+    display: inline-block;
+    text-decoration: none;
+    font-weight: 400;
+}
+
+h2 {
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    display: inline-block;
+    margin: 40px 8px 10px 8px;
+    color: #cccccc;
+}
+
+/* STRUCTURE */
+
+.wrapper {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    min-height: 100%;
+    padding: 20px;
+}
+
+#formContent {
+    -webkit-border-radius: 10px 10px 10px 10px;
+    border-radius: 10px 10px 10px 10px;
+    background: #fff;
+    padding: 30px;
+    width: 90%;
+    max-width: 450px;
+    position: relative;
+    padding: 0px;
+    -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+    box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+    text-align: center;
+}
+
+#formFooter {
+    background-color: #f6f6f6;
+    border-top: 1px solid #dce8f1;
+    padding: 25px;
+    text-align: center;
+    -webkit-border-radius: 0 0 10px 10px;
+    border-radius: 0 0 10px 10px;
+}
+
+/* TABS */
+
+h2.inactive {
+    color: #cccccc;
+}
+
+h2.active {
+    color: #0d0d0d;
+    border-bottom: 2px solid #5fbae9;
+}
+
+/* FORM TYPOGRAPHY*/
+
+input[type=button], input[type=submit], input[type=reset] {
+    background-color: #56baed;
+    border: none;
+    color: white;
+    padding: 15px 80px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    text-transform: uppercase;
+    font-size: 13px;
+    -webkit-box-shadow: 0 10px 30px 0 rgba(95,186,233,0.4);
+    box-shadow: 0 10px 30px 0 rgba(95,186,233,0.4);
+    -webkit-border-radius: 5px 5px 5px 5px;
+    border-radius: 5px 5px 5px 5px;
+    margin: 5px 20px 40px 20px;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+    input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover {
+        background-color: #39ace7;
+    }
+
+    input[type=button]:active, input[type=submit]:active, input[type=reset]:active {
+        -moz-transform: scale(0.95);
+        -webkit-transform: scale(0.95);
+        -o-transform: scale(0.95);
+        -ms-transform: scale(0.95);
+        transform: scale(0.95);
+    }
+
+input[type=email] {
+    background-color: #f6f6f6;
+    border: none;
+    color: #0d0d0d;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 5px;
+    width: 85%;
+    border: 2px solid #f6f6f6;
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -ms-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    border-radius: 5px 5px 5px 5px;
+}
+
+    input[type=email]:focus {
+        background-color: #fff;
+        border-bottom: 2px solid #5fbae9;
+    }
+
+    input[type=email]:placeholder {
+        color: #cccccc;
+    }
+
+input[type=password] {
+    background-color: #f6f6f6;
+    border: none;
+    color: #0d0d0d;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 5px;
+    width: 85%;
+    border: 2px solid #f6f6f6;
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -ms-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    border-radius: 5px 5px 5px 5px;
+}
+
+    input[type=password]:focus {
+        background-color: #fff;
+        border-bottom: 2px solid #5fbae9;
+    }
+
+    input[type=password]:placeholder {
+        color: #cccccc;
+    }
+
+/* ANIMATIONS */
+
+/* Simple CSS3 Fade-in-down Animation */
+.fadeInDown {
+    -webkit-animation-name: fadeInDown;
+    animation-name: fadeInDown;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+@-webkit-keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        -webkit-transform: translate3d(0, -100%, 0);
+        transform: translate3d(0, -100%, 0);
+    }
+
+    100% {
+        opacity: 1;
+        -webkit-transform: none;
+        transform: none;
+    }
+}
+
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        -webkit-transform: translate3d(0, -100%, 0);
+        transform: translate3d(0, -100%, 0);
+    }
+
+    100% {
+        opacity: 1;
+        -webkit-transform: none;
+        transform: none;
+    }
+}
+
+/* Simple CSS3 Fade-in Animation */
+@-webkit-keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@-moz-keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.fadeIn {
+    opacity: 0;
+    -webkit-animation: fadeIn ease-in 1;
+    -moz-animation: fadeIn ease-in 1;
+    animation: fadeIn ease-in 1;
+    -webkit-animation-fill-mode: forwards;
+    -moz-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+    -webkit-animation-duration: 1s;
+    -moz-animation-duration: 1s;
+    animation-duration: 1s;
+}
+
+    .fadeIn.first {
+        -webkit-animation-delay: 0.4s;
+        -moz-animation-delay: 0.4s;
+        animation-delay: 0.4s;
+    }
+
+    .fadeIn.second {
+        -webkit-animation-delay: 0.6s;
+        -moz-animation-delay: 0.6s;
+        animation-delay: 0.6s;
+    }
+
+    .fadeIn.third {
+        -webkit-animation-delay: 0.8s;
+        -moz-animation-delay: 0.8s;
+        animation-delay: 0.8s;
+    }
+
+    .fadeIn.fourth {
+        -webkit-animation-delay: 1s;
+        -moz-animation-delay: 1s;
+        animation-delay: 1s;
+    }
+
+/* Simple CSS3 Fade-in Animation */
+.underlineHover:after {
+    display: block;
+    left: 0;
+    bottom: -10px;
+    width: 0;
+    height: 2px;
+    background-color: #56baed;
+    content: "";
+    transition: width 0.2s;
+}
+
+.underlineHover:hover {
+    color: #0d0d0d;
+}
+
+    .underlineHover:hover:after {
+        width: 100%;
+    }
+
+/* OTHERS */
+
+*:focus {
+    outline: none;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/*Establece la imagen de fondo */
+/*body .login {
+    background: linear-gradient(rgba(20,20,20, .5),rgba(20,20,20, .5)),url(../imagenes/bg-1.jpeg);*/
+/* -webkit-clip-path: polygon(0 0, 100% 0, 100% 89%, 51% 100%, 0 89%);
+    clip-path: polygon(0 0, 100% 0, 100% 89%, 51% 100%, 0 89%);*/
+/*}
+footer .login {
+    background: linear-gradient(rgba(20,20,20, .5),rgba(20,20,20, .5)),url(../imagenes/bg-1.jpeg);*/
+/* -webkit-clip-path: polygon(0 0, 100% 0, 100% 89%, 51% 100%, 0 89%);
+    clip-path: polygon(0 0, 100% 0, 100% 89%, 51% 100%, 0 89%);*/
+/*}*/
+
+/* Estilo para el contenido del formulario */
+/*.wrapper {
+    background-color: rgba(255, 255, 255, 0);*/ /* Fondo semitransparente para que la imagen de fondo sea visible */
+/*padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px 0px #000000;
+}*/
+#icon {
+    width: 160px; /* Ancho deseado */
+    height: auto; /* Altura ajustada automáticamente para mantener la proporción */
+}
+
+#btnCerrar {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 9999; /* Asegura que el botón esté por encima de otros elementos */
+}
+
+#tablaMascotas {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px; /* Añadir espacio superior a la tabla */
+}
+
+    #tablaMascotas th,
+    #tablaMascotas td {
+        padding: 12px;
+        border: 1px solid #ddd;
+        text-align: center;
+        font-size: 14px;
+    }
+
+    #tablaMascotas th {
+        background-color: #021D5D; /* Color de fondo para las celdas del encabezado */
+        color: white; /* Color del texto en el encabezado */
+    }
+
+    #tablaMascotas tbody tr:nth-child(odd) {
+        background-color: #ffffff; /* Fila impar amarilla */
+    }
+
+    #tablaMascotas tbody tr:nth-child(even) {
+        background-color: #ffffff; /* Fila par blanca */
+    }
+
+    #tablaMascotas tbody tr:hover {
+        background-color: #D4E2F9; /* Resalta la fila al pasar el ratón */
+    }
+
+    #tablaMascotas .btn {
+        margin-right: 5px;
+    }
+
+    #tablaMascotas tfoot {
+        background-color: #021D5D; /* Color de fondo para el pie de la tabla */
+        color: white; /* Color del texto en el pie de la tabla */
+    }
+
+#tablaDiagnostico {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px; /* Añadir espacio superior a la tabla */
+}
+
+    #tablaDiagnostico th,
+    #tablaDiagnostico td {
+        padding: 12px;
+        border: 1px solid #ddd;
+        text-align: center;
+        font-size: 14px;
+    }
+
+    #tablaDiagnostico th {
+        background-color: #021D5D; /* Color de fondo para las celdas del encabezado */
+        color: white; /* Color del texto en el encabezado */
+    }
+
+    #tablaDiagnostico tbody tr:nth-child(odd) {
+        background-color: #ffffff; /* Fila impar amarilla */
+    }
+
+    #tablaDiagnostico tbody tr:nth-child(even) {
+        background-color: #ffffff; /* Fila par blanca */
+    }
+
+    #tablaDiagnostico tbody tr:hover {
+        background-color: #D4E2F9; /* Resalta la fila al pasar el ratón */
+    }
+
+    #tablaDiagnostico .btn {
+        margin-right: 5px;
+    }
+
+    #tablaDiagnostico tfoot {
+        background-color: #021D5D; /* Color de fondo para el pie de la tabla */
+        color: white; /* Color del texto en el pie de la tabla */
+    }
+#tablaLlantas {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px; /* Añadir espacio superior a la tabla */
+}
+
+    #tablaLlantas th,
+    #tablaLlantas td {
+        padding: 12px;
+        border: 1px solid #ddd;
+        text-align: center;
+        font-size: 14px;
+    }
+
+    #tablaLlantas th {
+        background-color: #021D5D; /* Color de fondo para las celdas del encabezado */
+        color: white; /* Color del texto en el encabezado */
+    }
+
+    #tablaLlantas tbody tr:nth-child(odd) {
+        background-color: #ffffff; /* Fila impar amarilla */
+    }
+
+    #tablaLlantas tbody tr:nth-child(even) {
+        background-color: #ffffff; /* Fila par blanca */
+    }
+
+    #tablaLlantas tbody tr:hover {
+        background-color: #D4E2F9; /* Resalta la fila al pasar el ratón */
+    }
+
+    #tablaLlantas .btn {
+        margin-right: 5px;
+    }
+
+    #tablaLlantas tfoot {
+        background-color: #021D5D; /* Color de fondo para el pie de la tabla */
+        color: white; /* Color del texto en el pie de la tabla */
+    }
+

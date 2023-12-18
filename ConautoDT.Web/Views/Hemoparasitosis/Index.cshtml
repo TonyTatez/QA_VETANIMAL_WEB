@@ -1,0 +1,710 @@
+﻿
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.css" />
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="~/Content/bootstrap.css" />
+    
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+@model VET_ANIMAL.WEB.Models.MascotasViewModel
+@{
+    ViewData["Title"] = "HEMOPARASITOSIS";
+}
+
+<body>
+    <div class="container">
+        <h2 class="mb-3" style="color: black; font-weight: bold; font-size: 2.2em;font-family: 'Young Serif', sans-serif;">DETECCIÓN HEMOPARASITOSIS </h2>
+
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card p-4 border-0" style="border-radius: 15px; background: linear-gradient(180deg, #ffffff 0%, #f0f0f0 100%); box-shadow: 10px 10px 15px 10px #888888;">
+
+
+                        <form style="color: black;font-family: 'Young Serif', sans-serif;">
+                            <div class="mb-3">
+                                <label for="CI" class="form-label">Cédula del Cliente</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="CI" placeholder="Ingrese Cédula" onkeypress="return solo10Numeros(event)" required>
+                                    <button class="btn btn-primary" type="button" onclick="buscarCliente2()"><i class="bi bi-search"></i></button>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="cedCliente" class="form-label">Cliente</label>
+                                <input type="text" class="form-control" id="cedCliente" readonly style="color: red;">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="petDropdown" class="form-label">Mascota</label>
+                                <select class="form-select" id="petDropdown" readonly style="color: blue;">
+                                    <!-- Opciones de mascotas -->
+                                </select>
+                            </div>
+
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card text-center mt-5">
+            <div class="card-header">
+               
+                    <div class="nav-item">
+
+                    <h1 class="mb-3 text-center" style="color: black; font-weight: bold;font-size: 1.2em; font-family: 'Young Serif', sans-serif;">
+                            CASOS SOPECHA DE HEMOPARASITOSIS
+                        </h1>
+                    </div>
+                    <div class="btn-group" role="group" aria-label="Basic mixed styles example" style="margin-bottom:5px !important;">
+                    <button id="btnNuevo" type="button" class="btn btn-primary btn-sm bi bi-clipboard-plus" data-bs-toggle="modal" data-bs-target="#exampleModal">   Nuevo </button>
+                    </div>
+                    @*<li class="nav-item">
+                        <button class="btn btn-success active m-1" type="button" style="background-color: #007bff; color: #ffffff;">Active</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-danger active m-1" type="button" style="background-color: #007bff; color: #ffffff;">Active</button>
+                    </li>*@
+               
+            </div>
+            <div class="card-body">
+
+                <div class="table-responsive" style="font-family: 'Young Serif', sans-serif; ">
+                    <table class="table table-bordered table-sm  dataTable table-striped" id="tablaMascotas">
+                        <thead>
+                            <tr>
+                                
+                                <th>
+                                    Historia Clinica
+                                </th>
+                                <th>
+                                    Nombre Mascota
+                                </th>
+                                <th>
+                                    Motivo Consulta
+                                </th>
+                                <th>
+                                    Peso
+                                </th>
+                                <th>
+                                    Observacion
+                                </th>
+                                
+                                <th>
+                                    Acciones
+                                </th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.ListaMascota != null)
+                            {
+                                @foreach (var item in Model.ListaMascota)
+                                {
+                                    @Html.HiddenFor(model => item.idMascota)
+                                    @Html.HiddenFor(model => item.cliente)
+                                    @Html.HiddenFor(model => item.fechaNacimiento)
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(model => item.idHistoriaClinica)
+
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => item.nombreMascota)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => item.motivo)
+                                        </td>
+                                        
+                                        <td>
+                                            @Html.DisplayFor(model => item.peso)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => item.observacion)
+                                        </td>
+                                        
+                                        <td>
+
+
+                                            <button title="Ficha Control" class="btn p-v-sm btn-primary btn-sm btn-editar" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="FichaMascota({idMascota:@item.idMascota ,nombreMascotas:'@item.nombreMascota',nombres:'@item.cliente', peso:'@item.peso' ,raza:'@item.raza', sexo:'@item.sexo',fecha:'@item.fechaNacimiento'});">
+                                                <i class="bi bi-file-earmark-richtext-fill"></i>
+                                            </button>
+
+                                            
+
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    
+                                </tr>
+                            }
+
+
+                        </tbody>
+
+                    </table>
+                </div>
+
+            </div>
+        </div>
+       
+    </div>
+
+
+    <!-- Modal Guardar-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content " style="width:100%">
+                <div class="modal-header TMSHeaderModal" style="background: #DAE8FD">
+                    <h5 class="modal-title" style="font-family: 'Young Serif', sans-serif; font-weight: bold;">FICHA SINTOMATOLÓGICA</h5>
+                    <div class="d-flex align-items-end flex-column">
+                        <button type="button" style="color: black" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                </div>
+
+                <div class="accordion" id="accordionExample">
+                    <div class="accordion-item" >
+                        <h2 class="accordion-header" >
+                            <button class="accordion-button" id="acor1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                DATOS PACIENTE
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <div class="form-row m-2" style="font-family: 'Young Serif', sans-serif; " >
+
+                                    <div class="form-group col-md-4">
+                                        <label for="">Nombre</label>
+                                        <input type="text" style="color: blue;font-size: 16px;" class="form-control" id="editNombre2" readonly>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="">Dueño</label>
+                                        <input id="editdueño22" type="text" class="form-control mb-3" style="width:100%!important; color: red" readonly>
+                                    </div>
+                                    <div class="form-group col-md-6" hidden>
+                                        <label for="">idmasc</label>
+                                        <input id="idmasc2" type="text" class="form-control mb-3" style="width:100%!important; color: red"readonly>
+                                    </div>
+
+
+
+                                    <div class="form-group col-md-4">
+                                        <label for="">Peso</label>
+                                        <input readonly type="text" style="color: blue;font-size: 16px;" class="form-control" id="editPeso2" onkeypress="return soloNumeros(event)" required>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="">Raza</label>
+                                        <select disabled class="form-control" id="editRaza2" style="color: blue;font-size: 16px;" required>
+                                            <option value="">Seleccione</option>
+                                            <option value="Labrador">Labrador</option>
+                                            <option value="Bulldog">Bulldog</option>
+                                            <option value="Mestizo">Mestizo</option>
+                                            <option value="Chihuahua">Chihuahua</option>
+                                            <option value="French">French</option>
+                                            <option value="Golden Retriever">Golden Retriever</option>
+                                            <option value="Pitbull">Pitbull</option>
+                                        </select>
+                                    </div>
+
+
+                                    <div class="form-group col-md-4">
+                                        <label for="">Sexo</label>
+                                        <select disabled class="form-control" id="editSexo2" style="color: blue;font-size: 16px;" required>
+                                            <option value="">Seleccione</option>
+                                            <option value="Macho">Macho</option>
+                                            <option value="Hembra">Hembra</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="">Fecha de Nacimiento</label>
+                                        <input readonly style="color: blue;font-size: 16px;width: 100%" class="form-control" id="editFecha2" name="editFecha2" readonly max="2024-12-31" type="text">
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" id="acor2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                SINTOMAS
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <div class="form-row " style="font-family: 'Young Serif', sans-serif;">
+
+                                    <form id="miFormulario">
+
+                                        <div class="sintomas-header">
+                                            <h5 style="font-family: 'Young Serif', sans-serif;color:black">HEMOPARASITOSIS</h5>
+                                        </div>
+
+                                        <div class="form-row m-2" style="font-family: 'Young Serif', sans-serif; ">
+                                            <div class="checkbox-container ">
+                                                <input type="checkbox" id="sangradoCutaneo" name="sintomas" value="SANGRADO CUTANEO">
+                                                <label for="sangradoCutaneo">Sangrado cutáneo</label>
+                                            </div>
+
+                                            <div class="checkbox-container">
+                                                <input type="checkbox" id="problemasRespiratorios" name="sintomas" value="PROBLEMAS RESPIRATORIOS">
+                                                <label for="problemasRespiratorios">Problemas respiratorios</label>
+                                            </div>
+
+                                            <div class="checkbox-container">
+                                                <input type="checkbox" id="perdidaPeso" name="sintomas" value="PERDIDA DE PESO">
+                                                <label for="perdidaPeso">Pérdida de peso</label>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-row m-2" style="font-family: 'Young Serif', sans-serif; ">
+                                            <div class="checkbox-container">
+                                                <input type="checkbox" id="linfadenopatia" name="sintomas" value="LINFADENOPATIA">
+                                                <label for="linfadenopatia">Linfadenopatía</label>
+                                            </div>
+
+                                            <div class="checkbox-container">
+                                                <input type="checkbox" id="letargia" name="sintomas" value="LETARGIA">
+                                                <label for="letargia">Letargia</label>
+                                            </div>
+
+                                            <div class="checkbox-container">
+                                                <input type="checkbox" id="ictericia" name="sintomas" value="ICTERICIA">
+                                                <label for="ictericia">Ictericia</label>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-row m-2" style="font-family: 'Young Serif', sans-serif; ">
+                                            <div class="checkbox-container">
+                                                <input type="checkbox" id="hemorragiasMucosas" name="sintomas" value="HEMORRAGIAS EN MUCOSAS">
+                                                <label for="hemorragiasMucosas">Hemorragias en mucosas</label>
+                                            </div>
+
+                                            <div class="checkbox-container">
+                                                <input type="checkbox" id="hemoglobinuria" name="sintomas" value="HEMOGLOBINURIA">
+                                                <label for="hemoglobinuria">Hemoglobinuria</label>
+                                            </div>
+
+                                            <div class="checkbox-container">
+                                                <input type="checkbox" id="fiebre" name="sintomas" value="FIEBRE">
+                                                <label for="fiebre">Fiebre</label>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-row m-2" style="font-family: 'Young Serif', sans-serif; ">
+                                            <div class="checkbox-container">
+                                                <input type="checkbox" id="esplenomegalia" name="sintomas" value="ESPLENOMEGALIA">
+                                                <label for="esplenomegalia">Esplenomegalia</label>
+                                            </div>
+
+                                            <div class="checkbox-container">
+                                                <input type="checkbox" id="epistaxis" name="sintomas" value="EPISTAXIS">
+                                                <label for="epistaxis">Epistaxis</label>
+                                            </div>
+
+                                            <div class="checkbox-container">
+                                                <input type="checkbox" id="cojeraArticular" name="sintomas" value="DOLOR ARTICULAR">
+                                                <label for="cojeraArticular">Dolor articular</label>
+                                            </div>
+
+
+                                        </div>
+                                        <div class="form-row m-2" style="font-family: 'Young Serif', sans-serif; ">
+                                            <div class="checkbox-container">
+                                                <input type="checkbox" id="cojeraIntermitente" name="sintomas" value="COJERA INTERMITENTE">
+                                                <label for="cojeraIntermitente">Cojera intermitente</label>
+                                            </div>
+
+                                            <div class="checkbox-container">
+                                                <input type="checkbox" id="anorexia" name="sintomas" value="ANOREXIA">
+                                                <label for="anorexia">Anorexia</label>
+                                            </div>
+
+                                            <div class="checkbox-container">
+                                                <input type="checkbox" id="depresion" name="sintomas" value="DEPRESION">
+                                                <label for="depresion">Depresión</label>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="modal-footer" style="background: #DAE8FD">
+                                            <button id="diagnosticar" type="button" onclick="enviarDatos()" class="btn btn-success btn-grad btn-sm">
+                                                DIAGNOSTICAR
+                                            </button>
+                                        </div>
+
+
+                                    </form>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" id="acor3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                RESULTADO
+                            </button>
+                        </h2>
+                        <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <div class="table-responsive" style="font-family: 'Young Serif', sans-serif; ">
+                                    <table class="table table-bordered table-sm  dataTable table-striped" id="tablaDiagnostico">
+                                        <thead>
+                                            <tr>
+
+
+                                                <th>
+                                                    Nombre Mascota
+                                                </th>
+                                                <th>
+                                                    Diagnostico
+                                                </th>
+
+                                                <th>
+                                                    Observacion
+                                                </th>
+
+                                                <th>
+                                                    Hemoparasitosis
+                                                </th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer" style="background: #DAE8FD">
+                    <button id="guardarInformacion2" type="submit" class="btn btn-success btn-grad btn-sm">
+                        Guardar
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Eliminar -->
+    <div class="modal fade" id="modalLoader" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content " style="width:100%">
+                <div class="modal-header TMSHeaderModal">
+                </div>
+
+
+                <div class="modal-body ">
+                    <div >
+                        <!-- Contenido del loader -->
+                        <div class="container">
+                            <div class="ring"></div>
+                            <div class="ring"></div>
+                            <div class="ring"></div>
+                            <span class="loading">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    
+
+    <script>
+
+        function mostrarLoader() {
+            $('#modalLoader').modal('show'); // Muestra el modal
+        }
+
+        function ocultarLoader() {
+            $('#modalLoader').modal('hide'); // Oculta el modal
+        }
+        function FichaMascota(Mascota) {
+           
+
+            console.log("editar", Mascota);
+            $('#editNombre2').val(Mascota.nombreMascotas);
+            $('#editdueño22').val(Mascota.nombres);
+            $('#editPeso2').val(Mascota.peso);
+            $('#editRaza2').val(Mascota.raza);
+            $('#editSexo2').val(Mascota.sexo);
+            $('#idmasc2').val(Mascota.idMascota);
+
+            // Dividir la cadena de fecha
+            const partesFecha = Mascota.fecha.split(' ');
+            const fechaSinHora = partesFecha[0]; // Obtener la parte de la fecha
+
+            // Formatear la fecha para mostrar solo la parte de la fecha (sin la hora)
+            const partesFechaNumeros = fechaSinHora.split('/');
+            const fecha = new Date(partesFechaNumeros[2], partesFechaNumeros[1] - 1, partesFechaNumeros[0]);
+
+            const fechaFormateada = fecha.toLocaleDateString(); // Puedes ajustar el formato según tus necesidades
+
+            $('#editFecha2').val(fechaFormateada);
+        }
+
+        function enviarDatos() {
+            mostrarLoader(); // Mostrar el loader antes de la solicitud AJAX
+            // Obtener los valores de los checkboxes seleccionados
+            var idMascota = $("#idmasc2").val();
+            var nombremascota = $("#editNombre2").val();
+           
+            var sintomasSeleccionados = $("input[name='sintomas']:checked").map(function () {
+                return $(this).val();
+            }).get();
+
+            // Imprimir en consola los síntomas seleccionados
+            console.log("Síntomas seleccionados:", sintomasSeleccionados);
+            // Realizar la solicitud AJAX
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("PredecirEnfermedad", "Hemoparasitosis")", // Reemplaza con la ruta correcta del controlador
+                data: {
+                    idMascota: idMascota,
+                    nombremascota: nombremascota,
+                    sintomas: sintomasSeleccionados
+                },
+                success: function (response) {
+                    ocultarLoader();
+                    // Limpiar la tabla antes de agregar nuevos datos
+                    $('#tablaDiagnostico tbody').empty();
+
+                    // Verificar si hay una propiedad "enfermedad" en la respuesta
+                    if (response.enfermedad) {
+
+
+                        var estiloBoton = response.enfermedad === "Enfermedad Desconocida" ? "btn-danger" : "btn-success";
+                        var icono = response.enfermedad === "Enfermedad Desconocida" ? "bi-x" : "bi-check";
+                        // Crear una fila con la información de la respuesta
+                        var observacion = response.enfermedad === "Enfermedad Desconocida" ? "NEGATIVO" : "POSITIVO";
+                        // Crear una fila con la información de la respuesta
+                        var fila = '<tr>' +
+                            '<td>' + response.nombreMascota + '</td>' +  // Reemplaza esto con el nombre real de la mascota
+                            '<td>' + response.enfermedad + '</td>' +
+                            '<td>' + observacion + '</td>' +  // Puedes ajustar esto según tus necesidades
+                            '<td>' + 
+                                '<button type="button" class="btn ' + estiloBoton + ' btn-sm">' +
+                                    '<i class="bi ' + icono + '"></i>' +
+                                '</button>' +
+                            '</td>' +
+                            '</tr>';
+
+                        $('#tablaDiagnostico tbody').append(fila);
+                    }
+
+                    // Manejar la respuesta del servidor si es necesario
+                    console.log(response);
+                },
+                error: function (error) {
+                    ocultarLoader();
+                    // Manejar errores
+                    console.error("Error en la solicitud AJAX: ", error);
+                }
+            });
+        }
+        
+        function buscarCliente2() {
+            console.log("Iniciando función buscarCliente2");
+
+            // Obtener el valor del input de cédula
+            var identificacion = $("#CI").val();
+
+            console.log("Cédula del cliente:", identificacion);
+
+            // Hacer la solicitud al endpoint de tu API para consultar el cliente
+            $.ajax({
+                url: '/HistoriaClinica/BuscarClientePorCI',
+                method: 'GET',
+                data: { CI: identificacion },
+                contentType: 'application/json',
+                success: function (data) {
+                    console.log("Datos del cliente:", data);
+
+                    // Verifica si se está ejecutando y muestra los datos en la consola
+
+
+                    // Asegúrate de que los identificadores coincidan con los elementos HTML reales
+                    $("#nombreCliente").val(data.nombres);
+                    $("#dirCliente").val(data.direccion);
+                    $("#correoCliente").val(data.correo);
+                    $("#telefono").val(data.telefono);
+                    $("#cedCliente").val(data.nombres);
+                    $("#editdueño22").val(data.nombres);// Cambiado a data.cedula si es el nombre del cliente
+
+                },
+                error: function (error) {
+                    // Imprime el mensaje de error en la consola para facilitar la depuración
+                    console.error('Error en la solicitud AJAX:', error);
+                }
+            });
+
+            console.log("Finalizando función buscarCliente2");
+
+            var identificacion = $("#CI").val();
+            $.ajax({
+                url: '/HistoriaClinica/BuscarMascotaPorCI',
+                method: 'GET',
+                data: { CI: identificacion },
+                contentType: 'application/json',
+                success: function (data) {
+
+                    var dropdown = $("#petDropdown");
+                    dropdown.empty(); // Clear existing options
+                    // Agrega la opción por defecto "Seleccione"
+                    dropdown.append($('<option></option>').val('').html('Seleccione'));
+
+
+                    // Populate the dropdown with pet names
+                    data.forEach(function (pet) {
+                        dropdown.append($('<option></option>').val(pet.idMascota).html(pet.nombreMascota));
+                    });
+                    // Verifica si se está ejecutando y muestra los datos en la consola
+                    console.log("Datos MASCOTAAAA:", data);
+                    $("#petDropdown").change(function () {
+                        var selectedPetId = $(this).val();
+
+                        // Find the selected pet in the data array
+                        var selectedPet = data.find(function (pet) {
+                            return pet.idMascota == selectedPetId;
+                        });
+                        var longId = parseInt(selectedPet.idMascota); // Assuming it's an integer
+                        // Fill the form with the selected pet's details
+                        $("#editNombre2").val(selectedPet.nombreMascota);
+                        $("#editPeso2").val(selectedPet.peso);
+                        $("#editRaza2").val(selectedPet.raza);
+                        $("#editSexo2").val(selectedPet.sexo);
+                        $("#idmasc2").val(longId);
+                        // Verificar si la fecha de nacimiento es válida
+                        if (selectedPet.fechaNacimiento) {
+                            const fechaNacimiento = new Date(selectedPet.fechaNacimiento);
+
+                            // Verificar si la fecha es válida
+                            if (!isNaN(fechaNacimiento.getTime())) {
+                                // Formatear la fecha a 'YYYY-MM-DD' para asignarla al input
+                                const fechaFormateada = fechaNacimiento.toISOString().split('T')[0];
+                                $("#editFecha2").val(fechaFormateada);
+                                console.log("Fecha de nacimiento en el modal:", fechaFormateada);
+                            } else {
+                                console.error('Fecha de nacimiento no válida:', selectedPet.fechaNacimiento);
+                            }
+                        } else {
+                            console.error('La mascota seleccionada no tiene fecha de nacimiento.');
+                        }
+                        $('#exampleModal').modal('show');
+
+                        $.ajax({
+                            url: '/Hemoparasitosis/SospechaHemo',
+                            method: 'GET',
+                            data: {  },
+                            contentType: 'application/json',
+                            success: function (data) {
+                                console.log("aquiii historial", data)
+
+                                
+
+                            },
+                            error: function (error) {
+                                // Imprime el mensaje de error en la consola para facilitar la depuración
+                                console.error('Error en la solicitud AJAX:', error);
+                            }
+                        });
+
+                        console.log("Finalizando función buscarCliente2");
+
+                    });
+
+
+
+                },
+                error: function (error) {
+                    // Imprime el mensaje de error en la consola para facilitar la depuración
+                    console.error('Error en la solicitud AJAX:', error);
+                }
+            });
+
+            console.log("Finalizando función buscarCliente2");
+
+            var idMascota = $("#idmasc2").val();
+
+
+        }
+
+        function nuevo() {
+            $("#editNombre2").val("");
+            $("#editPeso2").val("");
+            $("#editRaza2").val("");
+            $("#editSexo2").val("");
+            $("#editdueño22").val("");
+            $("#idmasc2").val("");
+            $("#editFecha2").val("");
+        }
+
+
+        function predecirEnfermedad() {
+            var idMascota = $("#idmasc2").val();
+            var sintomasSeleccionados = obtenerSintomasSeleccionados();
+
+            // Verifica si se seleccionó al menos un síntoma
+            if (sintomasSeleccionados.length === 0) {
+                alert("Por favor, seleccione al menos un síntoma.");
+                return;
+            }
+
+            // Realiza una solicitud al servidor para obtener la predicción
+            $.ajax({
+                url: '/Prediccion/PredecirEnfermedad',
+                method: 'POST',
+                data: { idMascota: idMascota, sintomas: sintomasSeleccionados },
+                success: function (resultado) {
+                    console.log("Predicción de enfermedad:", resultado);
+
+                    // Aquí puedes mostrar el resultado al usuario o realizar acciones adicionales
+                },
+                error: function (error) {
+                    console.error('Error en la solicitud AJAX:', error);
+                }
+            });
+        }
+
+        function obtenerSintomasSeleccionados() {
+            var sintomasSeleccionados = [];
+
+            // Itera sobre los checkboxes y agrega los síntomas seleccionados a la lista
+            $("input[name='sintomas']:checked").each(function () {
+                sintomasSeleccionados.push($(this).val());
+            });
+
+            return sintomasSeleccionados;
+        }
+
+
+    </script>
+
+</body>

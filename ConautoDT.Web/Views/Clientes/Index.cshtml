@@ -1,0 +1,521 @@
+﻿<link rel="stylesheet" href="~/Content/bootstrap.css" />
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+@model VET_ANIMAL.WEB.Models.ClientesViewModel
+@{
+    ViewData["Title"] = "Clientes";
+}
+
+
+
+<!-- Modal Guardar-->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content " style="width:100%">
+            <div class="modal-header TMSHeaderModal" style="background: #DAE8FD">
+                <h5 class="modal-title" style="font-family: 'Young Serif', sans-serif; font-weight: bold;">Cliente</h5>
+                <div class="d-flex align-items-end flex-column">
+                    <button type="button" style="color: black" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+            </div>
+            <div class="col-md-4 float-left container-fluid h-custom" style="margin-top: 15%; margin-left: 5%; position:absolute">
+                <div class="row">
+                    <!-- Gallery -->
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 mb-4">
+                            <img src="~/imagenes/cliente.png"
+                                 style="width: 150px!important;"
+                                 class="w-100 shadow-1-strong rounded mb-4"
+                                 alt="Boat on Calm Water" />
+
+                            <img src="~/imagenes/dueño2.jpg"
+                                 style="width: 150px!important;"
+                                 class="w-100 shadow-1-strong rounded mb-4"
+                                 alt="Wintry Mountain Landscape" />
+                        </div>
+
+                        @*<div class="col-lg-4 col-md-6 mb-4">
+                        <img src="~/imagenes/dueño2.jpg"
+                        class="w-100 shadow-1-strong rounded mb-4"
+                        alt="Boat on Calm Water" />
+                        <img src="~/imagenes/dueño2.jpg"
+                        class="w-100 shadow-1-strong rounded mb-4"
+                        alt="Boat on Calm Water" />
+                        </div>*@
+                    </div>
+                </div>
+            </div>
+
+            <form asp-action="GuardaryEditarInfo" onsubmit="procesarFormulario()">
+
+                <div class="row col-md-8" style="margin-left: 40%;margin-top: 2%;font-family: 'Young Serif', sans-serif; ">
+
+
+                    <div class="form-group col-md-12">
+                        <label for="nombreCliente">Nombres</label>
+                        <input type="text" asp-for="@Model.nombres" style="color: blue;font-size: 14px;" id="nombreCliente" class="form-control" placeholder="Ingrese nombres del cliente" />
+                    </div>
+
+
+
+                    <div class="form-group col-md-12">
+                        <label for="cedCliente">Cédula</label>
+                        <input type="text" asp-for="@Model.identificacion" style="color: blue;font-size: 14px;" onkeypress="return solo10Numeros(event)" id="cedCliente" class="form-control" placeholder="Ingrese cédula del cliente" required />
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label for="dirCliente">Dirección</label>
+                        <input type="text" asp-for="@Model.direccion" style="color: blue;font-size: 14px;" id="dirCliente" class="form-control" placeholder="Ingrese dirección del cliente" />
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label for="correoCliente">Correo</label>
+                        <input type="text" asp-for="@Model.correo" onkeypress="return validarCorreoElectronico(event)" style="color: blue;font-size: 14px;" id="correoCliente" class="form-control" placeholder="Ingrese correo del cliente" required />
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label for="telefono">Teléfono</label>
+                        <input type="text" asp-for="@Model.telefono" onkeypress="return solo10Numeros(event)" style="color: blue;font-size: 14px;" id="telefono" class="form-control" placeholder="Ingrese teléfono del cliente" />
+                    </div>
+
+                </div>
+                <div class="modal-footer" style="background: #DAE8FD">
+                    <button id="guardarInformacion" type="submit" class="btn btn-success btn-grad btn-sm">
+                        Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Editar -->
+<div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content " style="width:100%">
+            <div class="modal-header TMSHeaderModal" style="background: #DAE8FD">
+                <h5 class="modal-title" style="font-family: 'Young Serif', sans-serif; font-weight: bold;">Cliente</h5>
+                <div class="d-flex align-items-end flex-column">
+                    <button type="button" style="color: black" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+            </div>
+            <div class="col-md-4 float-left container-fluid h-custom" style="margin-top: 15%; margin-left: 5%; position:absolute">
+                <div class="row">
+                    <!-- Gallery -->
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 mb-4">
+                            <img src="~/imagenes/cliente.png"
+                                 style="width: 150px!important;"
+                                 class="w-100 shadow-1-strong rounded mb-4"
+                                 alt="Boat on Calm Water" />
+
+                            <img src="~/imagenes/dueño2.jpg"
+                                 style="width: 150px!important;"
+                                 class="w-100 shadow-1-strong rounded mb-4"
+                                 alt="Wintry Mountain Landscape" />
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+            <form asp-action="EditarInfo" class="formEditCl">
+
+                <div class="row col-md-8" style=" margin-left: 40%;margin-top:2%;margin-top: 2%;font-family: 'Young Serif', sans-serif; ">
+                    <div class="form-group col-md-12" hidden>
+                        <label for="nombreCliente">Nombres</label>
+                        <input type="text" asp-for="@Model.idCliente" style="color: blue;font-size: 14px;" id="idCliente2" class="form-control" placeholder="Ingrese nombres del cliente" />
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label for="nombreCliente">Nombres</label>
+                        <input type="text" asp-for="@Model.nombres" style="color: blue;font-size: 14px;" id="nombreCliente2" class="form-control" placeholder="Ingrese nombres del cliente" />
+                    </div>
+
+
+
+                    <div class="form-group col-md-12">
+                        <label for="cedCliente">Cédula</label>
+                        <input type="text" asp-for="@Model.identificacion" onkeypress="return solo10Numeros(event)" style="color: blue;font-size: 14px;" onkeypress="return solo10Numeros(event)" id="cedCliente2" class="form-control" placeholder="Ingrese cédula del cliente" required />
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label for="dirCliente">Dirección</label>
+                        <input type="text" asp-for="@Model.direccion" style="color: blue;font-size: 14px;" id="dirCliente2" class="form-control" placeholder="Ingrese dirección del cliente" />
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label for="correoCliente">Correo</label>
+                        <input type="text" asp-for="@Model.correo" style="color: blue;font-size: 14px;" id="correoCliente2" class="form-control" placeholder="Ingrese correo del cliente" required />
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label for="telefono">Teléfono</label>
+                        <input type="text" asp-for="@Model.telefono" onkeypress="return solo10Numeros(event)" style="color: blue;font-size: 14px;" id="telfCliente2" class="form-control" placeholder="Ingrese teléfono del cliente" />
+                    </div>
+
+                </div>
+                <div class="modal-footer" style="background: #DAE8FD">
+                    <button id="guardarInformacion2" type="submit" class="btn btn-success btn-grad btn-sm">
+                        Guardar
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Modal Eliminar -->
+<div class="modal fade" id="eliminarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content " style="width:100%">
+            <div class="modal-header TMSHeaderModal">
+                <h5 class="modal-title TMSTituloModal">ANIMAL PLACE</h5>
+                <div class="d-flex align-items-end flex-column">
+                    <button type="button" style="color: black" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+            </div>
+            <form asp-action="DeleteInformacionC"  >
+
+
+                <div class="modal-body ">
+                    <div hidden class="form-outline mb-4">
+                        <label class="form-label btn-color-info TMSlabelText">Id</label>
+                        <input type="text" asp-for="@Model.idCliente" id="idClienteEliminar" class="form-control form-control-lg  TMSTextBoxValores" />
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label btn-color-info TMSlabelText" style="margin-top:28px; font-size:13px">¿Está seguro de querer eliminar este Cliente?</label>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button id="eliminarInfoData" style="padding:10px; width:50px;" type="submit" class=" btn btn-success  btn-sm">Sí </button>
+                    <button id="eliminarInfoDatos" style="padding:10px; width:50px;" data-bs-dismiss="modal" aria-label="Cerrar" type="button" class=" btn btn-danger  btn-sm">No </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="row" style="font-size: 13px !important;">
+    <div class="col-md-12">
+        <div class="widget">
+            <header class="widget-header" style="padding-bottom: 5px !important;">
+                <div class="row">
+                    <h4 class="widget-title col-md-12" style="font-weight:400 !important;font-size: 30px; color:black; font-family: 'Young Serif', sans-serif; ">Clientes</h4>
+                </div>
+            </header>
+            <hr class="widget-separator" style="margin-top:2px !important">
+            <div class="widget-body">
+                <div class="btn-group" role="group" aria-label="Basic mixed styles example" style="margin-bottom:5px !important;">
+                    <button id="btnNuevo" type="button" class="btn btn-primary btn-sm bi bi-clipboard-plus" data-bs-toggle="modal" onclick="nuevo();" data-bs-target="#exampleModal">   Nuevo </button>
+
+                </div>
+                <div class="table-responsive" style=";font-family: 'Young Serif', sans-serif; ">
+                    <table class="table table-bordered table-sm  dataTable table-striped" id="tablaLlantas">
+
+                        <thead>
+                            <tr>
+                                <th>
+                                    Id
+                                </th>
+                                <th>
+                                    Nombres
+                                </th>
+                                <th>
+                                    Cedula
+                                </th>
+                                <th>
+                                    Dirección
+                                </th>
+
+                                <th>
+                                    Teléfono
+                                </th>
+                                <th>
+                                    Correo
+                                </th>
+
+                                <th>
+                                    Acciones
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.ListaClientes != null)
+                            {
+
+                                @foreach (var item in Model.ListaClientes)
+                                {
+
+                                    @Html.HiddenFor(model => item.idCliente)
+
+                                    <tr>
+
+                                        <td>
+                                            @Html.DisplayFor(model => item.idCliente)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => item.nombres)
+                                        </td>
+
+                                        <td>
+                                            @Html.DisplayFor(model => item.identificacion)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => item.direccion)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => item.telefono)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => item.correo)
+                                        </td>
+
+                                        <td>
+                                            <button title="Editar Cliente" class="btn p-v-sm btn-info btn-sm btn-editar" data-bs-toggle="modal" data-bs-target="#editarModal" onclick="editarCliente({idCliente:@item.idCliente ,nombres:'@item.nombres',direccion:'@item.direccion',telefono:'@item.telefono',correo:'@item.correo',identificacion:'@item.identificacion'});">
+                                                <i class="bi bi-pen"></i>
+                                            </button>
+
+                                            <button title="Eliminar Cliente" class="btn p-v-sm btn-danger btn-sm" id="btnEliminar" data-bs-toggle="modal" data-bs-target="#eliminarModal" onclick="eliminarCliente({idCliente:@item.idCliente});">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+
+                                        </td>
+                                    </tr>
+                                }
+
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>No hay Datos que Mostrar</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>
+                                    Id
+                                </th>
+                                <th>
+                                    Nombres
+                                </th>
+                                <th>
+                                    Cedula
+                                </th>
+                                <th>
+                                    Dirección
+                                </th>
+
+                                <th>
+                                    Teléfono
+                                </th>
+                                <th>
+                                    Correo
+                                </th>
+
+                                <th>
+                                    Acciones
+                                </th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@section Scripts {
+    <script src="~/Content/jquery-2.2.4.js"></script>
+    <script src="~/Content/bootstrap.js"></script>
+    <script src="~/Content/modernizr-2.8.3.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+    <script type="text/javascript">
+        var table;
+        $(document).ready(function () {
+            $('#tablaLlantas').DataTable({
+                "language": {
+                    "decimal": "",
+                    "emptyTable": "No hay datos disponibles en la tabla",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                    "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+                    "infoFiltered": "(filtrado de _MAX_ registros en total)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "Mostrar _MENU_ registros",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscar:",
+                    "zeroRecords": "No se encontraron registros coincidentes",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Último",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    },
+                    "aria": {
+                        "sortAscending": ": activar para ordenar la columna en orden ascendente",
+                        "sortDescending": ": activar para ordenar la columna en orden descendente"
+                    }
+                }
+            });
+        });
+
+        function redirigirAVistaDeCarga() {
+            // Redirige a la vista de carga con la animación de loader
+            window.location.href = '/Loader/Index'; // Ajusta la ruta según la estructura de tu aplicación
+        }
+
+        // Esta función se llama cuando se hace clic en el botón de guardar
+        function procesarFormulario() {
+            // Llama a la función para redirigir a la vista de carga
+            redirigirAVistaDeCarga();
+        }
+        function editarCliente(Cliente) {
+            console.log("esditarrr", Cliente);
+            $('#nombreCliente2').val(Cliente.nombres);
+            $('#idCliente2').val(Cliente.idCliente);
+            $('#cedCliente2').val(Cliente.identificacion);
+            $('#dirCliente2').val(Cliente.direccion);
+            $('#telfCliente2').val(Cliente.telefono);
+            $('#correoCliente2').val(Cliente.correo);
+        }
+        $(document).ready(function () {
+            $('#tablaCiudades').DataTable();
+        });
+
+        //function eliminarCiudad(guia) {
+        //    console.log(guia);
+
+        //    $("#idCiudadEliminar").val(guia.idCiudad);
+
+
+        //    //   $("#eliminarModal").modal({ backdrop: 'static', keyboard: false });
+
+
+        //}
+        function nuevo() {
+            $("#idProvincia").val(0);
+            $("#bgcolor-input").val("");
+        }
+        //function eliminar(Ciudad) {
+        //    console.log(Ciudad);
+        //    $('#idCiudad').val(Ciudad.idCiudad);
+
+
+        //}
+        function eliminarCliente(guia) {
+            console.log(guia);
+
+            $("#idClienteEliminar").val(guia.idCliente);
+
+
+            //   $("#eliminarModal").modal({ backdrop: 'static', keyboard: false });
+
+
+        }
+
+        function solo10Numeros(e) {
+            let tecla = (document.all) ? e.keyCode : e.which;
+
+            // Permitir la tecla de retroceso (backspace)
+            if (tecla == 8) return true;
+
+            let patron = /[0-9]/;
+            let te = String.fromCharCode(tecla);
+
+            // Verificar si es un número y la longitud es menor o igual a 10
+            if (patron.test(te) && e.target.value.length < 10) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        
+
+        function soloNumeros(e) {
+            let tecla = (document.all) ? e.keyCode : e.which;
+
+            // Permitir la tecla de retroceso (backspace)
+            if (tecla == 8) return true;
+
+            let patron = /[0-9]/;
+            let te = String.fromCharCode(tecla);
+
+            // Verificar si es un número y la longitud es menor o igual a 10
+            if (patron.test(te) && e.target.value.length < 10) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        $(document).ready(function () {
+            // Guarda los valores iniciales al cargar el modal
+            var initialValues = getFormValues();
+
+            // Marca si se han realizado cambios
+            var cambiosRealizados = false;
+
+            // Al cambiar cualquier campo, marca que se han realizado cambios
+            $('.formEditCl :input').on('input', function () {
+                cambiosRealizados = true;
+            });
+
+            // Al enviar el formulario, verifica si se han realizado cambios
+            $('.formEditCl').submit(function (event) {
+                if (!cambiosRealizados) {
+                    // No hay cambios, muestra SweetAlert y detén el envío del formulario
+                    Swal.fire({
+                        icon: "warning",
+                        title: "No se detectaron cambios",
+                        text: "Realice al menos una modificación antes de guardar.",
+                        confirmButtonColor: "green",
+                        confirmButtonText: "Ok",
+                        iconColor: "orange"
+                    });
+                    event.preventDefault();
+                } else {
+                    // Hay cambios, continúa con el envío del formulario
+                    // Puedes agregar aquí la lógica adicional necesaria
+                }
+            });
+
+            // Función para obtener los valores de los campos del formulario
+            function getFormValues() {
+                return {
+                    nombres: $('#nombreCliente2').val(),
+                    idCliente: $('#idCliente2').val(),
+                    identificacion: $('#cedCliente2').val(),
+                    direccion: $('#dirCliente2').val(),
+                    telefono: $('#telfCliente2').val(),
+                    correo: $('#correoCliente2').val()
+                };
+            }
+        });
+
+
+    </script>
+
+
+
+}

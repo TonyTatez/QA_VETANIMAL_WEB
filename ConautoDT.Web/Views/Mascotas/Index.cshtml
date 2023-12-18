@@ -1,0 +1,918 @@
+﻿<link rel="stylesheet" href="~/Content/bootstrap.css" />
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
+@model VET_ANIMAL.WEB.Models.MascotasViewModel
+@{
+    ViewData["Title"] = "Mascotas";
+}
+<!-- Modal Guardar-->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content " style="width:100%">
+            <div class="modal-header TMSHeaderModal" style="background: #DAE8FD">
+                <h5 class="modal-title" style="font-family: 'Young Serif', sans-serif; font-weight: bold;">Mascotas</h5>
+                <div class="d-flex align-items-end flex-column">
+                    <button type="button" style="color: black" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+            </div>
+
+            <form asp-action="GuardaryEditarInfo" style="font-family: 'Young Serif', sans-serif;">
+
+                <div class="col-md-4 float-left container-fluid h-custom" style="margin-top: 2%; margin-left: 55%; position:absolute">
+                    
+                            <div class="col-lg-6 col-md-6 mb-4">
+                                <img src="~/imagenes/dog.png"
+                                     style="width: 250px!important;"
+                                     class="w-100 shadow-1-strong rounded mb-4"
+                                     alt="Boat on Calm Water" />
+
+                                
+                            </div>
+
+                            
+                </div>
+                <div class="m-5">
+                    <!-- Primer input y botón -->
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Ingrese Cedula del Cliente" id="CI" onkeypress="return solo10Numeros(event)" required>
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="button" onclick="buscarCliente2()"><i class="bi bi-search"></i></button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <!-- Segundos y terceros inputs -->
+                        <label for="nombreCliente">Id Cliente</label>
+                        <input type="text" class="form-control mb-3" id="idCliente" readonly style="width:20%!important; color: red">
+                        <label for="getnombreCliente">Cliente</label>
+                        <input type="text" class="form-control" id="cedCliente" readonly style="color: red">
+                    </div>
+
+                </div>
+                <div class="m-5">
+                    <div class="form-row">
+
+                        <div class="form-group col-md-6">
+                            <label for="">Nombre</label>
+                            <input type="text" asp-for="@Model.nombreMascota" class="form-control" id="verificarname" placeholder="Ingrese Nombre Mascota" >
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="">Dueño</label>
+                            <input id="editdueño" type="text" class="form-control mb-3" readonly style="width:100%!important;font-size: 13px; color: red" >
+                        </div>
+
+                        <div class="form-group col-md-6" hidden>
+                            <label for="">Id Cliente</label>
+                            <input id="idcliente2" asp-for="@Model.IdCliente" type="text" class="form-control mb-3" readonly style="width:50%!important; color: red">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="">Peso</label>
+                            <input type="text" asp-for="@Model.peso" class="form-control" id="verificarpeso" placeholder="Ingrese Peso Mascota" onkeypress="return soloNumeros(event)">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="">Raza</label>
+                            <select asp-for="@Model.raza" class="form-control" id="verificarraza" >
+                                <option value="">Seleccione</option>
+                                <option value="Labrador">Labrador</option>
+                                <option value="Bulldog">Bulldog</option>
+                                <option value="Mestizo">Mestizo</option>
+                                <option value="Chihuahua">Chihuahua</option>
+                                <option value="French">French</option>
+                                <option value="Golden Retriever">Golden Retriever</option>
+                                <option value="Pitbull">Pitbull</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="">Sexo</label>
+                            <select asp-for="@Model.sexo" class="form-control" id="verificarsexo">
+                                <option value="">Seleccione</option>
+                                <option value="Macho">Macho</option>
+                                <option value="Hembra">Hembra</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="">Fecha de Nacimiento</label>
+                            <input class="form-control" asp-for="@Model.fechaNacimiento" name="fechaNacimiento" style="width: 89%;" max="2023-11-11" type="date" >
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+                <div class="modal-footer" style="background: #DAE8FD">
+                    <button id="guardarInformacion2" type="submit" class="btn btn-success btn-grad btn-sm">
+                        Guardar
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Modal Editar-->
+<div class="modal fade" id="exampleModalEdit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content " style="width:100%">
+            <div class="modal-header TMSHeaderModal" style="background: #DAE8FD">
+                <h5 class="modal-title" style="font-family: 'Young Serif', sans-serif; font-weight: bold;">Mascotas</h5>
+                <div class="d-flex align-items-end flex-column">
+                    <button type="button" style="color: black" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+            </div>
+
+            <form asp-action="EditarInfo" class="formEdit" style="font-family: 'Young Serif', sans-serif;">
+
+                <div class="col-md-4 float-left container-fluid h-custom" style="margin-top: 2%; margin-left: 55%; position:absolute">
+
+                    <div class="col-lg-6 col-md-6 mb-4">
+                        <img src="~/imagenes/dog.png"
+                             style="width: 250px!important;"
+                             class="w-100 shadow-1-strong rounded mb-4"
+                             alt="Boat on Calm Water" />
+
+
+                    </div>
+
+
+                </div>
+                <div class="m-5">
+                    <!-- Primer input y botón -->
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" style="color: blue;font-size: 16px;" placeholder="Ingrese Cedula del Cliente" id="cedulaedit" onkeypress="return solo10Numeros(event)">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary"  type="button" onclick="buscarCliente()"><i class="bi bi-search"></i></button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <!-- Segundos y terceros inputs -->
+                        <label for="nombreCliente">Id Cliente</label>
+                        <input type="text" class="form-control mb-3" id="editidCliente" readonly style="width:20%!important; color: red">
+                        <label for="getnombreCliente">Cliente</label>
+                        <input type="text" class="form-control" id="editcedCliente" readonly style="color: red">
+                    </div>
+
+                </div>
+                <div class="m-5">
+                    <div class="form-row">
+
+                        <div class="form-group col-md-12" hidden>
+                            <label for="masct">masc</label>
+                            <input type="text" asp-for="@Model.idMascota" style="color: blue;font-size: 16px;" id="idMascota2" class="form-control" placeholder="Ingrese nombres del cliente" />
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="">Nombre</label>
+                            <input type="text" asp-for="@Model.nombreMascota" style="color: blue;font-size: 16px;" class="form-control" id="editNombre" placeholder="Ingrese Nombre Mascota">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="">Dueño</label>
+                            <input id="editdueño2"  type="text" class="form-control mb-3" readonly style="width:100%!important; color: red">
+                        </div>
+
+                        <div class="form-group col-md-6" hidden >
+                            <label for="">Id Cliente</label>
+                            <input id="editIdCliente2" asp-for="@Model.IdCliente" type="text" class="form-control mb-3" readonly style="width:50%!important; color: red">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="">Peso</label>
+                            <input type="text" asp-for="@Model.peso" style="color: blue;font-size: 16px;" class="form-control" id="editPeso" placeholder="Ingrese Peso Mascota" onkeypress="return soloNumeros(event)" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="">Raza</label>
+                            <select asp-for="@Model.raza" class="form-control" id="editRaza" style="color: blue;font-size: 16px;" required>
+                                <option value="">Seleccione</option>
+                                <option value="Labrador">Labrador</option>
+                                <option value="Bulldog">Bulldog</option>
+                                <option value="Mestizo">Mestizo</option>
+                                <option value="Chihuahua">Chihuahua</option>
+                                <option value="French">French</option>
+                                <option value="Golden Retriever">Golden Retriever</option>
+                                <option value="Pitbull">Pitbull</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="">Sexo</label>
+                            <select asp-for="@Model.sexo" class="form-control" id="editSexo" style="color: blue;font-size: 16px;" required>
+                                <option value="">Seleccione</option>
+                                <option value="Macho">Macho</option>
+                                <option value="Hembra">Hembra</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="">Fecha de Nacimiento</label>
+                            <input style="color: blue;font-size: 16px;" class="form-control" id="editFecha2" asp-for=" @Model.fechaNacimiento" name="fechaNacimiento" style="width: 89%;" max="2024-12-31" type="date">
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+                <div class="modal-footer" style="background: #DAE8FD">
+                    <button id="guardarInformacion" type="submit" class="btn btn-success btn-grad btn-sm">
+                        Guardar
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal Ficha Consulta -->
+<div class="modal fade" id="ModalConsulta" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="width:100%">
+            <div class="modal-header TMSHeaderModal" style="background: #DAE8FD">
+                <h5 class="modal-title" style="font-family: 'Young Serif', sans-serif; font-weight: bold;">Ficha Consulta </h5>
+                <div class="d-flex align-items-end flex-column">
+                    <button type="button" style="color: black" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+            </div>
+
+            
+            
+            <form asp-action="GuardarFichaControl" class="controles" style="font-family: 'Young Serif', sans-serif;">
+
+                <div class="modal-body" style="font-family: 'Young Serif', sans-serif;">
+                    <div class="row col-md-12">
+                        <div class="form-group col-md-6">
+                            <label for="">Mascota</label>
+                            <input type="text" disabled style="color: blue;font-size: 16px;" class="form-control" id="fichaNombre" placeholder="Ingrese Nombre Mascota">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="">Dueño</label>
+                            <input id="fichadueño2" type="text" class="form-control mb-3" disabled style="width:100%!important;font-size:13px; color: red">
+                        </div>
+                    </div>
+
+                    <div class="row col-md-12">
+                        <div class="form-group col-md-6">
+                            <label for="">Peso</label>
+                            <input asp-for="@Model.peso" type="text" style="color: blue;font-size: 16px;" class="form-control" id="fichaPeso" placeholder="Ingrese Peso Mascota" onkeypress="return soloNumeros(event)" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row"hidden>
+
+                        <div class="form-group col-md-12">
+                            <label for="masct">Id Mascota</label>
+                            <input type="text" style="color: blue;font-size: 16px;" id="idMascotaficha" class="form-control" placeholder="Ingrese nombres del cliente" />
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="masct">idHC</label>
+                            <input type="text" asp-for="@Model.idHistoriaClinica" style="color: blue;font-size: 16px;" id="hcficha2" class="form-control" placeholder="Ingrese nombres del cliente" />
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="">Id Cliente</label>
+                            <input id="editIdClienteficha" type="text" class="form-control mb-3" readonly style="width:50%!important; color: red">
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label  for="Observacion">Motivo de la consulta</label>
+                        <input type="hidden"  />
+                        <div class="row m-5">
+                            <div class="form-check col-md-6">
+                                <input asp-for="@Model.motivo" class="form-check-input checkbox-option" type="checkbox" value="VACUNACION" id="checkvacuna">
+                                <label  class="form-check-label" for="checkvacuna">
+                                    Vacunación
+                                </label>
+                            </div>
+
+                            <div class="form-check col-md-6">
+                                <input asp-for="@Model.motivo" class="form-check-input checkbox-option" type="checkbox" value="DESPARASITACION" id="checkdespara">
+                                <label class="form-check-label" for="checkdespara">
+                                    Desparasitación
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <div class="row m-5">
+                            <div class="form-check col-md-6">
+                                <input asp-for="@Model.motivo" class="form-check-input checkbox-option" type="checkbox" value="BAÑO" id="checkboxBanio">
+                                <label class="form-check-label" for="checkboxBanio">
+                                    Baño y Peluquería
+                                </label>
+                            </div>
+
+                            
+
+                            <div class="form-check col-md-6">
+                                <input asp-for="@Model.motivo" class="form-check-input checkbox-option" type="checkbox" value="EMERGENCIA" id="checkboxEmergencia">
+                                <label class="form-check-label" for="checkboxEmergencia">
+                                    Emergencia
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group col-md-12">
+                        <div class="row m-5">
+                            <div class="form-check col-md-6">
+                                <input asp-for="@Model.motivo" class="form-check-input checkbox-option" type="checkbox" value="CONSULTA" id="checkboxconsulta">
+                                <label class="form-check-label" for="checkboxconsulta">
+                                    Otros
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group col-md-12" id="observacionContainer" style="display: none;">
+                        <label for="Observacion">Observación</label>
+                        <textarea asp-for="@Model.observacion" class="form-control" id="Observacion" name="Observacion" rows="4" style="width: 100%;"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer" style="background: #DAE8FD">
+                    <button id="guardarInformacion2" type="submit" class="btn btn-success btn-grad btn-sm">
+                        Guardar
+                    </button>
+                </div>
+            </form>
+
+            
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Modal Eliminar -->
+<div class="modal fade" id="eliminarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content " style="width:100%">
+            <div class="modal-header TMSHeaderModal">
+                <h5 class="modal-title TMSTituloModal">ANIMAL PLACE</h5>
+                <div class="d-flex align-items-end flex-column">
+                    <button type="button" style="color: black" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+            </div>
+            <form asp-action="DeleteInformacionM">
+                <div class="modal-body ">
+                    <div hidden class="form-outline mb-4">
+                        <label class="form-label btn-color-info TMSlabelText">Id</label>
+                        <input type="text" asp-for="@Model.idMascota" id="idMascotaEliminar" class="form-control form-control-lg  TMSTextBoxValores" />
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label btn-color-info TMSlabelText" style="margin-top:28px; font-size:13px">¿Está seguro de querer eliminar esta Mascota?</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="eliminarInfoData" style="padding:10px; width:50px;" type="submit" class=" btn btn-success  btn-sm">Sí </button>
+                    <button id="eliminarInfoDatos" style="padding:10px; width:50px;" data-bs-dismiss="modal" aria-label="Cerrar" type="button" class=" btn btn-danger  btn-sm">No </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="row" style="font-size: 13px !important;">
+    <div class="col-md-12">
+        <div class="widget">
+            <header class="widget-header" style="padding-bottom: 5px !important;">
+                <div class="row">
+                    <h4 class="widget-title col-md-12" style="font-weight:400 !important;font-size: 30px; color:black; font-family: 'Young Serif', sans-serif; ">Mascotas</h4>
+                </div>
+            </header>
+            <hr class="widget-separator" style="margin-top:2px !important">
+            <div class="widget-body">
+                <div class="btn-group" role="group" aria-label="Basic mixed styles example" style="margin-bottom:5px !important;">
+                    <button id="btnNuevo" type="button" class="btn btn-primary btn-sm bi bi-clipboard-plus" data-bs-toggle="modal" onclick="nuevo()" data-bs-target="#exampleModal">   Nuevo </button>
+                </div>
+                <div class="table-responsive" style="font-family: 'Young Serif', sans-serif; ">
+                    <table class="table table-bordered table-sm  dataTable table-striped" id="tablaMascotas">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Id
+                                </th>
+                                <th>
+                                    Nombre
+                                </th>
+
+                                <th>
+                                    Raza
+                                </th>
+                                <th>
+                                    Sexo
+                                </th>
+                                <th>
+                                    Peso
+                                </th>
+                                <th>
+                                    Dueño
+                                </th>
+                                <th>
+                                    Fecha de Nacimiento
+                                </th>
+                                <th>
+                                    Acciones
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.ListaMascota != null)
+                            {
+                                @foreach (var item in Model.ListaMascota)
+                                {
+                                    @Html.HiddenFor(model => item.idMascota)
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(model => item.idMascota)
+
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => item.nombreMascota)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => item.raza)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => item.sexo)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => item.peso)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => item.cliente)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => item.fechaNacimiento)
+                                        </td>
+                                        <td>
+                                            <button title="Editar Mascota" class="btn p-v-sm btn-info btn-sm btn-editar" data-bs-toggle="modal" data-bs-target="#exampleModalEdit" onclick="editarMascota({idMascota:@item.idMascota ,nombreMascotas:'@item.nombreMascota',peso:'@item.peso',raza:'@item.raza',idCliente:'@item.idCliente',fechaNacimiento:'@item.fechaNacimiento',sexo:'@item.sexo'});">
+                                                <i class="bi bi-pen"></i>
+                                            </button>
+
+                                            <button title="Ficha Control" class="btn p-v-sm btn-primary btn-sm btn-editar" data-bs-toggle="modal" data-bs-target="#ModalConsulta" onclick="FichaMascota({idMascota:@item.idMascota ,nombreMascotas:'@item.nombreMascota',nombres:'@item.cliente', idHistoriaClinica:'@item.idHistoriaClinica', peso:'@item.peso' ,idcliente:'@item.idCliente'});">
+                                                <i class="bi bi-file-earmark-richtext-fill"></i>
+                                            </button>
+
+                                            <button title="Eliminar Cliente" class="btn p-v-sm btn-danger btn-sm" id="btnEliminar" data-bs-toggle="modal" data-bs-target="#eliminarModal" onclick="eliminarMascota({idMascota:@item.idMascota});">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>
+                                    Id
+                                </th>
+                                <th>
+                                    Nombre
+                                </th>
+                                <th>
+                                    Raza
+                                </th>
+                                <th>
+                                    Sexo
+                                </th>
+                                <th>
+                                    Peso
+                                </th>
+                                <th>
+                                    Dueño
+                                </th>
+                                <th>
+                                    Fecha de Nacimiento
+                                </th>
+                                <th>
+                                    Acciones
+                                </th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="~/Content/jquery-2.2.4.js"></script>
+    <script src="~/Content/bootstrap.js"></script>
+    <script src="~/Content/modernizr-2.8.3.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    <script type="text/javascript">
+        var table;
+        $(document).ready(function () {
+            $('#tablaMascotas').DataTable({
+                "language": {
+                    "decimal": "",
+                    "emptyTable": "No hay datos disponibles en la tabla",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                    "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+                    "infoFiltered": "(filtrado de _MAX_ registros en total)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "Mostrar _MENU_ registros",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscar:",
+                    "zeroRecords": "No se encontraron registros coincidentes",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Último",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    },
+                    "aria": {
+                        "sortAscending": ": activar para ordenar la columna en orden ascendente",
+                        "sortDescending": ": activar para ordenar la columna en orden descendente"
+                    }
+                }
+            });
+        });
+
+        function eliminarMascota(guia) {
+            console.log(guia);
+            $("#idMascotaEliminar").val(guia.idMascota);
+        }
+
+        $(document).ready(function () {
+            $(".checkbox-option").change(function () {
+                if ($(this).prop("checked")) {
+                    // Deshabilitar los demás checkboxes
+                    $(".checkbox-option").not(this).prop("disabled", true);
+                } else {
+                    // Habilitar todos los checkboxes cuando se desmarca uno
+                    $(".checkbox-option").prop("disabled", false);
+                }
+
+                // Mostrar u ocultar el textarea según el estado de los checkboxes
+                if ($(".checkbox-option:checked").length > 0) {
+                    $("#observacionContainer").show();
+                } else {
+                    $("#observacionContainer").hide();
+                }
+            });
+        });
+
+        
+
+        
+
+        function buscarCliente2() {
+            console.log("Iniciando función buscarCliente2");
+
+            // Obtener el valor del input de cédula
+            var identificacion = $("#CI").val();
+
+            console.log("Cédula del cliente:", identificacion);
+
+            // Hacer la solicitud al endpoint de tu API para consultar el cliente
+            $.ajax({
+                url: '/Clientes/BuscarClientePorCI',
+                method: 'GET',
+                data: { CI: identificacion },
+                contentType: 'application/json',
+                success: function (data) {
+                    console.log("Datos del cliente:", data);
+
+                    // Verifica si se está ejecutando y muestra los datos en la consola
+                    console.log("Función success ejecutada. Datos:", data);
+
+                    // Asegúrate de que los identificadores coincidan con los elementos HTML reales
+                    $("#idCliente").val(data.idCliente);
+                    $("#idcliente2").val(data.idCliente);
+                    $("#editdueño").val(data.nombres);
+                    $("#cedCliente").val(data.cedula);  // Cambiado a data.cedula si es el nombre del cliente
+                    
+                },
+                error: function (error) {
+                    // Imprime el mensaje de error en la consola para facilitar la depuración
+                    console.error('Error en la solicitud AJAX:', error);
+                }
+            });
+
+            console.log("Finalizando función buscarCliente2");
+        }
+
+        function mostrarAlerta(mensaje, tipo) {
+            console.log('mostrarAlerta called with mensaje:', mensaje, 'tipo:', tipo);
+            Swal.fire({
+
+
+                icon: tipo,
+                title: mensaje,
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }
+        function buscarCliente() {
+
+            // Obtener el valor del input de cédula
+            var identificacion = $("#cedulaedit").val();
+
+            console.log("Cédula del cliente:", identificacion);
+
+            // Hacer la solicitud al endpoint de tu API para consultar el cliente
+            $.ajax({
+                url: '/Clientes/BuscarClientePorCI',
+                method: 'GET',
+                data: { CI: identificacion },
+                contentType: 'application/json',
+                success: function (data) {
+                    console.log("Datos del cliente:", data);
+
+                    // Verifica si se está ejecutando y muestra los datos en la consola
+                    console.log("Función success ejecutada. Datos:", data);
+
+                    // Asegúrate de que los identificadores coincidan con los elementos HTML reales
+                    $("#editidCliente").val(data.idCliente);
+                    $("#editdueño2").val(data.nombres);
+                    $("#editIdCliente2").val(data.idCliente);
+                    $("#editcedCliente").val(data.cedula);  // Cambiado a data.cedula si es el nombre del cliente
+
+                },
+                error: function (error) {
+                    // Imprime el mensaje de error en la consola para facilitar la depuración
+                    console.error('Error en la solicitud AJAX:', error);
+                }
+            });
+
+            console.log("Finalizando función buscarCliente2");
+        }
+
+        
+        function editarMascota(Mascota) {
+            console.log("esditarrr", Mascota);
+            $('#editNombre').val(Mascota.nombreMascotas);
+            $('#editIdCliente2').val(Mascota.idCliente);
+            $('#editdueño2').val(Mascota.idCliente);
+            $('#editPeso').val(Mascota.peso);
+            $('#editRaza').val(Mascota.raza);
+            $('#idMascota2').val(Mascota.idMascota);
+            $('#editSexo').val(Mascota.sexo);
+            $('#hcficha').val(Mascota.idHistoriaClinica);
+            // Parsear la cadena de fecha y crear una instancia de Date
+            const partesFecha = Mascota.fechaNacimiento.split(/[\/ :]/);
+            const fechaNacimiento = new Date(
+                partesFecha[2],
+                partesFecha[1] - 1,
+                partesFecha[0],
+                partesFecha[3],
+                partesFecha[4],
+                partesFecha[5]
+            );
+
+            // Verificar si la fecha es válida
+            if (!isNaN(fechaNacimiento.getTime())) {
+                // Formatear la fecha a 'YYYY-MM-DD' para asignarla al input
+                const fechaFormateada = fechaNacimiento.toISOString().split('T')[0];
+                $("#editFecha2").val(fechaFormateada);
+                console.log("Fecha de nacimiento en el modal:", fechaFormateada);
+            } else {
+                console.error('Fecha de nacimiento no válida');
+            }
+        }
+
+        function FichaMascota(Mascota) {
+            // Desmarcar los checkboxes
+            $("#checkvacuna").prop("checked", false);
+            $("#checkdespara").prop("checked", false);
+            $("#checkboxBanio").prop("checked", false);
+            $("#checkboxEmergencia").prop("checked", false);
+
+            // Ocultar el campo de observación
+            $("#observacionContainer").hide();
+
+            // Habilitar todos los checkboxes
+            $("#checkvacuna").prop("disabled", false);
+            $("#checkdespara").prop("disabled", false);
+            $("#checkboxBanio").prop("disabled", false);
+            $("#checkboxEmergencia").prop("disabled", false);
+
+            // Vaciar el campo de observación
+            $("#Observacion").val("");
+
+            console.log("editar", Mascota);
+            $('#fichaNombre').val(Mascota.nombreMascotas);
+            $('#fichadueño2').val(Mascota.nombres);
+            $('#fichaPeso').val(Mascota.peso);
+            $('#editIdClienteficha').val(Mascota.idcliente);
+            $('#idMascotaficha').val(Mascota.idMascota);
+            $('#hcficha2').val(Mascota.idHistoriaClinica);
+        }
+
+        function nuevo() {
+            $("#cedulaCliente").val("");
+        }
+
+        $(document).ready(function () {
+            $('.controles').submit(function (event) {
+                var emergenciaCheckbox = $("#checkboxEmergencia");
+                var observacionTextArea = $("#Observacion");
+
+                // Verificar si el campo de observación está vacío
+                if (observacionTextArea.val().trim() === "") {
+                    // Resaltar el borde del textarea en rojo
+                    observacionTextArea.css("border", "1px solid red");
+
+                    // Mostrar un mensaje indicando que el campo de observación está vacío
+                    Swal.fire({
+                        icon: "error",
+                        title: "Campos Vacíos",
+                        text: "Por favor, llene todos los campos.",
+                        confirmButtonColor: "green",
+                        confirmButtonText: "Ok",
+                        iconColor: "red"
+                    });
+
+                    // Detener el envío del formulario porque el campo está vacío
+                    event.preventDefault();
+                    return;
+                }
+
+                // Restaurar el estilo del borde del textarea
+                observacionTextArea.css("border", "");
+
+                if (emergenciaCheckbox.prop("checked")) {
+                    // Mostrar SweetAlert para obtener la respuesta del usuario
+                    Swal.fire({
+                        title: "¿Presenta sospecha de HEMOPARASITOSIS?",
+                        icon: "question",
+                        iconColor: "red",  // Color del icono
+                        confirmButtonText: "Sí",
+                        confirmButtonColor: "green",  // Color del botón "Sí"
+                        cancelButtonText: "No",
+                        cancelButtonColor: "red",  // Color del botón "No"
+                        textColor: "black",  // Color del texto
+                        showCancelButton: true,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Si el usuario elige "Sí", añadir "SOSPECHA HEMO" al textarea
+                            observacionTextArea.val(observacionTextArea.val() + " SOSPECHA HEMO");
+                        }
+
+                        // Continuar con el proceso de guardar y redirigir después de las validaciones
+                        guardarYRedirigir();
+                    });
+
+                    // Detener el envío del formulario para manejar la lógica de SweetAlert
+                    event.preventDefault();
+                } else {
+                    // Si el checkbox de emergencia no está marcado, continuar con el proceso de guardar
+                    guardarYRedirigir();
+                }
+            });
+        });
+
+        function guardarYRedirigir() {
+            // Coloca aquí el código para guardar y redirigir
+            $('.controles').unbind('submit').submit(); // Esto vuelve a enviar el formulario después de las validaciones
+        }
+
+
+        
+
+
+       
+        function solo10Numeros(e) {
+            let tecla = (document.all) ? e.keyCode : e.which;
+
+            // Permitir la tecla de retroceso (backspace)
+            if (tecla == 8) return true;
+
+            let patron = /[0-9]/;
+            let te = String.fromCharCode(tecla);
+
+            // Verificar si es un número y la longitud es menor o igual a 10
+            if (patron.test(te) && e.target.value.length < 10) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        function soloNumeros(e) {
+            let tecla = (document.all) ? e.keyCode : e.which; // 2
+            if (tecla == 8) return true; // 3
+            let patron = /[0-9.]/; // 4
+            let te = String.fromCharCode(tecla); // 5
+            return patron.test(te); // 6
+        }
+
+
+        // Muestra el mensaje de éxito si existe
+        var mensajeExito = '@TempData["MensajeExito"]';
+        if (mensajeExito) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Éxito',
+                text: mensajeExito,
+                showConfirmButton: false,  // No mostrará el botón de confirmación
+                timer: 2000,  // Desaparecerá después de 3000 milisegundos (3 segundos),
+                iconColor: '#0968DB',  // Color verde para el icono de éxito
+                border: '4px solid #196F3D',  // Borde verde para el cuadro de diálogo
+                background: '#FFF',  // Fondo blanco para el cuadro de diálogo
+                titleColor: '#000000',  // Color verde para el título
+                textColor: '#000000'  // Color del texto del contenido
+            });
+        }
+
+        // Muestra el mensaje de error si existe
+        var mensajeError = '@TempData["MensajeError"]';
+        if (mensajeError) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: mensajeError,
+                showConfirmButton: false,  // No mostrará el botón de confirmación
+                timer: 2000,  // Desaparecerá después de 3000 milisegundos (3 segundos),
+                iconColor: '#FF0000',  // Color rojo para el icono de error
+                border: '2px solid #FF0000',  // Borde rojo para el cuadro de diálogo
+                background: '#FFF',  // Fondo blanco para el cuadro de diálogo
+                titleColor: '#FF0000',  // Color rojo para el título
+                textColor: '#333'  // Color del texto del contenido
+            });
+        }
+        $(document).ready(function () {
+            // Guarda los valores iniciales al cargar el modal
+            var initialValues = getFormValues();
+
+            // Marca si se han realizado cambios
+            var cambiosRealizados = false;
+
+            // Al cambiar cualquier campo, marca que se han realizado cambios
+            $('.formEdit :input').on('input', function () {
+                cambiosRealizados = true;
+            });
+
+            // Al enviar el formulario, verifica si se han realizado cambios
+            $('.formEdit').submit(function (event) {
+                if (!cambiosRealizados) {
+                    // No hay cambios, muestra SweetAlert y detén el envío del formulario
+                    Swal.fire({
+                        icon: "warning",
+                        title: "No se detectaron cambios",
+                        text: "Realice al menos una modificación antes de guardar.",
+                        confirmButtonColor: "green",
+                        confirmButtonText: "Ok",
+                        iconColor: "orange"
+                    });
+                    event.preventDefault();
+                } else {
+                    // Hay cambios, continúa con el envío del formulario
+                    // Puedes agregar aquí la lógica adicional necesaria
+                }
+            });
+
+            // Función para obtener los valores de los campos del formulario
+            function getFormValues() {
+                return {
+                    nombre: $('#editNombre').val(),
+                    idCliente: $('#editIdCliente2').val(),
+                    dueño: $('#editdueño2').val(),
+                    peso: $('#editPeso').val(),
+                    raza: $('#editRaza').val(),
+                    idMascota: $('#idMascota2').val(),
+                    sexo: $('#editSexo').val(),
+                    fechaNacimiento: $('#editFecha2').val()
+                };
+            }
+        });
+
+        function cambioTermico() {
+
+            
+                
+        }
+        
+    </script>
+
+}

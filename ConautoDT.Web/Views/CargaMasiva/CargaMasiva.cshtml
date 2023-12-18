@@ -1,0 +1,260 @@
+﻿<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.css" />
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.css" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="stylesheet" href="~/Content/bootstrap.css" />
+
+
+
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
+
+
+
+
+@model VET_ANIMAL.WEB.Models.CargaMasivaViewModel
+@{
+    ViewData["Title"] = "CARGA MASIVA";
+}
+
+<div class="row" style="font-size: 13px !important;">
+    <div class="col-md-12">
+        <div class="widget" >
+            <header class="widget-header" >
+                <div class="row">
+                    <h4 class="widget-title col-md-12" style="font-weight: 400 !important; font-size: 30px; font-family: 'Young Serif', sans-serif;">CARGA MASIVA</h4>
+                </div>
+            </header>
+            <hr class="widget-separator" style="margin-top: 2px !important; border-color: #007bff;">
+            <div class="widget-body" style="padding: 20px;">
+                <div class="btn-group m-2" role="group" aria-label="Basic mixed styles example" style="margin-left: 85% !important;">
+                    <button title="Agregar Registros" class="btn p-v-sm btn-primary btn-sm btn-editar" data-bs-toggle="modal" data-bs-target="#masivo">
+                        <i class="bi bi-arrow-bar-up"></i> AGREGAR REGISTROS
+                    </button>
+
+                    <button title="Entrenar Algoritmo" class="btn p-v-sm btn-primary btn-sm btn-editar" data-bs-toggle="modal" data-bs-target="#masivoTrain">
+                        <i class="bi bi-arrow-bar-up"></i> AGREGAR REGISTROS
+                    </button>
+                </div>
+                <div id="dashboard">
+
+                    <div id="clientes" style="background-color: #ffffff; padding: 15px; border: 1px solid #ced4da; border-radius: 5px; margin-bottom: 20px;">
+                        <h2 style="color: black;">Clientes</h2>
+                        <p id="cantidadClientes" style="color: blue;">Cargando...</p>
+                    </div>
+
+                    <div id="mascotas" style="background-color: #ffffff; padding: 15px; border: 1px solid #ced4da; border-radius: 5px;">
+                        <h2 style="color: black;">Mascotas</h2>
+                        <p id="cantidadMascotas" style="color: blue">Cargando...</p>
+                        <div>
+                            <h3 style="color: black;">Razas de mascotas</h3>
+                            <canvas id="chartRazas" width="900" height="200"></canvas>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal cARAGA MASIVA-->
+<div class="modal fade" id="masivo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="max-width: 600px;">
+        <!-- Establecer un tamaño máximo -->
+        <div class="modal-content" style="width:100%">
+            <div class="modal-header TMSHeaderModal" style="background: #DAE8FD">
+                <h5 class="modal-title" style="font-family: 'Young Serif', sans-serif; font-weight: bold;">SINCRONIZACIÓN CARGA MASIVA</h5>
+                <div class="d-flex align-items-end flex-column">
+                    <button type="button" style="color: black" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+            </div>
+            <div class="col-md-4 float-left container-fluid h-custom" style="margin-top: 15%; margin-left: 5%; position:absolute">
+            </div>
+
+               
+            <form asp-action="GuardaryEditarInfo">
+
+                <div class="row col-md-8" style="margin-left: 40%;margin-top: 2%;font-family: 'Young Serif', sans-serif; ">
+
+
+                    <div class="form-group col-md-12">
+                        <label for="nombreCliente">XSLM</label>
+                        <input type="file" style="color: blue;font-size: 14px;" id="excelCM" accept=".xls, .xlsx" class="form-control" placeholder="Ingrese nombres del cliente" />
+                    </div>
+
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+
+
+
+                </div>
+                <div class="modal-footer" style="background: #DAE8FD">
+                    <button id="guardarInformacion" type="button" onclick="uploadFile()" class="btn btn-success btn-grad btn-sm">
+                        Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- Modal Entrenamiento MASIVA-->
+<div class="modal fade" id="masivoTrain" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="max-width: 600px;">
+        <!-- Establecer un tamaño máximo -->
+        <div class="modal-content" style="width:100%">
+            <div class="modal-header TMSHeaderModal" style="background: #DAE8FD">
+                <h5 class="modal-title" style="font-family: 'Young Serif', sans-serif; font-weight: bold;">SINCRONIZACIÓN CARGA MASIVA</h5>
+                <div class="d-flex align-items-end flex-column">
+                    <button type="button" style="color: black" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+            </div>
+            <div class="col-md-4 float-left container-fluid h-custom" style="margin-top: 15%; margin-left: 5%; position:absolute">
+            </div>
+
+
+            <form asp-action="TrainModel" method="post" enctype="multipart/form-data">
+                <div class="form-group col-md-12">
+                    <label for="archivoEntrenamiento">Archivo de Entrenamiento</label>
+                    <input type="file" style="color: blue; font-size: 14px;" id="archivoEntrenamiento" name="file" accept=".csv" class="form-control" />
+                </div>
+
+                <br />
+                <br />
+
+                <div class="modal-footer" style="background: #DAE8FD">
+                    <button id="entrenarModelo" type="submit" class="btn btn-success btn-grad btn-sm">
+                        Entrenar Modelo
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="~/Content/jquery-2.2.4.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+    <script src="~/Content/bootstrap.js"></script>
+    <script src="~/Content/modernizr-2.8.3.js"></script>
+    <script type="text/javascript">
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // Datos de ejemplo (reemplaza con tus datos reales)
+            var cantidadClientes = 100;
+            var cantidadMascotas = 200;
+            var razas = ["Labrador", "Poodle", "Bulldog"];
+
+            // Mostrar la cantidad de clientes y mascotas en el DOM
+            var cantidadClientesElement = document.getElementById("cantidadClientes");
+            if (cantidadClientesElement) {
+                cantidadClientesElement.textContent = `Cantidad de clientes: ${cantidadClientes}`;
+            }
+
+            var cantidadMascotasElement = document.getElementById("cantidadMascotas");
+            if (cantidadMascotasElement) {
+                cantidadMascotasElement.textContent = `Cantidad de mascotas: ${cantidadMascotas}`;
+            }
+
+            // Crear un gráfico de barras para las razas de mascotas
+            var ctxRazas = document.getElementById("chartRazas").getContext('2d');
+            var chartRazas = new Chart(ctxRazas, {
+                type: 'bar',
+                data: {
+                    labels: razas,
+                    datasets: [{
+                        label: 'Razas de mascotas',
+                        data: [10, 20, 15], // Reemplaza con tus datos reales
+                        backgroundColor: 'rgba(15, 161, 220)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            
+        });
+
+        function uploadFile() {
+            // Obtener el elemento de entrada de archivo
+            const fileInput = document.getElementById('excelCM');
+            // Obtener el archivo seleccionado
+            const file = fileInput.files[0];
+
+            // Verificar si se seleccionó un archivo
+            if (file) {
+                // Crear un objeto FormData y agregar el archivo
+                const formData = new FormData();
+                formData.append('Excel', file);
+
+                // Configurar la solicitud Fetch
+                fetch('Upload', {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        // Verificar si la respuesta indica éxito (ajusta esto según tu lógica)
+                        if (data.success) {
+                            // Mostrar SweetAlert de éxito
+                            Swal.fire({
+                                title: 'Registro Exitoso',
+                                text: 'El archivo se ha subido correctamente.',
+                                icon: 'success',
+                                confirmButtonText: 'Aceptar'
+                            });
+                        } else {
+                            // Mostrar SweetAlert de error si es necesario
+                            Swal.fire({
+                                title: 'Error',
+                                text: 'Hubo un problema al procesar el archivo.',
+                                icon: 'error',
+                                confirmButtonText: 'Aceptar'
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error al enviar el archivo:', error);
+                        // Mostrar SweetAlert de error en caso de fallo
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'Hubo un problema al enviar el archivo.',
+                            icon: 'error',
+                            confirmButtonText: 'Aceptar'
+                        });
+                    });
+            } else {
+                alert('Por favor, selecciona un archivo antes de subirlo.');
+            }
+        }
+        
+
+        
+        
+
+        
+       
+    </script>
+
+
+
+}
