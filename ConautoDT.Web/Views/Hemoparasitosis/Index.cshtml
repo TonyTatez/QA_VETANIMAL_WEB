@@ -1,13 +1,13 @@
 ﻿
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.css" />
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.css" />
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="~/Content/bootstrap.css" />
-    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.css" />
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.css" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="stylesheet" href="~/Content/bootstrap.css" />
 
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
 @model VET_ANIMAL.WEB.Models.MascotasViewModel
@@ -54,23 +54,23 @@
         </div>
         <div class="card text-center mt-5">
             <div class="card-header">
-               
-                    <div class="nav-item">
+
+                <div class="nav-item">
 
                     <h1 class="mb-3 text-center" style="color: black; font-weight: bold;font-size: 1.2em; font-family: 'Young Serif', sans-serif;">
-                            CASOS SOPECHA DE HEMOPARASITOSIS
-                        </h1>
-                    </div>
-                    <div class="btn-group" role="group" aria-label="Basic mixed styles example" style="margin-bottom:5px !important;">
+                        CASOS SOPECHA DE HEMOPARASITOSIS
+                    </h1>
+                </div>
+                <div class="btn-group" role="group" aria-label="Basic mixed styles example" style="margin-bottom:5px !important;">
                     <button id="btnNuevo" type="button" class="btn btn-primary btn-sm bi bi-clipboard-plus" data-bs-toggle="modal" data-bs-target="#exampleModal">   Nuevo </button>
-                    </div>
-                    @*<li class="nav-item">
-                        <button class="btn btn-success active m-1" type="button" style="background-color: #007bff; color: #ffffff;">Active</button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="btn btn-danger active m-1" type="button" style="background-color: #007bff; color: #ffffff;">Active</button>
-                    </li>*@
-               
+                </div>
+                @*<li class="nav-item">
+                <button class="btn btn-success active m-1" type="button" style="background-color: #007bff; color: #ffffff;">Active</button>
+                </li>
+                <li class="nav-item">
+                <button class="btn btn-danger active m-1" type="button" style="background-color: #007bff; color: #ffffff;">Active</button>
+                </li>*@
+
             </div>
             <div class="card-body">
 
@@ -78,7 +78,7 @@
                     <table class="table table-bordered table-sm  dataTable table-striped" id="tablaMascotas">
                         <thead>
                             <tr>
-                                
+
                                 <th>
                                     Historia Clinica
                                 </th>
@@ -94,7 +94,7 @@
                                 <th>
                                     Observacion
                                 </th>
-                                
+
                                 <th>
                                     Acciones
                                 </th>
@@ -120,14 +120,14 @@
                                         <td>
                                             @Html.DisplayFor(model => item.motivo)
                                         </td>
-                                        
+
                                         <td>
                                             @Html.DisplayFor(model => item.peso)
                                         </td>
                                         <td>
                                             @Html.DisplayFor(model => item.observacion)
                                         </td>
-                                        
+
                                         <td>
 
 
@@ -135,7 +135,7 @@
                                                 <i class="bi bi-file-earmark-richtext-fill"></i>
                                             </button>
 
-                                            
+
 
                                         </td>
                                     </tr>
@@ -150,7 +150,7 @@
                                     <td>-</td>
                                     <td>-</td>
                                     <td>-</td>
-                                    
+
                                 </tr>
                             }
 
@@ -162,10 +162,34 @@
 
             </div>
         </div>
-       
+
     </div>
-
-
+    <div class="modal fade loadingModal" id="loadingModal">
+        <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="loading">
+                        <h2>Espere...</h2>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="myLoader" id="cargasid" hidden>
+        <div class="container1">
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <span class="loading">Procesando Datos...</span>
+        </div>
+    </div>
     <!-- Modal Guardar-->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -178,15 +202,15 @@
                 </div>
 
                 <div class="accordion" id="accordionExample">
-                    <div class="accordion-item" >
-                        <h2 class="accordion-header" >
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
                             <button class="accordion-button" id="acor1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                 DATOS PACIENTE
                             </button>
                         </h2>
                         <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
                             <div class="accordion-body">
-                                <div class="form-row m-2" style="font-family: 'Young Serif', sans-serif; " >
+                                <div class="form-row m-2" style="font-family: 'Young Serif', sans-serif; ">
 
                                     <div class="form-group col-md-4">
                                         <label for="">Nombre</label>
@@ -198,7 +222,7 @@
                                     </div>
                                     <div class="form-group col-md-6" hidden>
                                         <label for="">idmasc</label>
-                                        <input id="idmasc2" type="text" class="form-control mb-3" style="width:100%!important; color: red"readonly>
+                                        <input id="idmasc2" type="text" class="form-control mb-3" style="width:100%!important; color: red" readonly>
                                     </div>
 
 
@@ -417,7 +441,7 @@
 
 
                 <div class="modal-body ">
-                    <div >
+                    <div>
                         <!-- Contenido del loader -->
                         <div class="container">
                             <div class="ring"></div>
@@ -435,19 +459,20 @@
         </div>
     </div>
 
-    
+
 
     <script>
+        $(document).ready(function () {
+            $("#miModal").on("shown.bs.modal", function () {
+                // Modificar el z-index al valor deseado
+                $(this).css("z-index", "1000"); // Ajusta el valor según tus necesidades
+            });
 
-        function mostrarLoader() {
-            $('#modalLoader').modal('show'); // Muestra el modal
-        }
+            
+        });
 
-        function ocultarLoader() {
-            $('#modalLoader').modal('hide'); // Oculta el modal
-        }
         function FichaMascota(Mascota) {
-           
+
 
             console.log("editar", Mascota);
             $('#editNombre2').val(Mascota.nombreMascotas);
@@ -471,65 +496,72 @@
         }
 
         function enviarDatos() {
-            mostrarLoader(); // Mostrar el loader antes de la solicitud AJAX
+
             // Obtener los valores de los checkboxes seleccionados
             var idMascota = $("#idmasc2").val();
             var nombremascota = $("#editNombre2").val();
-           
+
             var sintomasSeleccionados = $("input[name='sintomas']:checked").map(function () {
                 return $(this).val();
             }).get();
 
             // Imprimir en consola los síntomas seleccionados
             console.log("Síntomas seleccionados:", sintomasSeleccionados);
-            // Realizar la solicitud AJAX
-            $.ajax({
-                type: "POST",
-                url: "@Url.Action("PredecirEnfermedad", "Hemoparasitosis")", // Reemplaza con la ruta correcta del controlador
-                data: {
-                    idMascota: idMascota,
-                    nombremascota: nombremascota,
-                    sintomas: sintomasSeleccionados
-                },
-                success: function (response) {
-                    ocultarLoader();
-                    // Limpiar la tabla antes de agregar nuevos datos
-                    $('#tablaDiagnostico tbody').empty();
-
-                    // Verificar si hay una propiedad "enfermedad" en la respuesta
-                    if (response.enfermedad) {
 
 
-                        var estiloBoton = response.enfermedad === "Enfermedad Desconocida" ? "btn-danger" : "btn-success";
-                        var icono = response.enfermedad === "Enfermedad Desconocida" ? "bi-x" : "bi-check";
-                        // Crear una fila con la información de la respuesta
-                        var observacion = response.enfermedad === "Enfermedad Desconocida" ? "NEGATIVO" : "POSITIVO";
-                        // Crear una fila con la información de la respuesta
-                        var fila = '<tr>' +
-                            '<td>' + response.nombreMascota + '</td>' +  // Reemplaza esto con el nombre real de la mascota
-                            '<td>' + response.enfermedad + '</td>' +
-                            '<td>' + observacion + '</td>' +  // Puedes ajustar esto según tus necesidades
-                            '<td>' + 
+            document.getElementById("cargasid").hidden = false;
+
+            setTimeout(function () {
+                // Realizar la solicitud AJAX
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("PredecirEnfermedad", "Hemoparasitosis")", // Reemplaza con la ruta correcta del controlador
+                    data: {
+                        idMascota: idMascota,
+                        nombremascota: nombremascota,
+                        sintomas: sintomasSeleccionados
+                    },
+                    success: function (response) {
+                        document.getElementById("cargasid").hidden = true;
+                        
+                        // Limpiar la tabla antes de agregar nuevos datos
+                        $('#tablaDiagnostico tbody').empty();
+
+                        // Verificar si hay una propiedad "enfermedad" en la respuesta
+                        if (response.enfermedad) {
+
+
+                            var estiloBoton = response.enfermedad === "Enfermedad Desconocida" ? "btn-danger" : "btn-success";
+                            var icono = response.enfermedad === "Enfermedad Desconocida" ? "bi-x" : "bi-check";
+                            // Crear una fila con la información de la respuesta
+                            var observacion = response.enfermedad === "Enfermedad Desconocida" ? "NEGATIVO" : "POSITIVO";
+                            // Crear una fila con la información de la respuesta
+                            var fila = '<tr>' +
+                                '<td>' + response.nombreMascota + '</td>' +  // Reemplaza esto con el nombre real de la mascota
+                                '<td>' + response.enfermedad + '</td>' +
+                                '<td>' + observacion + '</td>' +  // Puedes ajustar esto según tus necesidades
+                                '<td>' +
                                 '<button type="button" class="btn ' + estiloBoton + ' btn-sm">' +
-                                    '<i class="bi ' + icono + '"></i>' +
+                                '<i class="bi ' + icono + '"></i>' +
                                 '</button>' +
-                            '</td>' +
-                            '</tr>';
+                                '</td>' +
+                                '</tr>';
 
-                        $('#tablaDiagnostico tbody').append(fila);
+                            $('#tablaDiagnostico tbody').append(fila);
+                        }
+
+                        // Manejar la respuesta del servidor si es necesario
+                        console.log(response);
+                    },
+                    error: function (error) {
+                        document.getElementById("cargasid").hidden = true;
+                        // Manejar errores
+                        console.error("Error en la solicitud AJAX: ", error);
                     }
-
-                    // Manejar la respuesta del servidor si es necesario
-                    console.log(response);
-                },
-                error: function (error) {
-                    ocultarLoader();
-                    // Manejar errores
-                    console.error("Error en la solicitud AJAX: ", error);
-                }
-            });
+                });
+            }, 5000); // 10 segundos en milisegundos
         }
-        
+
         function buscarCliente2() {
             console.log("Iniciando función buscarCliente2");
 
@@ -622,12 +654,12 @@
                         $.ajax({
                             url: '/Hemoparasitosis/SospechaHemo',
                             method: 'GET',
-                            data: {  },
+                            data: {},
                             contentType: 'application/json',
                             success: function (data) {
                                 console.log("aquiii historial", data)
 
-                                
+
 
                             },
                             error: function (error) {
