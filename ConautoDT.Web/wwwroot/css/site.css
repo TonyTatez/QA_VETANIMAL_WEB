@@ -717,8 +717,8 @@ footer .login {
     background: black;
     z-index: 2000;
     opacity: 0.9;
-    position: absolute;
-    max-height:auto;
+    position: fixed;
+    max-height: auto;
     top: 0;
 }
 
