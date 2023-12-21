@@ -417,11 +417,44 @@
 
                                     </table>
                                 </div>
+
+                                <div class="card" id="diagnistico" hidden >
+                                    <div class="card-header">
+                                        Diagnóstico
+                                    </div>
+                                    <div class="card-body">
+                                       <div id="mensajeEnfermedad" class="alert alert-info" role="alert" style="display: none;"></div>
+                                       <div id="anaplasmasDiv" hidden>
+                                            <p>
+                                                La anaplasmosis en perros es una enfermedad infecciosa causada por bacterias transmitidas por garrapatas,
+                                                como Anaplasma phagocytophilum y Anaplasma platys. Los síntomas caracteristicos incluyen Esplenomegalia y Anorexia.
+                                            </p>
+                                       </div>
+
+                                        <div id="eriDiv" hidden>
+                                            <p>
+                                                La ehrlichiosis en perros es una enfermedad causada por la bacteria Ehrlichia canis, transmitida principalmente por 
+                                                las garrapatas. Esta infección afecta a los glóbulos blancos y puede causar síntomas caracteristicos como Hemorragias en mucosas,
+                                                letargo, Epistaxis.
+                                            </p>
+                                        </div>
+
+                                        <div id="babesiosisDiv" hidden>
+                                            <p>
+                                                La babesiosis en perros es una enfermedad causada por protozoos del género Babesia, que infectan los glóbulos rojos. 
+                                                La transmisión suele ocurrir a través de garrapatas, transfusiones de sangre o de madre a cachorro durante el parto. 
+                                                Los síntomas caracteristicos incluyen fiebre, ictericia y problemas de orina.
+                                            </p>
+                                        </div>
+                                      
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    
                 </div>
-
+                
                 <div class="modal-footer" style="background: #DAE8FD">
                     <button id="guardarInformacion2" type="submit" class="btn btn-success btn-grad btn-sm">
                         Guardar
@@ -473,6 +506,13 @@
 
         function FichaMascota(Mascota) {
 
+            // Obtener todos los checkboxes
+            var checkboxes = document.querySelectorAll('input[name="sintomas"]');
+
+            // Desmarcar todos los checkboxes
+            checkboxes.forEach(function (checkbox) {
+                checkbox.checked = false;
+            });
 
             console.log("editar", Mascota);
             $('#editNombre2').val(Mascota.nombreMascotas);
@@ -522,14 +562,37 @@
                         sintomas: sintomasSeleccionados
                     },
                     success: function (response) {
+
+                        console.log("trakaaaaaaa",response.enfermedad)
                         document.getElementById("cargasid").hidden = true;
-                        
+                        document.getElementById("diagnistico").hidden = false;
+                        // Mostrar el div específico según la enfermedad
+                        console.log("Enfermedad recibida:", response.enfermedad);
+
+                        if (response.enfermedad === 'ANAPLASMOSIS') {
+                            console.log("Mostrar ANAPLASMOSIS");
+                            $('#anaplasmasDiv').removeAttr('hidden');
+                            $('#eriDiv').attr('hidden', true);
+                            $('#babesiosisDiv').attr('hidden', true);
+                        } else if (response.enfermedad === 'EHRLICHIOSIS') {
+                            console.log("Mostrar EHRLICHIOSIS");
+                            $('#eriDiv').removeAttr('hidden');
+                            $('#anaplasmasDiv').attr('hidden', true);
+                            $('#babesiosisDiv').attr('hidden', true);
+                        } else if (response.enfermedad === 'BABESIOSIS') {
+                            console.log("Mostrar BABESIOSIS");
+                            $('#babesiosisDiv').removeAttr('hidden');
+                            $('#eriDiv').attr('hidden', true);
+                            $('#anaplasmasDiv').attr('hidden', true);
+                        }
                         // Limpiar la tabla antes de agregar nuevos datos
                         $('#tablaDiagnostico tbody').empty();
 
                         // Verificar si hay una propiedad "enfermedad" en la respuesta
                         if (response.enfermedad) {
-
+                            
+                                // Ocultar todos los divs relacionados con enfermedades
+        
 
                             var estiloBoton = response.enfermedad === "Enfermedad Desconocida" ? "btn-danger" : "btn-success";
                             var icono = response.enfermedad === "Enfermedad Desconocida" ? "bi-x" : "bi-check";
@@ -552,6 +615,11 @@
                             if (response.enfermedad) {
                                 // ... (código existente)
 
+                                // Actualizar el mensaje con la información de la enfermedad
+                                var mensaje = 'El cachorro presenta síntomas de ' + response.enfermedad + ' positivo para HEMOPARASITOSIS';
+                                $('#mensajeEnfermedad').text(mensaje);
+                                $('#mensajeEnfermedad').show(); // Mostrar el mensaje
+
                                 // Agregar el código para abrir el card después de agregar datos a la tabla
                                 $('#acor3').removeClass('collapsed'); // Elimina la clase 'collapsed' para expandir el botón
                                 $('#collapseThree').addClass('show'); // Agrega la clase 'show' para mostrar el contenido del card
@@ -562,6 +630,8 @@
 
                                 $('#acor2').addClass('collapsed'); // Agrega la clase 'collapsed' para cerrar el card SINTOMAS
                                 $('#collapseTwo').removeClass('show'); // Elimina la clase 'show' para ocultar el contenido del card SINTOMAS
+                                
+
                             }
 
                         }
