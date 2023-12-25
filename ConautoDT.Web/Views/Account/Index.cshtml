@@ -1,62 +1,18 @@
 ﻿@model VET_ANIMAL.WEB.Models.Login
 <section class="vh-90 login login-tm">
     <div class="container-fluid h-custom">
-        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" style="font-family: 'Alfa Slab One', cursive; font-size: 28px; font-weight: bold;color: black;">
+        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" style="font-family: 'Alfa Slab One', cursive; font-size: 28px; font-weight: bold;color: white;">
             Clinica Veterinaria Animal Place
         </a>
         <div class="row d-flex justify-content-center align-items-center h-90">
             <div class="col-md-9 col-lg-6 col-xl-5">
                 
-                @*  <img src="~/imagenes/atcotrans2.jpg"
-                class="img-fluid" alt="Sample image">*@
-
-                @* <div class="d-flex justify-content-center ">
-                <img src="~/imagenes/atcotrans2.jpg" width="110%" class="rounded">
-                </div>*@
-
-                <div class="row">
-                    <!-- Gallery -->
-                    <div class="row">
-                        <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
-                            <img src="~/imagenes/bg-3.jpeg"
-                                 class="w-100 shadow-1-strong rounded mb-4"
-                                 alt="Boat on Calm Water" />
-
-                            <img src="~/imagenes/atcotrans5.jpg"
-                                 class="w-100 shadow-1-strong rounded mb-4"
-                                 alt="Wintry Mountain Landscape" />
-                        </div>
-
-                        <div class="col-lg-4 mb-4 mb-lg-0">
-                            <img src="~/imagenes/dueño1.jpg"
-                                 class="w-100 shadow-1-strong rounded mb-4"
-                                 alt="Boat on Calm Water" />
-                            <img src="~/imagenes/bg-2.jpeg"
-                                 class="w-100 shadow-1-strong rounded mb-4"
-                                 alt="Boat on Calm Water" />
-
-                        </div>
-
-                        <div class="col-lg-4 mb-4 mb-lg-0">
-                            <img src="~/imagenes/bg-1.jpeg"
-                                 class="w-100 shadow-1-strong rounded mb-4"
-                                 alt="Waves at Sea" />
-
-                            <img src="~/imagenes/logoVet.jpg"
-                                 class="w-100 shadow-1-strong rounded mb-4"
-                                 alt="Yosemite National Park" />
-                        </div>
-                    </div>
-                    <!-- Gallery -->
-                </div>
+               
+                
             </div>
-            <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+            <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1" >
 
-               @* <div class="d-flex flex-row align-items-center ">
-                    <p class="lead fw-normal mb-0 me-3 h2" style="color: #127C8C;">Ingreso al Sistema</p>
-                    <p> </p>
-                </div>*@
-
+              
                 <!-- Email input -->
                 <div id="formContent">
                     <!-- Tabs Titles -->
@@ -70,9 +26,7 @@
 
                     <!-- Login Form -->
                     <form asp-action="Index">
-                        @*<input type="text" id="login" asp-for="@Model.User" class="fadeIn second" name="login" placeholder="Login">
-                        <input type="text" id="password" asp-for="@Model.Password"  class="fadeIn third" name="login" placeholder="Password">
-                        <input type="submit" style="background: #ffc1d5; color: black; font-weight: bold; " class="fadeIn fourth" value="Log In" asp-action="Index">*@
+                      
                         <div class="form-outline mb-4">
                             <input type="email" id="login" asp-for="@Model.User" class="form-control form-control-lg fadeIn second"
                                    placeholder="Ingrese un usuario/correo válido" />
@@ -96,7 +50,7 @@
 
                     <!-- Remind Passowrd -->
                     <div id="formFooter">
-                        <a class="underlineHover" href="#">Olvidó su Contraseña?</a>
+                        <a class="underlineHover" >Olvidó su Contraseña?</a>
                     </div>
 
                 </div>

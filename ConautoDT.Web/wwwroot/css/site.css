@@ -5,21 +5,40 @@
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+.login-tm {
+    background: url('/imagenes/fondo.jpg') no-repeat center center fixed; /* Ruta relativa a la carpeta wwwroot */
+    background-size: cover;
+    color: white; /* Puedes cambiar el color del texto según tus preferencias */
+    height: 100vh; /* Ajusta la altura al 100% de la ventana */
+    margin: 0; /* Elimina el margen predeterminado para que la imagen ocupe toda la pantalla */
+    display: flex;
+    /*flex-direction: column;
+    justify-content: center;*/
+}
+
+/* Ajustes adicionales para centrar el contenido si es necesario */
+#formContent {
+    text-align: center;
+}
+
 #acor1 {
     width: 400%;
     color: black; /* Color del texto en los botones */
     background: #0dcaf0;
 }
+
 #acor2 {
     width: 290%;
     color: black; /* Color del texto en los botones */
     background: #28a745;
 }
+
 #acor3 {
     width: 503%;
     color: black; /* Color del texto en los botones */
     background: #007bff;
 }
+
 #collapseOne .accordion-button {
     background-color: #007bff; /* Color del primer botón */
 }
@@ -50,57 +69,11 @@
     vertical-align: top; /* Alinea los elementos en la parte superior */
 }
 
-html {
-    font-size: 14px;
-}
-
-@media (min-width: 768px) {
-    html {
-        font-size: 16px;
-    }
-}
-
-html {
-    position: relative;
-    min-height: 100%;
-}
-
-body {
-    margin-bottom: 60px;
-}
 
 .estiloTextBox {
     font-size: 14px;
     text-align: center;
     margin-left: 35%;
-}
-
-.modales {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-.modal-contents {
-    background-color: white;
-    width: 100%;
-    max-width: 1400px;
-    margin: 5% auto;
-    padding: 20px;
-    position: relative;
-}
-
-.closes {
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    font-size: 24px;
-    font-weight: bold;
-    cursor: pointer;
 }
 
 .miDiv {
@@ -659,6 +632,7 @@ footer .login {
         background-color: #021D5D; /* Color de fondo para el pie de la tabla */
         color: white; /* Color del texto en el pie de la tabla */
     }
+
 #tablaLlantas {
     border-collapse: collapse;
     width: 100%;
@@ -698,10 +672,12 @@ footer .login {
         background-color: #021D5D; /* Color de fondo para el pie de la tabla */
         color: white; /* Color del texto en el pie de la tabla */
     }
+
 .loadingModal .modal-content {
     background: transparent;
     border: none !important;
 }
+
 * {
     margin: 0;
     padding: 0;
@@ -793,4 +769,370 @@ footer .login {
     100% {
         transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg);
     }
+}
+
+body {
+}
+
+.TMSTitulo {
+    color: #211900;
+    font-size: large;
+    font-weight: normal;
+    font-family: Century;
+    text-transform: capitalize;
+}
+
+.TMSBotonCerrarModal {
+    height: 40px;
+    color: black;
+    font-size: 40px;
+    box-shadow: 0 0 5px #eee;
+}
+
+.TMSTituloModal {
+    background-color: #F7F6F8;
+    color: black;
+}
+
+.TMSHeaderModal {
+    height: 80px;
+    background-color: #F7F6F8;
+    border-radius: .5px;
+}
+
+.TMSlabelComboValores {
+    color: blue;
+    font-size: x-small;
+    font-weight: bold;
+    font-family: Verdana;
+    text-transform: capitalize;
+}
+
+.TMSComboValores {
+    color: blue;
+    font-size: x-small;
+    font-weight: normal;
+    font-family: Verdana;
+    text-transform: capitalize;
+    height: 35px;
+}
+
+.TMSTextBoxValores {
+    color: #127C8C;
+    font-size: x-small;
+    font-weight: normal;
+    font-family: Verdana;
+    text-transform: capitalize;
+    height: 7px;
+}
+
+.TMSlabelText {
+    color: #127C8C;
+    font-size: x-small;
+    font-weight: bold;
+    font-family: Verdana;
+    text-transform: capitalize;
+}
+
+.TMSContenedorText {
+    vertical-align: bottom;
+    height: 30px;
+}
+
+.TMSTituloTabla {
+    color: #127C8C;
+    font-size: small;
+    vertical-align: central;
+    text-align: center;
+}
+
+.TMSBodyTabla {
+    color: #127C8C;
+    font-size: small;
+    vertical-align: central;
+    text-align: center;
+}
+
+.TMSModal {
+    width: 100%;
+    height: 100%;
+    border-radius: 25px;
+}
+
+.TMSButtom {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+    background-color: #127C8C;
+    color: white;
+}
+
+TMSDivImage {
+    /*background-image: url("~/imagenes/ruedast2.png");*/
+    /*   position: absolute;*/
+    /* height: 60%;
+    width: 80%;*/
+    /*  background-image: url("~/imagenes/ruedast2.png");*/
+    /* background-image: src("~/imagenes/ruedast2.png");*/
+
+    background-color: aquamarine;
+    position: center;
+}
+
+TMSDivButtomSelected {
+    left: 180px;
+    top: 90px;
+    position: absolute;
+}
+
+.btn-grad {
+    padding: 5px 6px;
+    text-align: center;
+    text-transform: uppercase;
+    text-emphasis-color: white;
+    box-shadow: 0 0 10px #eee;
+    border-radius: 15px;
+    display: block;
+    color: white
+}
+/* Estilo para el menú desplegable */
+.offcanvas {
+    /* Agrega estilos personalizados según tus preferencias */
+    background-color: #f8f9fa;
+    color: #212529;
+    /* Agrega más estilos según sea necesario */
+}
+
+/* Aplicar la fuente Quicksand a tu menú desplegable y elementos del menú */
+body, .offcanvas, .offcanvas-body ul.dropdown-menu li a {
+    font-family: 'Quicksand', sans-serif;
+}
+/* Agregar efectos de transición al menú desplegable */
+/* Estilo para el menú desplegable */
+.offcanvas {
+    background-color: #f8f9fa; /* Color de fondo del menú */
+    color: #212529; /* Color del texto del menú */
+    transition: transform 0.3s ease-in-out; /* Transición suave en la propiedad transform */
+}
+
+/* Estilo para los elementos del menú */
+.offcanvas-body ul.dropdown-menu li a {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 14px;
+    transition: color 0.3s ease-in-out; /* Transición suave en el color del texto */
+}
+
+    /* Cambio de color al pasar el ratón sobre los elementos del menú */
+    .offcanvas-body ul.dropdown-menu li a:hover {
+        color: #007bff; /* Cambia a un color diferente al pasar el ratón */
+    }
+
+
+:root {
+    --primary-font-color1: #ffffff;
+    --primary-font-color2: #007bff;
+}
+
+.navbar-light {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    background-color: #ffffff;
+}
+
+.navbar-brand {
+    font-family: 'Alfa Slab One' !important;
+    font-size: 24px; /* Tamaño de fuente según tus preferencias */
+    color: #ffffff; /* Color del texto */
+    /* Puedes agregar más estilos según tus preferencias */
+}
+
+.navbar-light .container a, .navbar-light .container .collapse .navbar-nav .nav-item .nav-link {
+    color: var(--primary-font-color1);
+}
+
+.background-main {
+    height: 100vh;
+    background: linear-gradient(rgba(20,20,20, .5),rgba(20,20,20, .5)),url(../imagenes/bg-1.jpeg);
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 89%, 51% 100%, 0 89%);
+    clip-path: polygon(0 0, 100% 0, 100% 89%, 51% 100%, 0 89%);
+}
+
+.background-main, .services-class {
+    max-width: 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    color: var(--primary-font-color1);
+}
+
+    .background-main h1 {
+        font-size: 5.5rem;
+    }
+
+    .background-main .main {
+        display: table;
+        width: 100%;
+        height: 82vh;
+        text-align: center;
+        /*
+    display: flex;
+    width: 50%;
+    height: 200px;
+    margin: auto;
+    */
+    }
+
+        .background-main .main .main-title, .background-main .main p {
+            display: table-cell;
+            vertical-align: middle;
+            /*margin: auto;  Important
+    text-align: center;  */
+        }
+
+.main-link {
+    font-size: 44px;
+    color: var(--primary-font-color1);
+}
+
+    .main-link:hover {
+        color: var(--primary-font-color2);
+    }
+
+.about-us, .services-class {
+    margin-top: 3em;
+    margin-bottom: 3em;
+}
+
+.line-shape {
+    width: 10%;
+    height: 2px;
+    margin-left: calc(49% - 40px);
+    background-color: var(--primary-font-color2);
+    margin-top: 17px;
+    margin-bottom: 25px;
+}
+
+.services-class {
+    max-width: 100%;
+    height: 78vh;
+    background: linear-gradient(rgba(20,20,20, .5),rgba(20,20,20, .5)),url(../imagenes/bg-2.jpeg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    -webkit-clip-path: polygon(0 7%, 100% 0, 100% 96%, 0 100%);
+    clip-path: polygon(0 7%, 100% 0, 100% 96%, 0 100%);
+}
+
+    .services-class .section-heading, .portfolio-title, .contact-us .section-heading {
+        font-size: 34px;
+        margin-top: 2.5em;
+    }
+
+    .services-class .container .service-box .text-muted {
+        color: rgba(255,255,255,.7) !important
+    }
+
+.contact-us {
+    max-width: 100%;
+    height: 100vh;
+    background: linear-gradient(rgba(20,20,20, .5),rgba(20,20,20, .5)),url(../imagenes/bg-3.jpeg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    color: var(--primary-font-color1);
+    -webkit-clip-path: polygon(0 0, 100% 7%, 100% 100%, 0 94%);
+    clip-path: polygon(0 0, 100% 7%, 100% 100%, 0 94%);
+}
+
+footer.footer .social-link {
+    display: block;
+    height: 4rem;
+    width: 4rem;
+    line-height: 4.3rem;
+    font-size: 2.5rem;
+    background-color: var(--primary-font-color2);
+    -webkit-transition: background-color .15s ease-in-out;
+    transition: background-color .15s ease-in-out;
+    -webkit-box-shadow: 0 3px 3px 0 rgba(0,0,0,.1);
+    box-shadow: 0 3px 3px 0 rgba(0,0,0,.1);
+}
+
+    footer.footer .social-link:hover {
+        background-color: rgba(20,20,20, .5);
+    }
+
+#sidebar {
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    top: 7.4%;
+    left: -250px;
+    background-color: #333;
+    padding-top: 20px;
+    color: white;
+    transition: left 0.6s; /* Agregar transición para una animación suave */
+}
+
+    #sidebar.active {
+        left: 0;
+    }
+
+/* Estilo del botón para abrir el sidebar */
+#sidebarCollapse {
+    position: fixed;
+    left: 20px;
+    top: 20px;
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+    #sidebarCollapse i {
+        font-size: 20px;
+    }
+/* Estilos para los temas principales (ahora son enlaces) */
+.list-unstyled.components li .main-topic {
+    font-size: 20px; /* Tamaño de la letra más grande para los temas principales */
+    margin-bottom: 10px;
+    display: block; /* Hacer que los enlaces ocupen todo el espacio del li */
+
+    color: white; /* Color del texto */
+    padding: 10px 10px; /* Agregar espacio alrededor del texto para el estilo de recuadro */
+    border: 1px solid white; /* Agregar un borde alrededor del tema principal */
+    border-radius: 10px; /* Redondear las esquinas del recuadro */
+    width: 90%;
+    position: relative;
+    margin-left: 15px;
+}
+
+.list-unstyled.sub-components li a {
+    font-size: 16px; /* Tamaño de la letra un poco más pequeña para los subtemas */
+    margin-bottom: 5px;
+    margin-left: 25px;
+}
+
+/* Estilo al pasar el mouse sobre los enlaces (mantenemos el estilo original) */
+.list-unstyled.sub-components a:hover {
+    color: #ff6600; /* Cambiar color al pasar el mouse */
+}
+
+/* Mostrar los temas principales como recuadros */
+.list-unstyled.components li {
+    margin-bottom: 10px;
+}
+
+.w-100 {
+    max-width: 150px;
+    height: auto;
+}
+
+#btnCerrar {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 9999; /* Asegura que el botón esté por encima de otros elementos */
 }

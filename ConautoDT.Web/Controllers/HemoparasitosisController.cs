@@ -127,7 +127,7 @@ namespace VET_ANIMAL.WEB.Controllers
                 bool tieneProblemaRespiratporios = sintomas.Contains("PROBLEMAS RESPIRATORIOS");
                 bool tieneSintomasExcluidos2 = sintomas.Any(s => s == "ESPLENOMEGALIA" || s == "ANOREXIA" || s == "ICTERICIA" || s == "HEMOGLOBINURIA" );
                 
-                if (tieneEpistaxis && tieneHemorragiasMucosas && !tieneSintomasExcluidos2)
+                if (tieneEpistaxis && tieneHemorragiasMucosas && tieneProblemaRespiratporios && !tieneSintomasExcluidos2)
                 {
                     // Si cumple con las condiciones, la predicción es BABESIOSIS
                     return Json(new { idMascota, nombreMascota, enfermedad = "EHRLICHIOSIS" });
