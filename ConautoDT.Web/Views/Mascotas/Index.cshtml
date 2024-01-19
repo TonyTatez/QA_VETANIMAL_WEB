@@ -18,19 +18,7 @@
 
             <form asp-action="GuardaryEditarInfo" style="font-family: 'Young Serif', sans-serif;">
 
-                <div class="col-md-4 float-left container-fluid h-custom" style="margin-top: 2%; margin-left: 55%; position:absolute">
-                    
-                            <div class="col-lg-6 col-md-6 mb-4">
-                                <img src="~/imagenes/dog.png"
-                                     style="width: 250px!important;"
-                                     class="w-100 shadow-1-strong rounded mb-4"
-                                     alt="Boat on Calm Water" />
-
-                                
-                            </div>
-
-                            
-                </div>
+                
                 <div class="m-5">
                     <!-- Primer input y botón -->
                     <div class="input-group mb-3">
@@ -96,7 +84,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label for="">Fecha de Nacimiento</label>
-                            <input class="form-control" asp-for="@Model.fechaNacimiento" name="fechaNacimiento" style="width: 89%;" max="2023-11-11" type="date" >
+                            <input class="form-control" asp-for="@Model.fechaNacimiento" name="fechaNacimiento" style="width: 89%;" max="2029-11-11" type="date" >
                         </div>
                     </div>
 
@@ -130,19 +118,7 @@
 
             <form asp-action="EditarInfo" class="formEdit" style="font-family: 'Young Serif', sans-serif;">
 
-                <div class="col-md-4 float-left container-fluid h-custom" style="margin-top: 2%; margin-left: 55%; position:absolute">
-
-                    <div class="col-lg-6 col-md-6 mb-4">
-                        <img src="~/imagenes/dog.png"
-                             style="width: 250px!important;"
-                             class="w-100 shadow-1-strong rounded mb-4"
-                             alt="Boat on Calm Water" />
-
-
-                    </div>
-
-
-                </div>
+                
                 <div class="m-5">
                     <!-- Primer input y botón -->
                     <div class="input-group mb-3">
@@ -213,7 +189,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label for="">Fecha de Nacimiento</label>
-                            <input style="color: blue;font-size: 16px;" class="form-control" id="editFecha2" asp-for=" @Model.fechaNacimiento" name="fechaNacimiento" style="width: 89%;" max="2024-12-31" type="date">
+                            <input style="color: blue;font-size: 16px;" class="form-control" id="editFecha2" asp-for=" @Model.fechaNacimiento" name="fechaNacimiento" style="width: 89%;" max="2029-12-31" type="date">
                         </div>
                     </div>
 

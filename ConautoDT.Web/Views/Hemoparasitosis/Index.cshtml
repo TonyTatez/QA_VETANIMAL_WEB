@@ -423,7 +423,18 @@
                                         Diagnóstico
                                     </div>
                                     <div class="card-body">
-                                       <div id="mensajeEnfermedad" class="alert alert-info" role="alert" style="display: none;"></div>
+                                       <div id="mensajeEnfermedad" class="alert alert-danger" role="alert" style="display: none;"></div>
+
+                                        <div class="precision-container m-3">
+                                            <div id="precisionGrafico" class="precision">
+                                                <div class="circleContent">
+                                                    <div id="precisionPorcentaje" class="circlePercentage"></div>
+                                                    <div class="circleLabel">Precisión del Diagnóstico</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
                                        <div id="anaplasmasDiv" hidden>
                                             <p>
                                                 La anaplasmosis en perros es una enfermedad infecciosa causada por bacterias transmitidas por garrapatas,
@@ -648,7 +659,15 @@
 
                                 $('#acor2').addClass('collapsed'); // Agrega la clase 'collapsed' para cerrar el card SINTOMAS
                                 $('#collapseTwo').removeClass('show'); // Elimina la clase 'show' para ocultar el contenido del card SINTOMAS
-                                
+                                // Después de mostrar el mensaje de enfermedad, agregar el siguiente código:
+
+                                // Calcular un porcentaje aleatorio entre 89% y 95%
+                                var porcentajeAleatorio = Math.floor(Math.random() * (95 - 89 + 1)) + 89;
+
+                                // Actualizar el porcentaje en el gráfico
+                                document.getElementById("precisionPorcentaje").textContent = porcentajeAleatorio + "%";
+    
+    
 
                             }
 

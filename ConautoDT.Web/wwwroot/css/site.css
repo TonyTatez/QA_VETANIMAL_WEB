@@ -6,7 +6,7 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 .login-tm {
-    background: url('/imagenes/fondo.jpg') no-repeat center center fixed; /* Ruta relativa a la carpeta wwwroot */
+    background: url('/imagenes/fondo2.jpg') no-repeat center center fixed; /* Ruta relativa a la carpeta wwwroot */
     background-size: cover;
     color: white; /* Puedes cambiar el color del texto según tus preferencias */
     height: 100vh; /* Ajusta la altura al 100% de la ventana */
@@ -76,144 +76,7 @@
     margin-left: 35%;
 }
 
-.miDiv {
-    position: absolute;
-    z-index: 1050; /* Un valor mayor que el z-index del modal */
-    background-color: rgba(255, 255, 255, 0.9); /* Fondo semi-transparente */
 
-    top: 50%; /* Ajusta la posición verticalmente */
-    left: 50%; /* Ajusta la posición horizontalmente */
-    transform: translate(-50%, -80%);
-    border: 1px solid #ccc;
-}
-
-.miDivEspecial2 {
-    position: absolute;
-    z-index: 1550; /* Un valor mayor que el z-index del modal */
-    background-color: rgba(255, 255, 255, 0.9); /* Fondo semi-transparente */
-
-    top: 50%; /* Ajusta la posición verticalmente */
-    left: 70%; /* Ajusta la posición horizontalmente */
-    transform: translate(-50%, -80%);
-    border: 1px solid #ccc;
-}
-
-.miDivEspecial20 {
-    position: absolute;
-    z-index: 9050; /* Un valor mayor que el z-index del modal */
-    background-color: rgb(255, 0, 0); /* Fondo semi-transparente */
-
-    top: 40%; /* Ajusta la posición verticalmente */
-    left: 80%; /* Ajusta la posición horizontalmente */
-    transform: translate(-50%, -80%);
-    border: 1px solid #ccc;
-}
-
-.miDiv100 {
-    position: absolute;
-    z-index: 1550; /* Un valor mayor que el z-index del modal */
-    background-color: rgba(255, 255, 255, 0.9); /* Fondo semi-transparente */
-
-    top: 65%; /* Ajusta la posición verticalmente */
-    left: 55%; /* Ajusta la posición horizontalmente */
-    transform: translate(-50%, -80%);
-    border: 1px solid #ccc;
-    width: 1000px; /* Ancho del div */
-    height: 662px; /* Alto del div */
-}
-
-.miDiv2 {
-    position: absolute;
-    z-index: 1050; /* Un valor mayor que el z-index del modal */
-    background-color: rgba(255, 255, 255, 0.9); /* Fondo semi-transparente */
-
-    top: 50%; /* Ajusta la posición verticalmente */
-    left: 50%; /* Ajusta la posición horizontalmente */
-    transform: translate(-50%, -80%);
-    border: 1px solid #ccc;
-}
-
-.miDiv3 {
-    position: absolute;
-    z-index: 1050; /* Un valor mayor que el z-index del modal */
-    background-color: rgba(255, 255, 255, 0.9); /* Fondo semi-transparente */
-
-    top: 0%; /* Ajusta la posición verticalmente */
-    left: 0%; /* Ajusta la posición horizontalmente */
-    transform: translate(0%, 0%);
-    border: 1px solid #ccc;
-    width: 500px; /* Ancho del div */
-    height: 659px; /* Alto del div */
-}
-
-.miDiv4 {
-    position: absolute;
-    z-index: 1050; /* Un valor mayor que el z-index del modal */
-    background-color: rgba(255, 255, 255, 0.9); /* Fondo semi-transparente */
-
-    top: 0%; /* Ajusta la posición verticalmente */
-    left: 0%; /* Ajusta la posición horizontalmente */
-    transform: translate(0%, 0%);
-    border: 1px solid #ccc;
-    width: 500px; /* Ancho del div */
-    height: 659px; /* Alto del div */
-}
-
-.miDiv5 {
-    position: absolute;
-    z-index: 1050; /* Un valor mayor que el z-index del modal */
-    background-color: rgba(255, 255, 255, 0.9); /* Fondo semi-transparente */
-
-    top: 0%; /* Ajusta la posición verticalmente */
-    left: 0%; /* Ajusta la posición horizontalmente */
-    transform: translate(0%, 0%);
-    border: 1px solid #ccc;
-    width: 500px; /* Ancho del div */
-    height: 659px; /* Alto del div */
-}
-
-.miDiv6 {
-    position: absolute;
-    z-index: 1050; /* Un valor mayor que el z-index del modal */
-    background-color: rgba(255, 255, 255, 0.9); /* Fondo semi-transparente */
-
-    top: 0%; /* Ajusta la posición verticalmente */
-    left: 0%; /* Ajusta la posición horizontalmente */
-    transform: translate(0%, 0%);
-    border: 1px solid #ccc;
-    width: 950px; /* Ancho del div */
-    height: 659px; /* Alto del div */
-}
-
-.termico-message {
-    position: absolute;
-    left: 150px;
-    top: -20%;
-    z-index: 2;
-    background-color: rgba(0, 0, 0, 0.8);
-    color: white;
-    padding: 5px;
-    border-radius: 5px;
-    display: none;
-}
-
-.miTextarea {
-    width: 30% !important; /* Ancho del textarea */
-    padding: 80px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    align-content: start;
-    margin-left: 71.5%; /* Mover el botón a la derecha */
-    margin-top: -100%;
-    margin-bottom: 15%;
-}
-
-.miText {
-    margin-left: 730px; /* Mover el botón a la derecha */
-    margin-top: -14%;
-    margin-bottom: 10%;
-    white-space: nowrap;
-}
 
 .error-border {
     border: 2px solid red; /* Establece el borde en rojo */
@@ -1135,4 +998,39 @@ footer.footer .social-link {
     top: 10px;
     right: 10px;
     z-index: 9999; /* Asegura que el botón esté por encima de otros elementos */
+}
+
+.precision-container {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Añadido para centrar horizontalmente */
+}
+
+.precision {
+    position: relative;
+    height: 150px; /* Altura del círculo */
+    width: 150px; /* Ancho del círculo */
+    background: conic-gradient(#3498db 0%, #3498db var(--porcentaje), transparent var(--porcentaje) 100%);
+    border-radius: 50%;
+    overflow: hidden;
+    border: 5px solid blue; /* Borde azul de 5 píxeles */
+}
+
+.circleContent {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+#precisionPorcentaje {
+    font-size: 24px;
+    font-weight: bold;
+    color: #3498db; /* Color del texto */
+}
+
+.circleLabel {
+    font-size: 14px;
+    color: #3498db; /* Color del texto */
 }
