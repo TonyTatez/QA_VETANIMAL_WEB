@@ -32,7 +32,7 @@
                             <div class="mb-3">
                                 <label for="CI" class="form-label">Cédula del Cliente</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="CI" placeholder="Ingrese Cédula" onkeypress="return solo10Numeros(event)" required>
+                                    <input type="text" class="form-control" id="CI" placeholder="Ingrese Cédula" onkeypress="return solo10Numeros(event)" required readonly>
                                 </div>
                             </div>
 
@@ -56,7 +56,7 @@
         </div>
 
         <!-- Botones que ocupan toda la pantalla -->
-        <div class="row mt-5">
+        <div class="row mt-5" style="display: none;">
             <div class="col-12">
                 <button type="button" class="btn btn-primary btn-lg btn-block" onclick="mostrarFormulario('formulario1')">DATOS DEL CLIENTE</button>
             </div>
@@ -167,7 +167,7 @@
                 <div class="card-body">
 
                     <div class="table-responsive" style="font-family: 'Young Serif', sans-serif; ">
-                        <table class="table table-bordered table-sm  dataTable table-striped" id="tablaMascotas">
+                        <table class="table table-bordered table-sm tablaMascotas dataTable table-striped" id="tablaMascotas">
                             <thead>
                                 <tr>
                                     <th>
@@ -211,9 +211,40 @@
                     FICHAS HEMOPARASITOSIS
                 </div>
                 <div class="card-body">
+                    <div class="table-responsive" style="font-family: 'Young Serif', sans-serif;">
+                        <table class="table table-bordered table-sm  dataTable table-striped" id="tablaFichasHemo">
+                            <thead>
+                                <tr>
+                                    <th style="background: #021D5D; color: white;font-size: 14px;font-family: 'Young Serif', sans-serif;">
+                                        Cod.
+                                    </th>
+                                    <th style="background: #021D5D; color: white;font-size: 14px;font-family: 'Young Serif', sans-serif;">
+                                        Historia Clinica
+                                    </th>
+                                    <th style="background: #021D5D; color: white;font-size: 14px;font-family: 'Young Serif', sans-serif;">
+                                        Motivo Consulta
+                                    </th>
+                                    <th style="background: #021D5D; color: white;font-size: 14px;font-family: 'Young Serif', sans-serif;">
+                                        Diagnostico
+                                    </th>
+                                    <th style="background: #021D5D; color: white;font-size: 14px;font-family: 'Young Serif', sans-serif;">
+                                        Tratamiento
+                                    </th>
+                                    <th style="background: #021D5D; color: white;font-size: 14px;font-family: 'Young Serif', sans-serif;">
+                                        Observacion
+                                    </th>
+                                    <th style="background: #021D5D; color: white;font-size: 14px;font-family: 'Young Serif', sans-serif;">
+                                        Fecha
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+
+                        </table>
+                    </div>
                 </div>
                 <div class="card-footer text-muted">
-                    2 days ago
                 </div>
             </div>
 
@@ -222,6 +253,7 @@
     </div>
 
     <script>
+        var tk;
         function mostrarFormulario(formulario) {
             var container = $('#formularioContainer' + formulario.charAt(formulario.length - 1));
 
@@ -240,16 +272,17 @@
             // Obtener el valor del input de cédula
             let params = new URLSearchParams(location.search);
             var contract = params.get('cedula');
+            tk = params.get('token');
             $("#CI").val(contract);
             var identificacion = $("#CI").val();
             console.log("Cédula veri:", contract);
-            console.log("Cédula del cliente:", identificacion);
+            console.log("Token:", tk);
 
             // Hacer la solicitud al endpoint de tu API para consultar el cliente
             $.ajax({
                 url: '/HistoriaClinica/BuscarClientePorCI',
                 method: 'GET',
-                data: { CI: identificacion },
+                data: { CI: identificacion, token: tk },
                 contentType: 'application/json',
                 success: function (data) {
                     console.log("Datos del cliente:", data);
@@ -278,7 +311,7 @@
             $.ajax({
                 url: '/HistoriaClinica/BuscarMascotaPorCI',
                 method: 'GET',
-                data: { CI: identificacion },
+                data: { CI: identificacion, token: tk },
                 contentType: 'application/json',
                 success: function (data) {
 
@@ -330,7 +363,7 @@
                         $.ajax({
                             url: '/HistoriaClinica/BuscarFichasControlById',
                             method: 'GET',
-                            data: { CI: longId },
+                            data: { CI: longId, token: tk },
                             contentType: 'application/json',
                             success: function (data) {
                                 console.log("aquiii historial", data)
@@ -354,6 +387,52 @@
                                         var fechaPartes = fichaControl.fecha.split('T');
                                         var fechaSolo = fechaPartes[0];
                                         row.append($("<td>").text(fechaSolo));
+                                        tableBody.append(row);
+                                    });
+                                } else {
+                                    console.log("No hay fichas de control para mostrar.");
+                                }
+
+
+                            },
+                            error: function (error) {
+                                // Imprime el mensaje de error en la consola para facilitar la depuración
+                                console.error('Error en la solicitud AJAX:', error);
+                            }
+                        });
+
+                        $.ajax({
+                            url: '/HistoriaClinica/BuscarFichasHemoById',
+                            method: 'GET',
+                            data: { CI: longId, token: tk },
+                            contentType: 'application/json',
+                            success: function (content) {
+                                console.log("aquiii Hemoooooooo", content)
+
+                                // Obtén la referencia del cuerpo de la tabla
+                                var tableBody = $("#tablaFichasHemo tbody");
+
+                                // Limpiar filas existentes
+                                tableBody.empty();
+
+                                if (content && content.fichasHemoparasitosis && content.fichasHemoparasitosis.length > 0) {
+                                    // Iterar sobre las fichas de control y agregar filas al cuerpo de la tabla
+                                    content.fichasHemoparasitosis.forEach(function (fichasHemoparasitosis) {
+                                        var row = $("<tr>");
+                                        row.append($("<td>").text(fichasHemoparasitosis.codigoFichaHemo).css({ "font-size": "14px", "font-family": "'Young Serif', sans-serif" }));
+                                        row.append($("<td>").text(content.idHistoriaClinica).css({ "font-size": "14px", "font-family": "'Young Serif', sans-serif" }));
+                                        row.append($("<td>").text("EMERGENCIA").css({ "font-size": "14px", "font-family": "'Young Serif', sans-serif" }));
+                                        row.append($("<td>").text(fichasHemoparasitosis.enfermedad).css({ "font-size": "14px", "font-family": "'Young Serif', sans-serif" }));
+                                        row.append($("<td>").text(fichasHemoparasitosis.tratamiento).css({ "font-size": "14px", "font-family": "'Young Serif', sans-serif" }));
+                                        row.append($("<td>").text(fichasHemoparasitosis.observaciones).css({ "font-size": "14px", "font-family": "'Young Serif', sans-serif" }));
+
+                                        // Formatea la fecha
+                                        var fecha = new Date(fichasHemoparasitosis.fecha);
+                                        var fechaFormateada = fecha.toLocaleDateString(); // Puedes ajustar el formato según tus preferencias
+
+                                        row.append($("<td>").text(fechaFormateada).css({ "font-size": "14px", "font-family": "'Young Serif', sans-serif" }));
+
+                                        // Agrega la fila al cuerpo de la tabla
                                         tableBody.append(row);
                                     });
                                 } else {
