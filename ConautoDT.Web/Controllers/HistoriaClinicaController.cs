@@ -33,6 +33,49 @@ namespace VET_ANIMAL.WEB.Controllers
             return View();
         }
 
+        [HttpGet]
+        public ActionResult BuscarFichasControlByIdMobile([FromQuery] long CI,string token)
+        {
+            try
+            {
+                var client = new RestClient(configuration["APIClient"]);
+                var request = new RestRequest("/api/consulta/historial", Method.Get);
+                request.AddParameter("Authorization", string.Format("Bearer " + token), ParameterType.HttpHeader);
+                request.AddQueryParameter("CI", CI);
+
+                var response = client.Execute(request);
+
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    var content = response.Content;
+                    Console.WriteLine(content);
+                    var Fichas = System.Text.Json.JsonSerializer.Deserialize<FichasControlViewModel>(content);
+
+
+                    if (Fichas != null)
+                    {
+                        // Buscar el cliente por cédula en la lista
+
+                        // Puedes devolver el IdCliente y la Cedula como un objeto JSON
+                        return Json(Fichas);// Json(new { IdMascota = Mascotas.idMascota, peso = Mascotas.peso, raza = Mascotas.raza, sexo = Mascotas.sexo, fechaNacimiento = Mascotas.fechaNacimiento, nombreMascota = Mascotas.nombreMascota,
+                                            // });
+                    }
+                    else
+                    {
+                        return Json(new { Mensaje = "Cliente no encontrado" });
+                    }
+                }
+                else
+                {
+                    return Json(new { Mensaje = $"Error al obtener la lista de clientes. Código de estado: {response.StatusCode}" });
+                }
+            }
+            catch (Exception ex)
+            {
+                // Manejar excepciones aquí y registrar información de depuración si es necesario
+                return Json(new { Mensaje = $"Error: {ex.Message}" });
+            }
+        }
 
         [HttpGet]
         public ActionResult BuscarFichasControlById([FromQuery] long CI)
@@ -79,6 +122,49 @@ namespace VET_ANIMAL.WEB.Controllers
             }
         }
 
+        [HttpGet]
+        public ActionResult BuscarFichasHemoByIdMobile([FromQuery] long CI,string token)
+        {
+            try
+            {
+                var client = new RestClient(configuration["APIClient"]);
+                var request = new RestRequest("/api/consulta/historial", Method.Get);
+                request.AddParameter("Authorization", string.Format("Bearer " + token), ParameterType.HttpHeader);
+                request.AddQueryParameter("CI", CI);
+
+                var response = client.Execute(request);
+
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    var content = response.Content;
+                    Console.WriteLine(content);
+                    var Fichas = System.Text.Json.JsonSerializer.Deserialize<FichasControlViewModel>(content);
+
+
+                    if (Fichas != null)
+                    {
+                        // Buscar el cliente por cédula en la lista
+
+                        // Puedes devolver el IdCliente y la Cedula como un objeto JSON
+                        return Json(Fichas);// Json(new { IdMascota = Mascotas.idMascota, peso = Mascotas.peso, raza = Mascotas.raza, sexo = Mascotas.sexo, fechaNacimiento = Mascotas.fechaNacimiento, nombreMascota = Mascotas.nombreMascota,
+                                            // });
+                    }
+                    else
+                    {
+                        return Json(new { Mensaje = "Cliente no encontrado" });
+                    }
+                }
+                else
+                {
+                    return Json(new { Mensaje = $"Error al obtener la lista de clientes. Código de estado: {response.StatusCode}" });
+                }
+            }
+            catch (Exception ex)
+            {
+                // Manejar excepciones aquí y registrar información de depuración si es necesario
+                return Json(new { Mensaje = $"Error: {ex.Message}" });
+            }
+        }
 
         [HttpGet]
         public ActionResult BuscarFichasHemoById([FromQuery] long CI)
@@ -125,6 +211,56 @@ namespace VET_ANIMAL.WEB.Controllers
             }
         }
 
+
+        [HttpGet]
+        public ActionResult BuscarClientePorCIMobile([FromQuery] string CI,string token)
+        {
+            try
+            {
+                var client = new RestClient(configuration["APIClient"]);
+                var request = new RestRequest("/api/cat/Cliente", Method.Get);
+                request.AddParameter("Authorization", string.Format("Bearer " + token), ParameterType.HttpHeader);
+                request.AddQueryParameter("CI", CI);
+
+                var response = client.Execute(request);
+
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    var content = response.Content;
+                    var Clientes = System.Text.Json.JsonSerializer.Deserialize<ClientesViewModel>(content);
+
+                    // Buscar el cliente por cédula en la lista
+
+                    if (Clientes != null)
+                    {
+                        // Puedes devolver el IdCliente y la Cedula como un objeto JSON
+                        return Json(new
+                        {
+                            IdCliente = Clientes.idCliente,
+                            Cedula = Clientes.identificacion,
+                            nombres = Clientes.nombres,
+                            direccion = Clientes.direccion,
+                            correo = Clientes.correo,
+                            telefono = Clientes.telefono,
+                        });
+                    }
+                    else
+                    {
+                        return Json(new { Mensaje = "Cliente no encontrado" });
+                    }
+                }
+                else
+                {
+                    return Json(new { Mensaje = $"Error al obtener la lista de clientes. Código de estado: {response.StatusCode}" });
+                }
+            }
+            catch (Exception ex)
+            {
+                // Manejar excepciones aquí y registrar información de depuración si es necesario
+                return Json(new { Mensaje = $"Error: {ex.Message}" });
+            }
+        }
+
         [HttpGet]
         public ActionResult BuscarClientePorCI([FromQuery] string CI)
         {
@@ -150,6 +286,50 @@ namespace VET_ANIMAL.WEB.Controllers
                         // Puedes devolver el IdCliente y la Cedula como un objeto JSON
                         return Json(new { IdCliente = Clientes.idCliente, Cedula = Clientes.identificacion, nombres = Clientes.nombres, direccion = Clientes.direccion, correo = Clientes.correo, telefono = Clientes.telefono,
                              });
+                    }
+                    else
+                    {
+                        return Json(new { Mensaje = "Cliente no encontrado" });
+                    }
+                }
+                else
+                {
+                    return Json(new { Mensaje = $"Error al obtener la lista de clientes. Código de estado: {response.StatusCode}" });
+                }
+            }
+            catch (Exception ex)
+            {
+                // Manejar excepciones aquí y registrar información de depuración si es necesario
+                return Json(new { Mensaje = $"Error: {ex.Message}" });
+            }
+        }
+
+        [HttpGet]
+        public ActionResult BuscarMascotaPorCIMobile([FromQuery] string CI,string token)
+        {
+            try
+            {
+                var client = new RestClient(configuration["APIClient"]);
+                var request = new RestRequest("/api/cat/Cliente/mascotas", Method.Get);
+                request.AddParameter("Authorization", string.Format("Bearer " + token), ParameterType.HttpHeader);
+                request.AddQueryParameter("CI", CI);
+
+                var response = client.Execute(request);
+
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    var content = response.Content;
+                    Console.WriteLine(content);
+                    var Mascotas = System.Text.Json.JsonSerializer.Deserialize<List<MascotasViewModel>>(content);
+
+
+                    if (Mascotas != null)
+                    {
+                        // Buscar el cliente por cédula en la lista
+
+                        // Puedes devolver el IdCliente y la Cedula como un objeto JSON
+                        return Json(Mascotas);// Json(new { IdMascota = Mascotas.idMascota, peso = Mascotas.peso, raza = Mascotas.raza, sexo = Mascotas.sexo, fechaNacimiento = Mascotas.fechaNacimiento, nombreMascota = Mascotas.nombreMascota,
+                                              // });
                     }
                     else
                     {
