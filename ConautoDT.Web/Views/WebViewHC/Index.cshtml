@@ -3,7 +3,6 @@
 @{
     ViewData["Title"] = "HISTORIAL";
 }
-
 <html lang="en">
 <head>
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.css" />
@@ -14,43 +13,138 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .buttonMasco {
+            display: inline-block;
+            text-align: center;
+            vertical-align: middle;
+            margin-top: 25px;
+            padding: 12px 24px;
+            border: 1px solid #a12727;
+            border-radius: 3px;
+            background: #4d71b0;
+            background: -webkit-gradient(linear, left top, left bottom, from(#4d71b0), to(#992727));
+            background: -moz-linear-gradient(top, #4d71b0, #992727);
+            background: linear-gradient(to bottom, #4d71b0, #992727);
+            -webkit-box-shadow: #ff5959 0px 0px 12px 0px;
+            -moz-box-shadow: #ff5959 0px 0px 12px 0px;
+            box-shadow: #ff5959 0px 0px 12px 0px;
+            text-shadow: #591717 1px 1px 1px;
+            font: normal normal bold 20px arial;
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+            .buttonMasco:hover,
+            .buttonMasco:focus {
+                background: #5c88d3;
+                background: -webkit-gradient(linear, left top, left bottom, from(#5c88d3), to(#b62f2f));
+                background: -moz-linear-gradient(top, #5c88d3, #b62f2f);
+                background: linear-gradient(to bottom, #5c88d3, #b62f2f);
+                color: #ffffff;
+                text-decoration: none;
+            }
+
+            .buttonMasco:active {
+                background: #2e446a;
+                background: -webkit-gradient(linear, left top, left bottom, from(#2e446a), to(#982727));
+                background: -moz-linear-gradient(top, #2e446a, #982727);
+                background: linear-gradient(to bottom, #2e446a, #982727);
+            }
+
+            .buttonMasco:before {
+                content: "\0000a0";
+                display: inline-block;
+                height: 24px;
+                width: 24px;
+                line-height: 24px;
+                margin: 0 4px -6px -4px;
+                position: relative;
+                top: 0px;
+                left: 0px;
+                background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABKUlEQVRIic3UMUoDQRTG8Z+riKQQC7FUa6sUFiIewcIDWFqIlVewsPQAKT2FJxAJHsDCyiKNbciKBInFzkoIM5tZEtEHj919+977z5tvGP6ZFW0LVlvkdvCCNTy1BeUCRpjgLHx3AnDpgM/wPsIA18sGxPymqbjAY/CUkDHAEY4xnon/9Kn3r8BBaLKN98ypCnENuthAOR18CPR7bEWK1jGcWek4svoJXkV24lDzHndVo6f+Z+lxojohsaI7nOJrTvMBdlKAppPyoRL0IpEzRA+7qebzAHWTc+zjFs/o4xKbTY1zAbX3caXSpdX9lAuofRRqktb6dmxr8y6qMhFvXHUuoMReBNLBWy4kZ4LUFFn26xr8icjlzDNmOTlgJRKbFi/nFC2k0cL2DT10iPGMuib/AAAAAElFTkSuQmCC") no-repeat left center transparent;
+                background-size: 100% 100%;
+            }
 
 
+        .buttonFichas {
+            display: inline-block;
+            text-align: center;
+            vertical-align: middle;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            padding: 12px 24px;
+            border: 1px solid #a12727;
+            border-radius: 3px;
+            background: #b06d4d;
+            background: -webkit-gradient(linear, left top, left bottom, from(#b06d4d), to(#261e1e));
+            background: -moz-linear-gradient(top, #b06d4d, #261e1e);
+            background: linear-gradient(to bottom, #b06d4d, #261e1e);
+            -webkit-box-shadow: #ff9e59 0px 0px 12px 0px;
+            -moz-box-shadow: #ff9e59 0px 0px 12px 0px;
+            box-shadow: #ff9e59 0px 0px 12px 0px;
+            text-shadow: #591717 1px 1px 1px;
+            font: normal normal bold 20px arial;
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+            .buttonFichas:hover,
+            .buttonFichas:focus {
+                background: #d3835c;
+                background: -webkit-gradient(linear, left top, left bottom, from(#d3835c), to(#2e2424));
+                background: -moz-linear-gradient(top, #d3835c, #2e2424);
+                background: linear-gradient(to bottom, #d3835c, #2e2424);
+                color: #ffffff;
+                text-decoration: none;
+            }
+
+            .buttonFichas:active {
+                background: #6a412e;
+                background: -webkit-gradient(linear, left top, left bottom, from(#6a412e), to(#261e1e));
+                background: -moz-linear-gradient(top, #6a412e, #261e1e);
+                background: linear-gradient(to bottom, #6a412e, #261e1e);
+            }
+
+            .buttonFichas:before {
+                content: "\0000a0";
+                display: inline-block;
+                height: 24px;
+                width: 24px;
+                line-height: 24px;
+                margin: 0 4px -6px -4px;
+                position: relative;
+                top: 0px;
+                left: 0px;
+                background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAA7EAAAOxAGVKw4bAAADDklEQVRIia2WXWgUVxzFf/furIm4WXWTjW6Msa422WBqDAa/ImJRGx8EzYNayUM+xI+iogUrVRQVfTCIokQfRF8soVAUlVJosQ8FMVaKiaLYJhFDS2n8RDZ10dnOzr19mK2a7uy6Gz0wMMzc+z/nf86de0eQRKSk7rAQcpvWyvCO8AKglSZh20ghcIPSGsPjQUjnvfWPBUIk0PpYz0DnFwACoDxUly8FTyqrZ/h+v9dLx6V28vLzuHPzNw7ubidcEXEl6O/tYffBLXxUU0ncjNO4fDNGgZ/Y48cxpQn2Peg0DRwaCUjD60UIQUGBj/yReRQFAyQsixexWFIKoJOyNCQsi6LiAH6/D9PrRQgQUgLIZE2MVF361V15ZZjGlgZu3rjz5mOSomhsbaA8Enbt7j+4ELz2WwhB84ZVNG9YlbFIJshhzxw+wf+9gOizQQajfw+LwMUiB3dv9zFp8gR6f73Pob0n2LS9hZraKi5+8z1aDxUxpXwSs+bWZEvgZHD9ahcHdh3FshLs3L+F2jnVDEafv48OHHWtn31KaVmImbOnUxQMADB6TEHawM2X8WwJHAghqF+2MEe9qXAJOXVbuNV1l76e/mERpLXo2/OXqZg2hZ+vdPHdhR85cGQHD/56RNu+kykhz6itYk3TimwJnA78o31sXbuHSNWHnOpoozAYIGElaNm4OoUgOK4wlw4cLFwyj6kVkxlfUoxheJzBXoPqmdNcx+cQ8mt1pWWhtMqyxVtDtm2br06f4+pPvwAQN+OYL4detm2nJUhr0fG2M5SWhbh25QbKVixrWMyffwywbs12lFZDxn78SR2ff7k+WwLHouUr69m17RCLls6nZeNqpJQEisbyw7WvXQvlkIFj0QfhiXRcbEd63m3DTZmtlMI0HTW5FDfNOLatUj7TZAdagVBCCPxjxrJicSvo1G07I4Qgf9QocH4QlAD1iuCFVKZPebqfPHy4oLhkAsWhEpdT4W3QPHr6lFg0CtBteg0T3liTkVBdGMFZKeUcMqyuTFBaJ9D6OtDUM9DZD/AvWF8GshjQK3wAAAAASUVORK5CYII=") no-repeat left center transparent;
+                background-size: 100% 100%;
+            }
+    </style>
 </head>
+
 
 <body>
     <div class="container" style="border: outset 3px">
-        <h2 class="mb-3" style="color: black; font-weight: bold; font-size: 2.2em;font-family: 'Young Serif', sans-serif;">HISTORIA CLINICA </h2>
+        <center>
+            <h2 class="mb-3" style="color: black; font-weight: bold; font-size: 2.2em;font-family: 'Young Serif', sans-serif;">HISTORIA CLINICA </h2>
+        </center>
 
-        <div class="container mt-5">
+        <div class="container" style="margin-top: 15px;">
             <div class="row justify-content-center">
                 <div class="col-md-6">
-                    <div class="card p-4 border-0" style="border-radius: 15px; background: linear-gradient(180deg, #ffffff 0%, #f0f0f0 100%); box-shadow: 10px 10px 15px 10px #888888;">
+                    <form style="color: black;font-family: 'Young Serif', sans-serif;">
+                        <input type="hidden" class="form-control" id="CI" placeholder="Ingrese Cédula" onkeypress="return solo10Numeros(event)" required readonly>
 
+                        <input type="hidden" class="form-control" id="cedCliente" readonly style="color: red;">
 
-                        <form style="color: black;font-family: 'Young Serif', sans-serif;">
-                            <div class="mb-3">
-                                <label for="CI" class="form-label">Cédula del Cliente</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" id="CI" placeholder="Ingrese Cédula" onkeypress="return solo10Numeros(event)" required readonly>
-                                </div>
-                            </div>
+                        <div class="mb-3">
+                            <label for="petDropdown" class="form-label">Mascota</label>
+                            <select class="form-select" id="petDropdown" readonly style="color: blue;">
+                                <!-- Opciones de mascotas -->
+                            </select>
+                        </div>
+                    </form>
 
-                            <div class="mb-3">
-                                <label for="cedCliente" class="form-label">Cliente</label>
-                                <input type="text" class="form-control" id="cedCliente" readonly style="color: red;">
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="petDropdown" class="form-label">Mascota</label>
-                                <select class="form-select" id="petDropdown" readonly style="color: blue;">
-                                    <!-- Opciones de mascotas -->
-                                </select>
-                            </div>
-
-
-                        </form>
-                    </div>
                 </div>
             </div>
         </div>
@@ -88,12 +182,14 @@
 
             </div>
         </div>
-
-        <div class="row">
-            <div class="col-12">
-                <button type="button" class="btn btn-secondary btn-lg btn-block" onclick="mostrarFormulario('formulario2')">DATOS MASCOTA</button>
+        <center>
+            <div class="row">
+                <div class="col-12">
+                    <button type="button" class="buttonMasco" onclick="mostrarFormulario('formulario2')">DATOS MASCOTA</button>
+                </div>
             </div>
-        </div>
+        </center>
+
 
         <div class="row mt-2" id="formularioContainer2" style="display: none;">
 
@@ -151,12 +247,14 @@
             </div>
 
         </div>
-
-        <div class="row">
-            <div class="col-12">
-                <button type="button" class="btn btn-success btn-lg btn-block" onclick="mostrarFormulario('formulario3')">FICHAS CONSULTAS</button>
+        <center>
+            <div class="row">
+                <div class="col-12">
+                    <button type="button" class="buttonFichas" onclick="mostrarFormulario('formulario3')">FICHAS CONSULTAS</button>
+                </div>
             </div>
-        </div>
+        </center>
+
 
         <div class="row mt-2" id="formularioContainer3" style="display: none;font-family: 'Young Serif', sans-serif;">
 

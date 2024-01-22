@@ -67,4 +67,28 @@
         public float peso { get; set; }
         public string observacion { get; set; }
     }
+
+    public class ItemMascotaFichas
+    {
+        public long idMascota { get; set; }
+        public string codigo { get; set; }
+        public string nombreMascota { get; set; }
+        public string raza { get; set; }
+        public string sexo { get; set; }
+        public float? peso { get; set; }
+        public string cliente { get; set; }
+
+        public DateTime? fechaNacimiento { get; set; }
+        public long idCliente { get; set; }
+        public long idMotivo { get; set; }
+        public long idEnfermedad { get; set; }
+        public string enfermedad { get; set; }
+        public string observaciones { get; set; }
+        public string tratamiento { get; set; }
+        public long idHistoriaClinica { get; set; }
+        public string motivo { get; set; }
+        public string codigoHistorial { get; set; }
+        public string cedula { get; set; }
+
+    }
 }

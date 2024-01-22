@@ -81,6 +81,51 @@ namespace VET_ANIMAL.WEB.Controllers
 
 
         [HttpGet]
+        public ActionResult BuscarFichasHemoById([FromQuery] long CI)
+        {
+            try
+            {
+                string tokenValue = Request.Cookies["token"];
+                var client = new RestClient(configuration["APIClient"]);
+                var request = new RestRequest("/api/consulta/historial", Method.Get);
+                request.AddParameter("Authorization", string.Format("Bearer " + tokenValue), ParameterType.HttpHeader);
+                request.AddQueryParameter("CI", CI);
+
+                var response = client.Execute(request);
+
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    var content = response.Content;
+                    Console.WriteLine(content);
+                    var Fichas = System.Text.Json.JsonSerializer.Deserialize<FichasControlViewModel>(content);
+
+
+                    if (Fichas != null)
+                    {
+                        // Buscar el cliente por cédula en la lista
+
+                        // Puedes devolver el IdCliente y la Cedula como un objeto JSON
+                        return Json(Fichas);// Json(new { IdMascota = Mascotas.idMascota, peso = Mascotas.peso, raza = Mascotas.raza, sexo = Mascotas.sexo, fechaNacimiento = Mascotas.fechaNacimiento, nombreMascota = Mascotas.nombreMascota,
+                                            // });
+                    }
+                    else
+                    {
+                        return Json(new { Mensaje = "Cliente no encontrado" });
+                    }
+                }
+                else
+                {
+                    return Json(new { Mensaje = $"Error al obtener la lista de clientes. Código de estado: {response.StatusCode}" });
+                }
+            }
+            catch (Exception ex)
+            {
+                // Manejar excepciones aquí y registrar información de depuración si es necesario
+                return Json(new { Mensaje = $"Error: {ex.Message}" });
+            }
+        }
+
+        [HttpGet]
         public ActionResult BuscarClientePorCI([FromQuery] string CI)
         {
             try

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using NLog;
 using RestSharp;
 using System.Collections.Generic;
+using Utf8Json;
 using VET_ANIMAL.WEB.Models;
 using VET_ANIMAL.WEB.Servicios;
 
@@ -157,7 +158,107 @@ namespace VET_ANIMAL.WEB.Controllers
         }
 
 
-        // GET: HemoparasitosisController/Details/5
+        [HttpPost]
+        public async Task<ActionResult> GuardarFicha(ItemMascotaFichas model)
+        {
+            
+                // Validación del idMascota
+                if (model.idMascota <= 0)
+                {
+                    throw new ArgumentException("ID de Mascota no válido");
+                }
+
+                // Construir objeto para enviar al API
+                var guardarFicha = new ItemMascotaFichas
+                {
+                    idMascota = model.idMascota,
+                    idHistoriaClinica = model.idHistoriaClinica,
+                    idEnfermedad = model.idEnfermedad,
+                    nombreMascota = model.nombreMascota,
+                    tratamiento = model.tratamiento,
+                    observaciones = model.observaciones,
+                    enfermedad = model.enfermedad
+                };
+
+                // Obtener token del cookie
+                string tokenValue = Request.Cookies["token"];
+
+                // Configurar la solicitud al API
+                var request = new RestRequest("api/consulta/FichaHemoparasitosis", Method.Post);
+                request.AddParameter("Authorization", string.Format("Bearer " + tokenValue), ParameterType.HttpHeader);
+                request.AddJsonBody(guardarFicha);
+
+                if (model.observaciones == null)
+                {
+                    TempData["MensajeError"] = "Rellene todos los campos";
+                    return Redirect("Index");
+                }
+
+                try
+                {
+                    // Validación del idHistoriaClinica
+                    if (model.idHistoriaClinica <= 0)
+                    {
+                        throw new ArgumentException("Historia Clinica no encontrada ");
+                    }
+
+                    if (model.observaciones != null)
+                    {
+                        if (ModelState.IsValid)
+                        {
+                            _log.Info("Accediendo al API");
+                            var response = await _apiClient.ExecuteAsync(request, Method.Post);
+                            _log.Info("Registrando Ficha");
+                            if (response.IsSuccessful)
+                            {
+                                if (model.idHistoriaClinica != 0)
+                                {
+                                    // SweetAlert para registro exitoso
+                                    TempData["MensajeExito"] = "Ficha Hemoparasitosis Registrada Exitosamente";
+                                }
+                                else
+                                {
+                                    // SweetAlert para edición exitosa
+                                    TempData["MensajeExito"] = "Se editó correctamente";
+                                }
+                                return RedirectToAction("Index", "Mascotas");
+                            }
+                            TempData["MensajeError"] = response.Content;
+                            return RedirectToAction("Index", "Mascotas");
+                        }
+                        // SweetAlert para campos no válidos
+                        TempData["MensajeError"] = "Rellene todos los campos";
+                        return View(model);
+                    }
+                    TempData["MensajeError"] = "Rellene todos los campos";
+                    return RedirectToAction("Index", "Mascotas");
+                }
+                catch (ArgumentException ex)
+                {
+                    // Manejo específico para ArgumentException
+                    TempData["MensajeError"] = ex.Message;
+                    return RedirectToAction("Index", "Mascotas");
+                }
+                catch (JsonParsingException e)
+                {
+                    _log.Error(e, "Error Obteniendo Token");
+                    _log.Error(e.GetUnderlyingStringUnsafe());
+                    TempData["MensajeError"] = e.Message.ToString();
+                    return View(model);
+                }
+                catch (Exception e)
+                {
+                    // SweetAlert para error general
+                    _log.Error(e, "Error al iniciar sesión");
+                    TempData["MensajeError"] = e.Message;
+                    return Redirect("Index");
+                }
+          
+
+        }
+
+
+        //GET: HemoparasitosisController/Details/5
         public ActionResult Details(int id)
         {
             return View();

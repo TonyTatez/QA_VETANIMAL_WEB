@@ -1,3 +1,4 @@
+
 #miFormulario {
     width: 100%; /* Ajusta el ancho del formulario al 100% */
     padding: 20px;
@@ -455,6 +456,8 @@ footer .login {
         background-color: #021D5D; /* Color de fondo para el pie de la tabla */
         color: white; /* Color del texto en el pie de la tabla */
     }
+
+
 
 #tablaDiagnostico {
     border-collapse: collapse;

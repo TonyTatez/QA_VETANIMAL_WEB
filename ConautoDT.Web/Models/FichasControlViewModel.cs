@@ -13,6 +13,23 @@
         public string observacion { get; set; }
     }
 
+    public class fichasHemoparasitosis
+    {
+
+        public long idFichaHemo { get; set; }
+        public string codigoFichaHemo { get; set; }
+        public long idHistoriaClinica { get; set; }
+        public DateTime fecha { get; set; }
+        public long idMascota { get; set; }
+        public long idEnfermedad { get; set; }
+        public string enfermedad { get; set; }
+        public string tratamiento { get; set; }
+        public string observaciones { get; set; }
+        public string nombreMascota { get; set; }
+        public string cliente { get; set; }
+
+
+    }
     public class FichaSintomaDTO
     {
         public long idFicha { get; set; }
@@ -37,6 +54,18 @@
         public string cedula { get; set; }
         public List<FichaSintomaDTO> fichasSintoma { get; set; }
         public List<FichasControl> fichasControl { get; set; }
+        public List<fichasHemoparasitosis> fichasHemoparasitosis { get; set; }
+
+    }
+
+
+    public class FichasHemoViewModel
+    {
+        public long idHistoriaClinica { get; set; }
+        public string codigoHistorial { get; set; }
+        public string cedula { get; set; }
+        public List<fichasHemoparasitosis> fichasHemoparasitosis { get; set; }
 
     }
 }
+

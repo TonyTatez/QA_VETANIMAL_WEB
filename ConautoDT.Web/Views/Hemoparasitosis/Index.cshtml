@@ -131,7 +131,7 @@
                                         <td>
 
 
-                                            <button title="Ficha Control" class="btn p-v-sm btn-primary btn-sm btn-editar" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="FichaMascota({idMascota:@item.idMascota ,nombreMascotas:'@item.nombreMascota',nombres:'@item.cliente', peso:'@item.peso' ,raza:'@item.raza', sexo:'@item.sexo',fecha:'@item.fechaNacimiento'});">
+                                            <button title="Ficha Control" class="btn p-v-sm btn-primary btn-sm btn-editar" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="FichaMascota({idMascota:@item.idMascota ,nombreMascotas:'@item.nombreMascota',nombres:'@item.cliente', peso:'@item.peso' ,raza:'@item.raza', sexo:'@item.sexo',fecha:'@item.fechaNacimiento',HC:'@item.idHistoriaClinica'});">
                                                 <i class="bi bi-file-earmark-richtext-fill"></i>
                                             </button>
 
@@ -225,6 +225,11 @@
                                         <input id="idmasc2" type="text" class="form-control mb-3" style="width:100%!important; color: red" readonly>
                                     </div>
 
+                                    <div class="form-group col-md-6" hidden>
+                                        <label for="">idHC</label>
+                                        <input id="idHC" type="text" class="form-control mb-3" style="width:100%!important; color: red" readonly>
+                                    </div>
+
 
 
                                     <div class="form-group col-md-4">
@@ -282,17 +287,17 @@
 
                                         <div class="form-row m-2" style="font-family: 'Young Serif', sans-serif; ">
                                             <div class="checkbox-container ">
-                                                <input type="checkbox" id="sangradoCutaneo" name="sintomas" value="SANGRADO CUTANEO">
+                                                <input type="checkbox" id="sangradoCutaneo" name="sintomas" value="SANGRADO_CUTANEO">
                                                 <label for="sangradoCutaneo">Sangrado cutáneo</label>
                                             </div>
 
                                             <div class="checkbox-container">
-                                                <input type="checkbox" id="problemasRespiratorios" name="sintomas" value="PROBLEMAS RESPIRATORIOS">
+                                                <input type="checkbox" id="problemasRespiratorios" name="sintomas" value="PROBLEMAS_RESPIRATORIOS">
                                                 <label for="problemasRespiratorios">Problemas respiratorios</label>
                                             </div>
 
                                             <div class="checkbox-container">
-                                                <input type="checkbox" id="perdidaPeso" name="sintomas" value="PERDIDA DE PESO">
+                                                <input type="checkbox" id="perdidaPeso" name="sintomas" value="PERDIDA_PESO">
                                                 <label for="perdidaPeso">Pérdida de peso</label>
                                             </div>
 
@@ -316,7 +321,7 @@
                                         </div>
                                         <div class="form-row m-2" style="font-family: 'Young Serif', sans-serif; ">
                                             <div class="checkbox-container">
-                                                <input type="checkbox" id="hemorragiasMucosas" name="sintomas" value="HEMORRAGIAS EN MUCOSAS">
+                                                <input type="checkbox" id="hemorragiasMucosas" name="sintomas" value="HEMORRAGIAS_MUCOSAS">
                                                 <label for="hemorragiasMucosas">Hemorragias en mucosas</label>
                                             </div>
 
@@ -343,7 +348,7 @@
                                             </div>
 
                                             <div class="checkbox-container">
-                                                <input type="checkbox" id="cojeraArticular" name="sintomas" value="DOLOR ARTICULAR">
+                                                <input type="checkbox" id="cojeraArticular" name="sintomas" value="DOLOR_ARTICULAR">
                                                 <label for="cojeraArticular">Dolor articular</label>
                                             </div>
 
@@ -351,7 +356,7 @@
                                         </div>
                                         <div class="form-row m-2" style="font-family: 'Young Serif', sans-serif; ">
                                             <div class="checkbox-container">
-                                                <input type="checkbox" id="cojeraIntermitente" name="sintomas" value="COJERA INTERMITENTE">
+                                                <input type="checkbox" id="cojeraIntermitente" name="sintomas" value="COJERA_INTERMITENTE">
                                                 <label for="cojeraIntermitente">Cojera intermitente</label>
                                             </div>
 
@@ -467,14 +472,14 @@
                                         Tratamiento
                                     </div>
                                     <div class="card-body">
-                                        <div contenteditable="true" style="width: 100%; min-height: 100px; border: 1px solid #ccc;"></div>
+                                        <div contenteditable="true" id="campoTratam" style="width: 100%; min-height: 100px; border: 1px solid #ccc;"></div>
                                     </div>
 
                                     <div class="card-header">
                                         Observaciones
                                     </div>
                                     <div class="card-body">
-                                        <div contenteditable="true" style="width: 100%; min-height: 100px; border: 1px solid #ccc;"></div>
+                                        <div contenteditable="true" id="campoObserv" style="width: 100%; min-height: 100px; border: 1px solid #ccc;"></div>
                                     </div>
                                </div>
                             </div>
@@ -484,7 +489,7 @@
                 </div>
                 
                 <div class="modal-footer" style="background: #DAE8FD">
-                    <button id="guardarInformacion2" type="submit" class="btn btn-success btn-grad btn-sm">
+                    <button id="guardarInformacion" type="button" onclick="GuardarFicha()" class="btn btn-success btn-grad btn-sm">
                         Guardar
                     </button>
                 </div>
@@ -548,6 +553,7 @@
             $('#editPeso2').val(Mascota.peso);
             $('#editRaza2').val(Mascota.raza);
             $('#editSexo2').val(Mascota.sexo);
+            $('#idHC').val(Mascota.HC);
             $('#idmasc2').val(Mascota.idMascota);
 
             // Dividir la cadena de fecha
@@ -562,7 +568,7 @@
 
             $('#editFecha2').val(fechaFormateada);
         }
-
+        var enfermedadGlobal;
         function enviarDatos() {
 
             // Obtener los valores de los checkboxes seleccionados
@@ -592,6 +598,7 @@
                     success: function (response) {
 
                         console.log("trakaaaaaaa",response.enfermedad)
+                        enfermedadGlobal = response.enfermedad;
                         document.getElementById("cargasid").hidden = true;
                         document.getElementById("diagnistico").hidden = false;
                         document.getElementById("tratamientodiv").hidden = false;
@@ -682,8 +689,50 @@
                         console.error("Error en la solicitud AJAX: ", error);
                     }
                 });
-            }, 10000); // 10 segundos en milisegundos
+            }, 1000); // 10 segundos en milisegundos
         }
+
+
+        function GuardarFicha() {
+            var idMascota = $("#idmasc2").val();
+            var nombreMascota = $("#editNombre2").val();
+            var idHistoriaClinica = $("#idHC").val();
+            var tratamiento = $("#campoTratam").text();
+            var observaciones = $("#campoObserv").text();
+            var enfermedad = enfermedadGlobal;
+            var idSintomas = $("input[name='sintomas']:checked").map(function () {
+                return $(this).val();
+            }).get();
+
+            console.log("Tratamiento:", tratamiento);
+            console.log("Observaciones:", observaciones);
+            console.log("enfermedad:", enfermedad);
+            console.log("Síntomas seleccionados:", idSintomas);
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("GuardarFicha", "Hemoparasitosis")",
+                data: {
+                    idMascota: idMascota,
+                    nombreMascota: nombreMascota,
+                    tratamiento: tratamiento,
+                    observaciones: observaciones,
+                    idSintomas: idSintomas,
+                    enfermedad: enfermedad,
+                    idHistoriaClinica: idHistoriaClinica
+                },
+                success: function (response) {
+                    // Manejar la respuesta exitosa aquí
+                    console.log("Guardado exitoso:", response);
+                },
+                error: function (error) {
+                    console.error("Error en la solicitud AJAX: ", error);
+                }
+            });
+        }
+
+
+
 
         function buscarCliente2() {
             console.log("Iniciando función buscarCliente2");
