@@ -14,6 +14,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
+        .encabezado{
+            box-shadow: #7F7FD5 0px 0px 12px 0px;
+            border: 1px solid #a12727;
+            background: #7F7FD5; /* fallback for old browsers */
+            background: -webkit-linear-gradient(to left, #91EAE4, #86A8E7, #7F7FD5); /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to left, #91EAE4, #86A8E7, #7F7FD5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        }
+
         .buttonMasco {
             display: inline-block;
             text-align: center;
@@ -21,6 +29,7 @@
             margin-top: 25px;
             padding: 12px 24px;
             border: 1px solid #a12727;
+            width:100%;
             border-radius: 3px;
             background: #4d71b0;
             background: -webkit-gradient(linear, left top, left bottom, from(#4d71b0), to(#992727));
@@ -74,6 +83,7 @@
             margin-top: 30px;
             margin-bottom: 20px;
             padding: 12px 24px;
+            width: 100%;
             border: 1px solid #a12727;
             border-radius: 3px;
             background: #b06d4d;
@@ -126,7 +136,7 @@
 <body>
     <div class="container" style="border: outset 3px">
         <center>
-            <h2 class="mb-3" style="color: black; font-weight: bold; font-size: 2.2em;font-family: 'Young Serif', sans-serif;">HISTORIA CLINICA </h2>
+            <h2 class="mb-3" style="margin-top:20px; color: black; font-weight: bold; font-size: 2.2em;font-family: 'Young Serif', sans-serif;">HISTORIA CLINICA </h2>
         </center>
 
         <div class="container" style="margin-top: 15px;">
@@ -195,26 +205,27 @@
 
 
             <div class="form-row mt-2" style=" margin-top: 2%;font-family: 'Young Serif', sans-serif; ">
-
+                
                 <div class="form-group col-md-6">
                     <label for="">Nombre</label>
                     <input type="text" style="color: blue;font-size: 16px;" class="form-control" id="editNombre2" readonly>
                 </div>
+                <br>
                 <div class="form-group col-md-6">
                     <label for="">Dueño</label>
                     <input id="editdueño22" type="text" class="form-control mb-3" style="width:100%!important; color: red" readonly>
                 </div>
+                <br>
                 <div class="form-group col-md-6" hidden>
                     <label for="">idmasc</label>
                     <input id="idmasc2" type="text" class="form-control mb-3" style="width:100%!important; color: red" readonly>
                 </div>
-
-
-
+                <br>
                 <div class="form-group col-md-6">
                     <label for="">Peso</label>
                     <input type="text" style="color: blue;font-size: 16px;" class="form-control" id="editPeso2" readonly onkeypress="return soloNumeros(event)" required>
                 </div>
+                <br>
                 <div class="form-group col-md-6">
                     <label for="">Raza</label>
                     <select readonly class="form-control" id="editRaza2" style="color: blue;font-size: 16px;" required>
@@ -229,7 +240,7 @@
                     </select>
                 </div>
 
-
+                <br>
                 <div class="form-group col-md-6">
                     <label for="">Sexo</label>
                     <select class="form-control" id="editSexo2" style="color: blue;font-size: 16px;" readonly required>
@@ -238,9 +249,11 @@
                         <option value="Hembra">Hembra</option>
                     </select>
                 </div>
+                <br>
+
                 <div class="form-group col-md-6">
                     <label for="">Fecha de Nacimiento</label>
-                    <input style="color: blue;font-size: 16px;width: 89%" class="form-control" id="editFecha2" name="editFecha2" readonly max="2024-12-31" type="text">
+                    <input style="color: blue;font-size: 16px;" class="form-control" id="editFecha2" name="editFecha2" readonly max="2024-12-31" type="text">
                 </div>
 
 
@@ -258,8 +271,8 @@
 
         <div class="row mt-2" id="formularioContainer3" style="display: none;font-family: 'Young Serif', sans-serif;">
 
-            <div class="card text-center mt-5">
-                <div class="card-header" style="background: aqua; color: black; font-weight: bold; font-size: 1.2em;font-family: 'Young Serif', sans-serif;">
+            <div class="card text-center mt-2">
+                <div class="card-header encabezado" style="color: black; font-weight: bold; font-size: 1.2em;font-family: 'Young Serif', sans-serif;">
                     FICHAS CONTROL
                 </div>
                 <div class="card-body">
@@ -304,8 +317,8 @@
 
 
 
-            <div class="card text-center mt-5">
-                <div class="card-header" style="background: aqua; color: black; font-weight: bold; font-size: 1.2em;font-family: 'Young Serif', sans-serif;">
+            <div class="card text-center mt-2">
+                <div class="card-header encabezado" style="color: black; font-weight: bold; font-size: 1.2em;font-family: 'Young Serif', sans-serif;">
                     FICHAS HEMOPARASITOSIS
                 </div>
                 <div class="card-body">
@@ -378,7 +391,7 @@
 
             // Hacer la solicitud al endpoint de tu API para consultar el cliente
             $.ajax({
-                url: '/HistoriaClinica/BuscarClientePorCI',
+                url: '/HistoriaClinica/BuscarClientePorCIMobile',
                 method: 'GET',
                 data: { CI: identificacion, token: tk },
                 contentType: 'application/json',
@@ -407,7 +420,7 @@
 
             var identificacion = $("#CI").val();
             $.ajax({
-                url: '/HistoriaClinica/BuscarMascotaPorCI',
+                url: '/HistoriaClinica/BuscarMascotaPorCIMobile',
                 method: 'GET',
                 data: { CI: identificacion, token: tk },
                 contentType: 'application/json',
@@ -459,7 +472,7 @@
                         }
 
                         $.ajax({
-                            url: '/HistoriaClinica/BuscarFichasControlById',
+                            url: '/HistoriaClinica/BuscarFichasControlByIdMobile',
                             method: 'GET',
                             data: { CI: longId, token: tk },
                             contentType: 'application/json',
@@ -500,7 +513,7 @@
                         });
 
                         $.ajax({
-                            url: '/HistoriaClinica/BuscarFichasHemoById',
+                            url: '/HistoriaClinica/BuscarFichasHemoByIdMobile',
                             method: 'GET',
                             data: { CI: longId, token: tk },
                             contentType: 'application/json',
