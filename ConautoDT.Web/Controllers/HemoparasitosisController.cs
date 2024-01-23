@@ -114,7 +114,7 @@ namespace VET_ANIMAL.WEB.Controllers
                 // Lógica de predicción basada en las condiciones especificadas
                 bool tieneEsplenomegalia = sintomas.Contains("ESPLENOMEGALIA");
                 bool tieneAnorexia = sintomas.Contains("ANOREXIA");
-                bool tieneSintomasExcluidos = sintomas.Any(s => s == "EPISTAXIS" || s == "HEMORRAGIAS EN MUCOSAS" || s == "ICTERICIA" || s == "HEMOGLOBINURIA" || s == "PROBLEMAS RESPIRATORIOS");
+                bool tieneSintomasExcluidos = sintomas.Any(s => s == "EPISTAXIS" || s == "HEMORRAGIAS_MUCOSAS" || s == "ICTERICIA" || s == "HEMOGLOBINURIA" || s == "PROBLEMAS_RESPIRATORIOS");
 
                 if (tieneEsplenomegalia && tieneAnorexia && !tieneSintomasExcluidos)
                 {
@@ -124,8 +124,8 @@ namespace VET_ANIMAL.WEB.Controllers
 
                 // Validación para ICTERICIA
                 bool tieneEpistaxis = sintomas.Contains("EPISTAXIS");
-                bool tieneHemorragiasMucosas = sintomas.Contains("HEMORRAGIAS EN MUCOSAS");
-                bool tieneProblemaRespiratporios = sintomas.Contains("PROBLEMAS RESPIRATORIOS");
+                bool tieneHemorragiasMucosas = sintomas.Contains("HEMORRAGIAS_MUCOSAS");
+                bool tieneProblemaRespiratporios = sintomas.Contains("PROBLEMAS_RESPIRATORIOS");
                 bool tieneSintomasExcluidos2 = sintomas.Any(s => s == "ESPLENOMEGALIA" || s == "ANOREXIA" || s == "ICTERICIA" || s == "HEMOGLOBINURIA" );
                 
                 if (tieneEpistaxis && tieneHemorragiasMucosas && tieneProblemaRespiratporios && !tieneSintomasExcluidos2)
@@ -137,7 +137,7 @@ namespace VET_ANIMAL.WEB.Controllers
                 // Validación para BABESIOSIS
                 bool tiene1 = sintomas.Contains("ICTERICIA");
                 bool tiene2 = sintomas.Contains("HEMOGLOBINURIA");
-                bool tieneSintomasExcluidos3 = sintomas.Any(s => s == "ESPLENOMEGALIA" || s == "ANOREXIA" || s == "PROBLEMAS RESPIRATORIOS" ||  s == "EPISTAXIS" || s == "HEMORRAGIAS EN MUCOSAS");
+                bool tieneSintomasExcluidos3 = sintomas.Any(s => s == "ESPLENOMEGALIA" || s == "ANOREXIA" || s == "PROBLEMAS_RESPIRATORIOS" ||  s == "EPISTAXIS" || s == "HEMORRAGIAS_MUCOSAS");
 
                 if (tiene1 && tiene2 && !tieneSintomasExcluidos3)
                 {

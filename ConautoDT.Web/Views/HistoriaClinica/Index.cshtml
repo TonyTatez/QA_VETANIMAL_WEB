@@ -55,205 +55,220 @@
                 </div>
             </div>
         </div>
+        <div class="container-fluid mt-5">
+            <div class="accordion" id="accordionExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" style="display: flex; border-bottom: 1px solid #eee; flex: 1; align-items: center; justify-content: center;">
+                        <button class="btn btn-primary btn-lg btn-block" onclick="mostrarFormulario('formulario1')" style="width: 100%; padding: 0.6rem 1rem; border: none;justify-content: center;" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            DATOS CLIENTE
+                            <span style="content: '\0000a0'; display: inline-block; height: 30px; width: 30px; margin-left: 10px; background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAA/0lEQVRIie3UsUoDURAF0JMgFqlSphBsrEVB+xT+hpAPEP2ElKkF/8AqP5DKIrUW2sdCwSJNxFYUtdi3Gp67+zbRKuTCsOzbOzN37g6PNVYejZLzIxxjC0+4xNV/NGjiHCcF3Auc4QMtHAR+FabxQQ+fFdELvNMEL49ZPMEt9ioU3WH/LxO8JRS9Jgr+QqzgOcF/WbTBRvQ+8uNzEUbh2UW/Rv2HeIK+At8CpnNFU96Xoo2hYv+H4fvS2MGkpHgek8CrjXxN27ipmXyPQ9kPb8rWtVXC/bZ7kFAexyDk7SZ4swY28YhODfXzyrbxnpogX9PxEg3I7qXrBfLWWEV8AfLaXMb/Tf+aAAAAAElFTkSuQmCC') no-repeat left center transparent; background-size: 100% 100%;"></span>
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <div class="form-row m-2" style="font-family: 'Young Serif', sans-serif; ">
+                                <div class="form-group col-md-6">
+                                    <label for="nombreCliente">Nombres</label>
+                                    <input type="text" style="color: blue;font-size: 14px;" id="nombreCliente" class="form-control" readonly />
+                                </div>
 
-        <!-- Botones que ocupan toda la pantalla -->
-        <div class="row mt-5">
-            <div class="col-12">
-                <button type="button" class="btn btn-primary btn-lg btn-block" onclick="mostrarFormulario('formulario1')">DATOS DEL CLIENTE</button>
-            </div>
-        </div>
+                                <div class="form-group col-md-6">
+                                    <label for="dirCliente">Dirección</label>
+                                    <input type="text" style="color: blue;font-size: 14px;" id="dirCliente" class="form-control" readonly />
+                                </div>
 
-        <div class="row mt-2" id="formularioContainer1" style="display: none;">
-            <div class="row col-md-8" style="margin-left: 20%;margin-top: 2%;font-family: 'Young Serif', sans-serif; ">
+                                <div class="form-group col-md-6">
+                                    <label for="correoCliente">Correo</label>
+                                    <input type="text" onkeypress="return validarCorreoElectronico(event)" style="color: blue;font-size: 14px;" id="correoCliente" class="form-control" required readonly />
+                                </div>
 
-
-                <div class="form-group col-md-6">
-                    <label for="nombreCliente">Nombres</label>
-                    <input type="text" style="color: blue;font-size: 14px;" id="nombreCliente" class="form-control" readonly />
-                </div>
-
-                <div class="form-group col-md-6">
-                    <label for="dirCliente">Dirección</label>
-                    <input type="text" style="color: blue;font-size: 14px;" id="dirCliente" class="form-control" readonly />
-                </div>
-
-                <div class="form-group col-md-6">
-                    <label for="correoCliente">Correo</label>
-                    <input type="text" onkeypress="return validarCorreoElectronico(event)" style="color: blue;font-size: 14px;" id="correoCliente" class="form-control" required readonly />
-                </div>
-
-                <div class="form-group col-md-6">
-                    <label for="telefono">Teléfono</label>
-                    <input type="text" onkeypress="return solo10Numeros(event)" style="color: blue;font-size: 14px;" id="telefono" class="form-control" readonly />
-                </div>
-
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-12">
-                <button type="button" class="btn btn-secondary btn-lg btn-block" onclick="mostrarFormulario('formulario2')">DATOS MASCOTA</button>
-            </div>
-        </div>
-
-        <div class="row mt-2" id="formularioContainer2" style="display: none;">
-
-
-            <div class="form-row mt-2" style=" margin-top: 2%;font-family: 'Young Serif', sans-serif; ">
-
-                    <div class="form-group col-md-6">
-                        <label for="">Nombre</label>
-                    <input type="text" style="color: blue;font-size: 16px;" class="form-control" id="editNombre2" readonly>
+                                <div class="form-group col-md-6">
+                                    <label for="telefono">Teléfono</label>
+                                    <input type="text" onkeypress="return solo10Numeros(event)" style="color: blue;font-size: 14px;" id="telefono" class="form-control" readonly />
+                                </div>
+                              
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group col-md-6">
-                        <label for="">Dueño</label>
-                    <input id="editdueño22" type="text" class="form-control mb-3" style="width:100%!important; color: red" readonly>
-                    </div>
-                    <div class="form-group col-md-6" hidden >
-                        <label for="">idmasc</label>
-                        <input id="idmasc2" type="text" class="form-control mb-3" style="width:100%!important; color: red" readonly>
-                    </div>
-                 
-            
-                
-                    <div class="form-group col-md-6">
-                        <label for="">Peso</label>
-                    <input type="text" style="color: blue;font-size: 16px;" class="form-control" id="editPeso2" readonly onkeypress="return soloNumeros(event)" required>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="">Raza</label>
-                    <select readonly class="form-control" id="editRaza2" style="color: blue;font-size: 16px;" required>
-                            <option value="">Seleccione</option>
-                            <option value="Labrador">Labrador</option>
-                            <option value="Bulldog">Bulldog</option>
-                            <option value="Mestizo">Mestizo</option>
-                            <option value="Chihuahua">Chihuahua</option>
-                            <option value="French">French</option>
-                            <option value="Golden Retriever">Golden Retriever</option>
-                            <option value="Pitbull">Pitbull</option>
-                        </select>
-                    </div>
-               
-                
-                    <div class="form-group col-md-6">
-                        <label for="">Sexo</label>
-                    <select class="form-control" id="editSexo2" style="color: blue;font-size: 16px;" readonly required>
-                            <option value="">Seleccione</option>
-                            <option value="Macho">Macho</option>
-                            <option value="Hembra">Hembra</option>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="">Fecha de Nacimiento</label>
-                    <input style="color: blue;font-size: 16px;width: 89%" class="form-control" id="editFecha2" name="editFecha2" readonly  max="2024-12-31" type="text">
-                    </div>
-               
-
-            </div>
-
-        </div>
-
-        <div class="row">
-            <div class="col-12">
-                <button type="button" class="btn btn-success btn-lg btn-block" onclick="mostrarFormulario('formulario3')">FICHAS CONSULTAS</button>
-            </div>
-        </div>
-
-        <div class="row mt-2" id="formularioContainer3" style="display: none;font-family: 'Young Serif', sans-serif;">
-
-            <div class="card text-center mt-5">
-                <div class="card-header" style="background: aqua; color: black; font-weight: bold; font-size: 1.2em;font-family: 'Young Serif', sans-serif;">
-                    FICHAS CONTROL
-                </div>
-                <div class="card-body">
                     
-                    <div class="table-responsive" style="font-family: 'Young Serif', sans-serif; ">
-                        <table class="table table-bordered table-sm tablaMascotas dataTable table-striped" id="tablaMascotas">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        Cod.
-                                    </th>
-                                    <th>
-                                        Historia Clinica
-                                    </th>
-                                    <th>
-                                        Motivo Consulta
-                                    </th>
-                                    <th>
-                                        Peso
-                                    </th>
-                                    <th>
-                                        Observacion
-                                    </th>
-                                    <th>
-                                        Fecha 
-                                    </th>
-
-                                    
-                                </tr>
-                            </thead>
-                            <tbody>
-                                
-                            </tbody>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" style="display: flex; border-bottom: 1px solid #eee; flex: 1; align-items: center; justify-content: center;">
+                        <button class="btn btn-secondary btn-lg btn-block" onclick="mostrarFormulario('formulario2')" style="width: 100%; padding: 0.6rem 1rem; border: none;" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            DATOS MASCOTA
+                            <span style="content: '\0000a0'; display: inline-block; height: 30px; width: 30px; margin-left: 10px; background: url('data:image /png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABKUlEQVRIic3UMUoDQRTG8Z+riKQQC7FUa6sUFiIewcIDWFqIlVewsPQAKT2FJxAJHsDCyiKNbciKBInFzkoIM5tZEtEHj919+977z5tvGP6ZFW0LVlvkdvCCNTy1BeUCRpjgLHx3AnDpgM/wPsIA18sGxPymqbjAY/CUkDHAEY4xnon/9Kn3r8BBaLKN98ypCnENuthAOR18CPR7bEWK1jGcWek4svoJXkV24lDzHndVo6f+Z+lxojohsaI7nOJrTvMBdlKAppPyoRL0IpEzRA+7qebzAHWTc+zjFs/o4xKbTY1zAbX3caXSpdX9lAuofRRqktb6dmxr8y6qMhFvXHUuoMReBNLBWy4kZ4LUFFn26xr8icjlzDNmOTlgJRKbFi/nFC2k0cL2DT10iPGMuib/AAAAAElFTkSuQmCC' ) no-repeat left center transparent;background-size: 100% 100%"></span>
                             
-                        </table>
+                        </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <div class="form-row " style="font-family: 'Young Serif', sans-serif;">
+
+                                <div class="form-group col-md-6">
+                                    <label for="">Nombre</label>
+                                    <input type="text" style="color: blue;font-size: 16px;" class="form-control" id="editNombre2" readonly>
+                                </div>
+                                <br>
+                                <div class="form-group col-md-6">
+                                    <label for="">Dueño</label>
+                                    <input id="editdueño22" type="text" class="form-control mb-3" style="width:100%!important; color: red" readonly>
+                                </div>
+                                <br>
+                                <div class="form-group col-md-6" hidden>
+                                    <label for="">idmasc</label>
+                                    <input id="idmasc2" type="text" class="form-control mb-3" style="width:100%!important; color: red" readonly>
+                                </div>
+                                <br>
+                                <div class="form-group col-md-6">
+                                    <label for="">Peso</label>
+                                    <input type="text" style="color: blue;font-size: 16px;" class="form-control" id="editPeso2" readonly onkeypress="return soloNumeros(event)" required>
+                                </div>
+                                <br>
+                                <div class="form-group col-md-6">
+                                    <label for="">Raza</label>
+                                    <select readonly class="form-control" id="editRaza2" style="color: blue;font-size: 16px;" required>
+                                        <option value="">Seleccione</option>
+                                        <option value="Labrador">Labrador</option>
+                                        <option value="Bulldog">Bulldog</option>
+                                        <option value="Mestizo">Mestizo</option>
+                                        <option value="Chihuahua">Chihuahua</option>
+                                        <option value="French">French</option>
+                                        <option value="Golden Retriever">Golden Retriever</option>
+                                        <option value="Pitbull">Pitbull</option>
+                                    </select>
+                                </div>
+
+                                <br>
+                                <div class="form-group col-md-6">
+                                    <label for="">Sexo</label>
+                                    <select class="form-control" id="editSexo2" style="color: blue;font-size: 16px;" readonly required>
+                                        <option value="">Seleccione</option>
+                                        <option value="Macho">Macho</option>
+                                        <option value="Hembra">Hembra</option>
+                                    </select>
+                                </div>
+                                <br>
+
+                                <div class="form-group col-md-6">
+                                    <label for="">Fecha de Nacimiento</label>
+                                    <input style="color: blue;font-size: 16px;" class="form-control" id="editFecha2" name="editFecha2" readonly max="2024-12-31" type="text">
+                                </div>
+
+
+                            </div>
+
+                            </div>
+
+                        </div>
                     </div>
-
-
                 </div>
-                <div class="card-footer text-muted">
-                    
+                <div class="accordion-item">
+                    <h2 class="accordion-header" style="display: flex; border-bottom: 1px solid #eee; flex: 1; align-items: center; justify-content: center;">
+                        <button class="btn btn-success btn-lg btn-block" onclick="mostrarFormulario('formulario3')" style="width: 100%; padding: 0.6rem 1rem; border: none;" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            FICHAS CONSULTAS
+                        <span style="content: '\0000a0'; display: inline-block; height: 30px; width: 30px; margin-left: 10px; background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABdklEQVRIiaXVsUscQRTH8c9JCMFKLIxYWEmwsAwpAilioQQkSAQr+/wBIpYSrELIf2GqqMVVCsE0FhapVYJWwhEsjggWkkIs7l0493bcOfcHA7Pz3vt9Z3aXNw35eomlmO/gV05RI9N8CD/D9Bav8DbmtQGfMIUXmI+1ffzGGTYGAUzgc2HtfZj8wOtYO8RcwJuF/HW0UsBpnONDz7jAZEnuZMR6c8/D47+elBT+1Tn+13geSe0mYh9jvhq191QGgNEoXsU3fMe/Qs5TtLEZmxktM0oBxG4O8Q7PEjk3OA5QqR4CdHWckZPUUEbOos7HKxuLVcU5J9jDUSLW91EfA7jBn4y8UuW8omVcJcZyVXHOCbaxm4hV9qIcwLDEP67ze17XBczq709drevvRQMDmlUmdQFjCg2sR6e4rAuYwVoi9gUHdQEHVSaPBYxjJdNnYlBAS6c9vMkEHEncYmWAMSzgJNO8q4WofRDQxhaeD2je1ZbC3XAHx/9Lk31lTtEAAAAASUVORK5CYII=') no-repeat left center transparent; background-size: 100% 100%;"></span>
+                    </button>
+                    </h2>
+                    <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                        <div class=" form-row " style="font-family: 'Young Serif', sans-serif; ">
+
+
+                            <div class="card text-center mt-5" style="width: 100%; padding: 0.6rem 1rem; border: none;justify-content: center;">
+                                <div class="card-header" style="background: aqua; color: black; font-weight: bold; font-size: 1.2em;font-family: 'Young Serif', sans-serif;">
+                                    FICHAS CONTROL
+                                </div>
+                                <div class="card-body">
+
+                                    <div class="table-responsive" style="font-family: 'Young Serif', sans-serif; ">
+                                        <table class="table table-bordered table-sm tablaMascotas dataTable table-striped" id="tablaMascotas">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        Cod.
+                                                    </th>
+                                                    <th>
+                                                        Historia Clinica
+                                                    </th>
+                                                    <th>
+                                                        Motivo Consulta
+                                                    </th>
+                                                    <th>
+                                                        Peso
+                                                    </th>
+                                                    <th>
+                                                        Observacion
+                                                    </th>
+                                                    <th>
+                                                        Fecha
+                                                    </th>
+
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+
+
+                                </div>
+                                <div class="card-footer text-muted">
+                                </div>
+                            </div>
+
+
+
+                            <div class="card text-center mt-5" style="width: 100%; padding: 0.6rem 1rem; border: none;justify-content: center;">
+                                <div class="card-header" style="background: aqua; color: black; font-weight: bold; font-size: 1.2em;font-family: 'Young Serif', sans-serif;">
+                                    FICHAS HEMOPARASITOSIS
+                                </div>
+                                <div class="card-body" >
+                                    <div class="table-responsive" style="font-family: 'Young Serif', sans-serif;">
+                                        <table class="table table-bordered table-sm  dataTable table-striped" id="tablaFichasHemo">
+                                            <thead>
+                                                <tr>
+                                                    <th style="background: #021D5D; color: white;font-size: 14px;font-family: 'Young Serif', sans-serif;">
+                                                        Cod.
+                                                    </th>
+                                                    <th style="background: #021D5D; color: white;font-size: 14px;font-family: 'Young Serif', sans-serif;">
+                                                        Historia Clinica
+                                                    </th>
+                                                    <th style="background: #021D5D; color: white;font-size: 14px;font-family: 'Young Serif', sans-serif;">
+                                                        Motivo Consulta
+                                                    </th>
+                                                    <th style="background: #021D5D; color: white;font-size: 14px;font-family: 'Young Serif', sans-serif;">
+                                                        Diagnostico
+                                                    </th>
+                                                    <th style="background: #021D5D; color: white;font-size: 14px;font-family: 'Young Serif', sans-serif;">
+                                                        Tratamiento
+                                                    </th>
+                                                    <th style="background: #021D5D; color: white;font-size: 14px;font-family: 'Young Serif', sans-serif;">
+                                                        Observacion
+                                                    </th>
+                                                    <th style="background: #021D5D; color: white;font-size: 14px;font-family: 'Young Serif', sans-serif;">
+                                                        Fecha
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="card-footer text-muted">
+                                </div>
+                            </div>
+
+                           
+                        </div>
+                    </div>
                 </div>
             </div>
-
-        
-
-            <div class="card text-center mt-5">
-                <div class="card-header" style="background: aqua; color: black; font-weight: bold; font-size: 1.2em;font-family: 'Young Serif', sans-serif;">
-                    FICHAS HEMOPARASITOSIS
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive" style="font-family: 'Young Serif', sans-serif;">
-                        <table class="table table-bordered table-sm  dataTable table-striped" id="tablaFichasHemo">
-                            <thead>
-                                <tr>
-                                    <th style="background: #021D5D; color: white;font-size: 14px;font-family: 'Young Serif', sans-serif;">
-                                        Cod.
-                                    </th>
-                                    <th style="background: #021D5D; color: white;font-size: 14px;font-family: 'Young Serif', sans-serif;">
-                                        Historia Clinica
-                                    </th>
-                                    <th style="background: #021D5D; color: white;font-size: 14px;font-family: 'Young Serif', sans-serif;">
-                                        Motivo Consulta
-                                    </th>
-                                    <th style="background: #021D5D; color: white;font-size: 14px;font-family: 'Young Serif', sans-serif;">
-                                        Diagnostico
-                                    </th>
-                                    <th style="background: #021D5D; color: white;font-size: 14px;font-family: 'Young Serif', sans-serif;">
-                                        Tratamiento
-                                    </th>
-                                    <th style="background: #021D5D; color: white;font-size: 14px;font-family: 'Young Serif', sans-serif;">
-                                        Observacion
-                                    </th>
-                                    <th style="background: #021D5D; color: white;font-size: 14px;font-family: 'Young Serif', sans-serif;">
-                                        Fecha
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-
-                        </table>
-                    </div>
-                </div>
-                <div class="card-footer text-muted">
-                   
-                </div>
-            </div>
-            
-
         </div>
+        
     </div>
 
     <script>

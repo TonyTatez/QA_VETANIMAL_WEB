@@ -26,15 +26,19 @@
             </header>
             <hr class="widget-separator" style="margin-top: 2px !important; border-color: #007bff;">
             <div class="widget-body" style="padding: 20px;">
-                <div class="btn-group m-2" role="group" aria-label="Basic mixed styles example" style="margin-left: 85% !important;">
-                    <button title="Agregar Registros" class="btn p-v-sm btn-primary btn-sm btn-editar" data-bs-toggle="modal" data-bs-target="#masivo">
-                        <i class="bi bi-arrow-bar-up"></i> AGREGAR REGISTROS
-                    </button>
 
-                    <button title="Entrenar Algoritmo" class="btn p-v-sm btn-primary btn-sm btn-editar" data-bs-toggle="modal" data-bs-target="#masivoTrain">
-                        <i class="bi bi-arrow-bar-up"></i> AGREGAR REGISTROS
-                    </button>
+                <div class="d-flex justify-content-end mb-2">
+                    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                        <button title="Agregar Registros" class="btn btn-primary btn-sm btn-editar mx-2" style="height: 40px;" data-bs-toggle="modal" data-bs-target="#masivo">
+                            <i class="bi bi-arrow-bar-up"></i> REGISTROS CLIENTES
+                        </button>
+
+                        <button title="Entrenar Algoritmo" class="btn btn-success btn-sm btn-editar mx-2" style="height: 40px;" data-bs-toggle="modal" data-bs-target="#masivoTrain">
+                            <i class="bi bi-clipboard-minus"></i> REGISTROS ENTRENAMIENTO
+                        </button>
+                    </div>
                 </div>
+
                 <div id="dashboard">
 
                     <div id="clientes" style="background-color: #ffffff; padding: 15px; border: 1px solid #ced4da; border-radius: 5px; margin-bottom: 20px;">
@@ -58,56 +62,43 @@
 </div>
 <!-- Modal cARAGA MASIVA-->
 <div class="modal fade" id="masivo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" style="max-width: 600px;">
-        <!-- Establecer un tamaño máximo -->
-        <div class="modal-content" style="width:100%">
+    <div class="modal-dialog modal-lm">
+        <div class="modal-content">
             <div class="modal-header TMSHeaderModal" style="background: #DAE8FD">
                 <h5 class="modal-title" style="font-family: 'Young Serif', sans-serif; font-weight: bold;">SINCRONIZACIÓN CARGA MASIVA</h5>
                 <div class="d-flex align-items-end flex-column">
                     <button type="button" style="color: black" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
             </div>
-            <div class="col-md-4 float-left container-fluid h-custom" style="margin-top: 15%; margin-left: 5%; position:absolute">
-            </div>
 
-               
-            <form asp-action="GuardaryEditarInfo">
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-8 offset-md-2">
+                            <!-- Ajusta la alineación y el diseño de las columnas -->
+                            <form asp-action="GuardaryEditarInfo">
+                                <div class="form-group">
+                                    <label for="nombreCliente">XSLM</label>
+                                    <input type="file" style="color: blue;font-size: 14px;" id="excelCM" accept=".xls, .xlsx" class="form-control" placeholder="Ingrese nombres del cliente" />
+                                </div>
 
-                <div class="row col-md-8" style="margin-left: 40%;margin-top: 2%;font-family: 'Young Serif', sans-serif; ">
+                                <!-- Espacio adicional -->
+                                <br />
+                                <br />
 
-
-                    <div class="form-group col-md-12">
-                        <label for="nombreCliente">XSLM</label>
-                        <input type="file" style="color: blue;font-size: 14px;" id="excelCM" accept=".xls, .xlsx" class="form-control" placeholder="Ingrese nombres del cliente" />
+                                <div class="modal-footer" style="background: #DAE8FD">
+                                    <button id="guardarInformacion" type="button" onclick="uploadFile()" class="btn btn-success btn-grad btn-sm">
+                                        Guardar
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-
-
-
                 </div>
-                <div class="modal-footer" style="background: #DAE8FD">
-                    <button id="guardarInformacion" type="button" onclick="uploadFile()" class="btn btn-success btn-grad btn-sm">
-                        Guardar
-                    </button>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>
-
 
 
 

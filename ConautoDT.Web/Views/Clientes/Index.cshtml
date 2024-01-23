@@ -14,56 +14,61 @@
 <!-- Modal Guardar-->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
-        <div class="modal-content " style="width:100%">
+        <div class="modal-content">
             <div class="modal-header TMSHeaderModal" style="background: #DAE8FD">
                 <h5 class="modal-title" style="font-family: 'Young Serif', sans-serif; font-weight: bold;">Cliente</h5>
                 <div class="d-flex align-items-end flex-column">
                     <button type="button" style="color: black" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
             </div>
+            <div class="modal-body">
+                <form asp-action="GuardaryEditarInfo" onsubmit="procesarFormulario()">
+                    <div class="row col-lg-8 col-md-10 col-sm-12 mx-auto" style="margin-top: 2%; font-family: 'Young Serif', sans-serif;">
 
-            <form asp-action="GuardaryEditarInfo" onsubmit="procesarFormulario()">
-
-                <div class="row col-md-8" style="margin-left: 30%;margin-top: 2%;font-family: 'Young Serif', sans-serif; ">
+                        
 
 
-                    <div class="form-group col-md-12">
-                        <label for="nombreCliente">Nombres</label>
-                        <input type="text" asp-for="@Model.nombres" style="color: blue;font-size: 14px;" id="nombreCliente" class="form-control" placeholder="Ingrese nombres del cliente" />
+                            <div class="form-group col-md-12">
+                                <label for="nombreCliente">Nombres</label>
+                                <input type="text" asp-for="@Model.nombres" style="color: blue;font-size: 14px;" id="nombreCliente" class="form-control" placeholder="Ingrese nombres del cliente" />
+                            </div>
+
+
+
+                            <div class="form-group col-md-12">
+                                <label for="cedCliente">Cédula</label>
+                                <input type="text" asp-for="@Model.identificacion" style="color: blue;font-size: 14px;" onkeypress="return solo10Numeros(event)" id="cedCliente" class="form-control" placeholder="Ingrese cédula del cliente" required />
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <label for="dirCliente">Dirección</label>
+                                <input type="text" asp-for="@Model.direccion" style="color: blue;font-size: 14px;" id="dirCliente" class="form-control" placeholder="Ingrese dirección del cliente" />
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <label for="correoCliente">Correo</label>
+                                <input type="text" asp-for="@Model.correo" onkeypress="return validarCorreoElectronico(event)" style="color: blue;font-size: 14px;" id="correoCliente" class="form-control" placeholder="Ingrese correo del cliente" required />
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <label for="telefono">Teléfono</label>
+                                <input type="text" asp-for="@Model.telefono" onkeypress="return solo10Numeros(event)" style="color: blue;font-size: 14px;" id="telefono" class="form-control" placeholder="Ingrese teléfono del cliente" />
+                            </div>
+
+                        
+
                     </div>
-
-
-
-                    <div class="form-group col-md-12">
-                        <label for="cedCliente">Cédula</label>
-                        <input type="text" asp-for="@Model.identificacion" style="color: blue;font-size: 14px;" onkeypress="return solo10Numeros(event)" id="cedCliente" class="form-control" placeholder="Ingrese cédula del cliente" required />
+                    <div class="modal-footer" style="background: #DAE8FD">
+                        <button id="guardarInformacion" type="submit" class="btn btn-success btn-grad btn-sm">
+                            Guardar
+                        </button>
                     </div>
-
-                    <div class="form-group col-md-12">
-                        <label for="dirCliente">Dirección</label>
-                        <input type="text" asp-for="@Model.direccion" style="color: blue;font-size: 14px;" id="dirCliente" class="form-control" placeholder="Ingrese dirección del cliente" />
-                    </div>
-
-                    <div class="form-group col-md-12">
-                        <label for="correoCliente">Correo</label>
-                        <input type="text" asp-for="@Model.correo" onkeypress="return validarCorreoElectronico(event)" style="color: blue;font-size: 14px;" id="correoCliente" class="form-control" placeholder="Ingrese correo del cliente" required />
-                    </div>
-
-                    <div class="form-group col-md-12">
-                        <label for="telefono">Teléfono</label>
-                        <input type="text" asp-for="@Model.telefono" onkeypress="return solo10Numeros(event)" style="color: blue;font-size: 14px;" id="telefono" class="form-control" placeholder="Ingrese teléfono del cliente" />
-                    </div>
-
-                </div>
-                <div class="modal-footer" style="background: #DAE8FD">
-                    <button id="guardarInformacion" type="submit" class="btn btn-success btn-grad btn-sm">
-                        Guardar
-                    </button>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
 </div>
+
 
 <!-- Modal Editar -->
 <div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -78,7 +83,7 @@
             
             <form asp-action="EditarInfo" class="formEditCl">
 
-                <div class="row col-md-8" style="margin-left: 30%;margin-top: 2%;font-family: 'Young Serif', sans-serif; ">
+                <div class="row col-lg-8 col-md-10 col-sm-12 mx-auto" style="margin-top: 2%; font-family: 'Young Serif', sans-serif;">
                     <div class="form-group col-md-12" hidden>
                         <label for="nombreCliente">Nombres</label>
                         <input type="text" asp-for="@Model.idCliente" style="color: blue;font-size: 14px;" id="idCliente2" class="form-control" placeholder="Ingrese nombres del cliente" />
