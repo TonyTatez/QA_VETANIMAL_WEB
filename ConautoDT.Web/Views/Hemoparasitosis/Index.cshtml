@@ -142,6 +142,10 @@
                                                 <i class="bi bi-file-earmark-richtext-fill"></i>
                                             </button>
 
+                                            <input type="file" accept=".pdf" id="inputArchivo" style="display: none;" />
+                                            <button title="Carga Examenes" class="btn p-v-sm btn-success btn-sm btn-editar" onclick="seleccionarArchivo();">
+                                                <i class="bi bi-file-arrow-up"></i> Examenes
+                                            </button>
 
 
                                         </td>
@@ -207,21 +211,20 @@
 
                     <div class="d-flex align-items-end flex-column">
                         <button type="button" style="color: black" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar" onclick="cerrarModalYRecargar()">
-
                         </button>
                     </div>
                 </div>
                 <div class="container-fluid mt-5">
                     <div class="accordion" id="accordionExample">
-                    <div class="accordion-item">
+                        <div class="accordion-item">
                             <h2 class="accordion-header" style="display: flex; border-bottom: 1px solid #eee; flex: 1; align-items: center; justify-content: center;">
-                            <button class="btn btn-primary btn-lg btn-block" id="acor1Hemo" style="width: 100%; padding: 0.6rem 1rem; border: none;justify-content: center;" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                DATOS PACIENTE
+                                <button class="btn btn-primary btn-lg btn-block" id="acor1Hemo" style="width: 100%; padding: 0.6rem 1rem; border: none;justify-content: center;" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    DATOS PACIENTE
                                     <span style="content: '\0000a0'; display: inline-block; height: 30px; width: 30px; margin-left: 10px; background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAElElEQVRIiX2VXWxTZRjHf+85PT1du36MsjkGa3EUAnVjsGicnxeg8eMGhGVGAwRi4o16QdQLYgwxkkA0i/GCZCGagEGiCRIkEYcJGgmiJoBs6NhYN1j3Aeugazu2tT3teb0ojK5r9796z/O87///vs95PgQlUFtbh1CUANACbATqgcX33RGgGzgLHJcmoaGhUFEeUczo8wfqgP3AFsBS6hL3kQFOSOSeocH+gUKnmv8RDAYps7u3AaeAJkAB0HWd11pa2PDCiyRTScZu384/pgCPCcQut2fRsMfj7IrH4/MFgsEg96bSHwAHAVs+w6f7D7C1tZX1TevYvGkTApPx8XHi8UT+Nh3YDOp0ZeWiC9FoFMgLkc8f2AYceXDrB1hSs4SOMx04HTZU5aHLMAw++7yNQ4e+LoyKCWwPD4aOzQr4fIE6BP8ArvydtbXLOHr0MMv9/kKSHJNpsn37Ls7/caHQlQAaw4Ohm6rPtxIE7eRiPgshBO3tB2mor597VJokhy9ipiaxOBbj9Xo5efJUoYAOVDud7h8sCBkgly1zsGzZUp5qfjLHmUkisxnMZIx0pJfsvbGcPT1F47q1WK1W0ul0IcUWRVUDFnJ5Pi8Vq6qqIJtieuAc2ekoSHNeiNLj17HZq9A0rZiAFWixkCuieYhEIqRudzN56wapqWkkEpfXi6IqJO7cRZomtvJy9FtXQcpiFAAbLeQqdB5GRkY5ffpnpiZjhMIRbLpGsK4GgaSrdwjDlPhrvCx9ZIyZ5EwpgaDq9iw6QEFqAkgpsQgTm65RvdjJ0+sCnD7XRU/fIC2vNJMyDKaTBt2hUTp7h0sJlC3YBjLZLBZVwV1up7N3mKagn+Tdca70DOH1lDMaGUXT1IUoED5/YASoKeb0esr55dBuxqOT6FYLlRVOYpFxpM3O5FSSmqoKWt9v5/rgWCn+UQu5rlhU4G7sHhf/vckz6wOzNk9VJQAVLgfXBm7RF44s9IBuhVzLLYlvf/p7dt3T2U/nX9fIZrIAHP7xArJ0BgGcVYDj5FpuUfSHI0xMxJFSsrpxBY3Na1AtKvH4JJ094YXIM8BxC9IMIZQTQGuxXeUOG9IUjAyPYSvTEQJmZlKU2Ww47PpCAiekKUJqPD6B21NxGcQucj0ERdXQKldQ39TMvp3NeJx2dF0nY2QxpcRht6NpGs0NdfRMVzKRUpHJBPJhtSeArUPhUMwCEB7sH1ixquE9ddVLR0RNE1Q3Ylgr6FNMbiiXWUIEIQRlZXPGBDeUlfQFX8dcraCnY4jIVeTIRTK9Z97pv951E/IGzo5393SOLn/TknSvfD6rlgGQlYLf7lSjCskaZxxV5H5o2lQ4NlxHW6geQ+Zq1FRtmC4fjtqGfc/VGl9e+vN3oGAmv7W3jSvWV99OyPIvsqj2fJ9bS9PgmgDgaqKCuGGd8xoVM+kSk7ufiH7X3t72yay96NB/dt+l1THhaUtK28smYl4byYeCNHWR6qgg+uH5jx7vLvQXFQDY+fFXDOiN9THhecOQ2gaBXGsIzQ6gSWNaIrqswvjVJRPfP5r9r+ubvTuK8vwP8wa54QiYpXAAAAAASUVORK5CYII=') no-repeat left center transparent; background-size: 100% 100%;"></span>
-                            </button>
-                        </h2>
-                        <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
                                     <div class=" mt-2" style=" margin-top: 2%;font-family: 'Young Serif', sans-serif; ">
 
                                         <div class="form-group col-md-12">
@@ -275,229 +278,229 @@
 
 
                                     </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="accordion-item">
+                        <div class="accordion-item">
                             <h2 class="accordion-header" style="display: flex; border-bottom: 1px solid #eee; flex: 1; align-items: center; justify-content: center;">
                                 <button class="btn btn-success btn-lg btn-block" id="acor2Hemo" style="width: 100%; padding: 0.6rem 1rem; border: none;" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                FICHA SINTOMATOLÓGICA
+                                    FICHA SINTOMATOLÓGICA
                                     <span style="content: '\0000a0'; display: inline-block; height: 30px; width: 30px; margin-left: 10px; background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAA7EAAAOxAGVKw4bAAADmUlEQVRIiZ2UXUxbZRzGf6fnFE43LCrfDoaE4VjpcMtUpkHYlpCQLEGIF0qyxMQYQ0x2ZbzUCxOjiUvmhSbGj2h0GEMGbaMBpIEFomwu4cPWrXQuQOlq2KFjWhw77WnP8WJQ2ODU4pOc5H3P+3+e3/v+z4dAFppY1fIAeza1Dygmtbe3lwKOTFW/Dva/VFyx9/Xt1korq7Dl5ZlZ35KAUy0tLR+WlZVlQKQgPLflbigUIhaN8mTzcVOnBNDY2IimaXiHh0GwrC0ZHDp4kNbWVlPz+Pg4M3/fybAxWE8jHA6jH3me1KFnWSnfx66TLxMMBjOas5Fl80SwiMx6fyQa8JFKxP9X4G3lJrP+30hq2jYAUWR3cSmpRBwxV95x+Nzvfn75/D240ovr7PskE4l7z2Bdhq5zd/kWejKJriUQdhCeSia52NfNO68eJm9XDovfTbEQDNx/glVlkfLnmik9/Ax3l6M72v3UhWFylpb56ryfyM0VwrcF9lTXbJzA6XSyevkyxFZAAP68zv7GxqzC1dU7zA/18+7RoyysrPDB2Us8VOtA29wiQdjakGAwaPomNTU1AWAYevJnd5/0YvkeJIuFR2WZ3RV70eKqfqn/h8U0oKSkhIaGhiwbAgUFBSwsLODt/uZjp93+xpGnn8oB+D54DVW2fRS5eqX4xrXguTRgbm6OwcHBrAEdHR0IgkBKVV87tRY+H4sxEg73aLq+Dzjd09u70aK6ujqqq6uzBsiyTCQS4URFed7jdjsGcC4ws6rp+kWgxO12zwMbAL/fj9vtzhrQ2dnJqNfL6Sf2AzCpKEwqyhfAC2sX9wGcTic1NTWmgYIgYLPZ0vOxsTGceopH5FxShsG3gZlFA/4Cut1ud2wLIBAIMDAwYAqw2Wx0dXUhSRKqquJ1uXjbcQCAoVCIUCz2CdBsGMbJzb40oLKykra2NlOAKIqIongvcGiIA1YrOaLIP5pG7x/XrxqG8ZkgCH0ejyexLSAajeLz+UwBVquVqqoqRFEkHA6TeFjlzNQkOYKFW6r6psfjUQDlQZ8ky/JMUVGRruu6JT8/3xQgSVL6Y4yrKq+0O/nyvI8LUzd6BEEYMvWtD3Jzc8kEsFqt6bEaVznz9SyPVdQCkZ9cLpduClBVtXZpaclSX19PYWGhKWCzjh07jsPhIBAIMDIykrFWApIul4vR0dGswtc1MTGBoigAyf8CfDo9Pd2zo/RNMgwj43/9X4FWZdTMPagdAAAAAElFTkSuQmCC') no-repeat left center transparent; background-size: 100% 100%;"></span>
                                 </button>
-                        </h2>
-                        <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                <div class="form-row " style="font-family: 'Young Serif', sans-serif;">
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <div class="form-row " style="font-family: 'Young Serif', sans-serif;">
 
-                                    <form id="miFormulario">
+                                        <form id="miFormulario">
 
-                                        <div class="sintomas-header">
-                                            <h5 style="font-family: 'Young Serif', sans-serif;color:black">HEMOPARASITOSIS</h5>
-                                        </div>
-
-                                        <div class="form-row m-2" style="font-family: 'Young Serif', sans-serif; ">
-                                            <div class="checkbox-container ">
-                                                <input type="checkbox" id="sangradoCutaneo" name="sintomas" value="SANGRADO_CUTANEO">
-                                                <label for="sangradoCutaneo">Sangrado cutáneo</label>
+                                            <div class="sintomas-header">
+                                                <h5 style="font-family: 'Young Serif', sans-serif;color:black">HEMOPARASITOSIS</h5>
                                             </div>
 
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="problemasRespiratorios" name="sintomas" value="PROBLEMAS_RESPIRATORIOS">
-                                                <label for="problemasRespiratorios">Problemas respiratorios</label>
+                                            <div class="form-row m-2" style="font-family: 'Young Serif', sans-serif; ">
+                                                <div class="checkbox-container ">
+                                                    <input type="checkbox" id="sangradoCutaneo" name="sintomas" value="SANGRADO_CUTANEO">
+                                                    <label for="sangradoCutaneo">Sangrado cutáneo</label>
+                                                </div>
+
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" id="problemasRespiratorios" name="sintomas" value="PROBLEMAS_RESPIRATORIOS">
+                                                    <label for="problemasRespiratorios">Problemas respiratorios</label>
+                                                </div>
+
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" id="perdidaPeso" name="sintomas" value="PERDIDA_PESO">
+                                                    <label for="perdidaPeso">Pérdida de peso</label>
+                                                </div>
+
+                                            </div>
+                                            <div class="form-row m-2" style="font-family: 'Young Serif', sans-serif; ">
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" id="linfadenopatia" name="sintomas" value="LINFADENOPATIA">
+                                                    <label for="linfadenopatia">Linfadenopatía</label>
+                                                </div>
+
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" id="letargia" name="sintomas" value="LETARGIA">
+                                                    <label for="letargia">Letargia</label>
+                                                </div>
+
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" id="ictericia" name="sintomas" value="ICTERICIA">
+                                                    <label for="ictericia">Ictericia</label>
+                                                </div>
+
+                                            </div>
+                                            <div class="form-row m-2" style="font-family: 'Young Serif', sans-serif; ">
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" id="hemorragiasMucosas" name="sintomas" value="HEMORRAGIAS_MUCOSAS">
+                                                    <label for="hemorragiasMucosas">Hemorragias en mucosas</label>
+                                                </div>
+
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" id="hemoglobinuria" name="sintomas" value="HEMOGLOBINURIA">
+                                                    <label for="hemoglobinuria">Hemoglobinuria</label>
+                                                </div>
+
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" id="fiebre" name="sintomas" value="FIEBRE">
+                                                    <label for="fiebre">Fiebre</label>
+                                                </div>
+
+                                            </div>
+                                            <div class="form-row m-2" style="font-family: 'Young Serif', sans-serif; ">
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" id="esplenomegalia" name="sintomas" value="ESPLENOMEGALIA">
+                                                    <label for="esplenomegalia">Esplenomegalia</label>
+                                                </div>
+
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" id="epistaxis" name="sintomas" value="EPISTAXIS">
+                                                    <label for="epistaxis">Epistaxis</label>
+                                                </div>
+
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" id="cojeraArticular" name="sintomas" value="DOLOR_ARTICULAR">
+                                                    <label for="cojeraArticular">Dolor articular</label>
+                                                </div>
+
+
+                                            </div>
+                                            <div class="form-row m-2" style="font-family: 'Young Serif', sans-serif; ">
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" id="cojeraIntermitente" name="sintomas" value="COJERA_INTERMITENTE">
+                                                    <label for="cojeraIntermitente">Cojera intermitente</label>
+                                                </div>
+
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" id="anorexia" name="sintomas" value="ANOREXIA">
+                                                    <label for="anorexia">Anorexia</label>
+                                                </div>
+
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" id="depresion" name="sintomas" value="DEPRESION">
+                                                    <label for="depresion">Depresión</label>
+                                                </div>
+
                                             </div>
 
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="perdidaPeso" name="sintomas" value="PERDIDA_PESO">
-                                                <label for="perdidaPeso">Pérdida de peso</label>
-                                            </div>
-
-                                        </div>
-                                        <div class="form-row m-2" style="font-family: 'Young Serif', sans-serif; ">
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="linfadenopatia" name="sintomas" value="LINFADENOPATIA">
-                                                <label for="linfadenopatia">Linfadenopatía</label>
-                                            </div>
-
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="letargia" name="sintomas" value="LETARGIA">
-                                                <label for="letargia">Letargia</label>
-                                            </div>
-
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="ictericia" name="sintomas" value="ICTERICIA">
-                                                <label for="ictericia">Ictericia</label>
-                                            </div>
-
-                                        </div>
-                                        <div class="form-row m-2" style="font-family: 'Young Serif', sans-serif; ">
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="hemorragiasMucosas" name="sintomas" value="HEMORRAGIAS_MUCOSAS">
-                                                <label for="hemorragiasMucosas">Hemorragias en mucosas</label>
-                                            </div>
-
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="hemoglobinuria" name="sintomas" value="HEMOGLOBINURIA">
-                                                <label for="hemoglobinuria">Hemoglobinuria</label>
-                                            </div>
-
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="fiebre" name="sintomas" value="FIEBRE">
-                                                <label for="fiebre">Fiebre</label>
-                                            </div>
-
-                                        </div>
-                                        <div class="form-row m-2" style="font-family: 'Young Serif', sans-serif; ">
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="esplenomegalia" name="sintomas" value="ESPLENOMEGALIA">
-                                                <label for="esplenomegalia">Esplenomegalia</label>
-                                            </div>
-
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="epistaxis" name="sintomas" value="EPISTAXIS">
-                                                <label for="epistaxis">Epistaxis</label>
-                                            </div>
-
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="cojeraArticular" name="sintomas" value="DOLOR_ARTICULAR">
-                                                <label for="cojeraArticular">Dolor articular</label>
+                                            <div class="modal-footer" style="background: #DAE8FD">
+                                                <button id="diagnosticar" type="button" onclick="enviarDatos()" class="btn btn-success btn-grad btn-sm">
+                                                    DIAGNOSTICAR
+                                                </button>
                                             </div>
 
 
-                                        </div>
-                                        <div class="form-row m-2" style="font-family: 'Young Serif', sans-serif; ">
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="cojeraIntermitente" name="sintomas" value="COJERA_INTERMITENTE">
-                                                <label for="cojeraIntermitente">Cojera intermitente</label>
-                                            </div>
+                                        </form>
 
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="anorexia" name="sintomas" value="ANOREXIA">
-                                                <label for="anorexia">Anorexia</label>
-                                            </div>
-
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="depresion" name="sintomas" value="DEPRESION">
-                                                <label for="depresion">Depresión</label>
-                                            </div>
-
-                                        </div>
-
-                                        <div class="modal-footer" style="background: #DAE8FD">
-                                            <button id="diagnosticar" type="button" onclick="enviarDatos()" class="btn btn-success btn-grad btn-sm">
-                                                DIAGNOSTICAR
-                                            </button>
-                                        </div>
-
-
-                                    </form>
+                                    </div>
 
                                 </div>
-
                             </div>
                         </div>
-                    </div>
-                    <div class="accordion-item">
+                        <div class="accordion-item">
                             <h2 class="accordion-header" style="display: flex; border-bottom: 1px solid #eee; flex: 1; align-items: center; justify-content: center;">
                                 <button class="btn btn-secondary btn-lg btn-block" id="acor3Hemo" style="width: 100%; padding: 0.6rem 1rem; border: none;" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                RESULTADO
+                                    RESULTADO
                                     <span style="content: '\0000a0'; display: inline-block; height: 30px; width: 30px; margin-left: 10px; background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAA7EAAAOxAGVKw4bAAADxUlEQVRIibWUW0wcVRzGf7M7e2GZwkK5lcLSpbhIDe1DFaVqgALFVFFqUk3RGolUfWpi4pNPPvli4oMmaogmXpvY2NhG2qYFTNE2tBoQawGZcmmXAst1l+teZtnjw3JZdBdIqt/LOTPnO9/5f9/858D/DKni2AmdJIlXgZz/WPuuhPhCliTxcGnxI58/U16CACRArJy+PIoo80hOtPn5llautP12UwYss0oGZ/68h61gH27XMHPuSR56vPy+yp9VegEUGWB0QGVHbj6329tWCR1NP97XAaMDKgAyQOHO7VQ+6gC2Zn8r8yb/JKP9ywdYExPItWWjDtxBCwZjVvWAPdwHtwfvxuQYZBlH7i6SEhPWHEjLn7Bb7SegaTE378xIB6Crty8mx2g04MjdxUpbyETYUgfvML+4uPYiApIkUXqgCAR0qX0IEYUEKPGWdc9yeAiTa6rK0YLBVZvRENA0Xqx+ijx7DkaDgUWvl2HXOJIkkZmehiXOvOw2zQe4oka0ZvPfWPT6uKX2kZiwjcbmVqbcbmy2LGZDGkPOYeypabxee5S9BQ5XSO//a11Egf2HAYkAgtMT8M8eKbMGIC6RpX2VfPj1JxyrqWIkP5kbmpsFEURHAQOuGS6rXfx8tlnWBY26dRHd8+ujVr0CXyg8XrtwjvqaKlrzTDgDE6vrSwi8QY0vzzXy7sk3g/tTMkO6yIg2g4TEks9Lqn+CkfxknMGFdevByVmmvvuF1LoKPjjzfUplbb1VtyXlVQi8Uy5252RxQ3Mz09TJQkd/uPo5L5Nf/UTKSyXorfH4jToFgUMGcM/MMOAcomYz/WkDCRYzc0JjQQRJKC1k/NOL6BUznosdJB0pxpCRFGFZhNt0bGKKmz3qpvWbDAaeLi9hyDmCjgKEUSbllYO4Pmok+UgxJnv6ilH8g2OLIKkyQH6enecOxbo911/WS6EQtqTt3Op2YtqTjd4aT+Y7R5H0a2l7u50UKqnjl5QxjwzMD424+KOnd1MHK9hbkE93YxNeIYjbY1sTF+DtcWK53M2J+rrZ97JPIgtBR1t752tt7Z1ZG4k+e+jgW0aDbIXwD7m04Ds+9vGFJ827M1422dMtEI7F1+/65vjz1e8nblMmifC+ISpr6x98+42638sOFJkBTp09z7c/NJZNK7oryfMhK+AIGxCqW9F72hsaVvfKW0wld9ozYzbIYbrJaASwLAt5gF9jbdzQQWVtfRFQDbxQ8cRjjh3paQCMjo3TfPW6CpwGhppOfdYQS2MzB06gBWhpvno9FsezkcDf8ZhzfzeeTo8AAAAASUVORK5CYII=') no-repeat left center transparent; background-size: 100% 100%;"></span>
                                 </button>
-                        </h2>
-                        <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                <div class="table-responsive" style="font-family: 'Young Serif', sans-serif; ">
-                                    <table class="table table-bordered table-sm  dataTable table-striped" id="tablaDiagnostico">
-                                        <thead>
-                                            <tr>
+                            </h2>
+                            <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <div class="table-responsive" style="font-family: 'Young Serif', sans-serif; ">
+                                        <table class="table table-bordered table-sm  dataTable table-striped" id="tablaDiagnostico">
+                                            <thead>
+                                                <tr>
 
 
-                                                <th>
-                                                    Nombre Mascota
-                                                </th>
-                                                <th>
-                                                    Diagnostico
-                                                </th>
+                                                    <th>
+                                                        Nombre Mascota
+                                                    </th>
+                                                    <th>
+                                                        Diagnostico
+                                                    </th>
 
-                                                <th>
-                                                    Observacion
-                                                </th>
+                                                    <th>
+                                                        Observacion
+                                                    </th>
 
-                                                <th>
-                                                    Hemoparasitosis
-                                                </th>
+                                                    <th>
+                                                        Hemoparasitosis
+                                                    </th>
 
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
 
-                                    </table>
-                                </div>
-
-                                <div class="card" id="diagnistico" style="font-family: 'Young Serif', sans-serif;" hidden >
-                                    <div class="card-header" >
-                                        Diagnóstico
+                                        </table>
                                     </div>
-                                    <div class="card-body">
-                                       <div id="mensajeEnfermedad" class="alert alert-danger" role="alert" style="display: none;"></div>
 
-                                        <div class="precision-container m-3" >
-                                            <div id="precisionGrafico" class="precision">
-                                                <div class="circleContent">
-                                                    <div id="precisionPorcentaje" class="circlePercentage"></div>
-                                                    <div class="circleLabel">Precisión del Diagnóstico</div>
+                                    <div class="card" id="diagnistico" style="font-family: 'Young Serif', sans-serif;" hidden>
+                                        <div class="card-header">
+                                            Diagnóstico
+                                        </div>
+                                        <div class="card-body">
+                                            <div id="mensajeEnfermedad" class="alert alert-danger" role="alert" style="display: none;"></div>
+
+                                            <div class="precision-container m-3">
+                                                <div id="precisionGrafico" class="precision">
+                                                    <div class="circleContent">
+                                                        <div id="precisionPorcentaje" class="circlePercentage"></div>
+                                                        <div class="circleLabel">Precisión del Diagnóstico</div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
 
 
                                             <div id="anaplasmasDiv" style="font-family: 'Young Serif', sans-serif;" hidden>
-                                            <p>
-                                                La anaplasmosis en perros es una enfermedad infecciosa causada por bacterias transmitidas por garrapatas,
-                                                como Anaplasma phagocytophilum y Anaplasma platys. Los síntomas caracteristicos incluyen Esplenomegalia y Anorexia.
-                                            </p>
-                                       </div>
+                                                <p>
+                                                    La anaplasmosis en perros es una enfermedad infecciosa causada por bacterias transmitidas por garrapatas,
+                                                    como Anaplasma phagocytophilum y Anaplasma platys. Los síntomas caracteristicos incluyen Esplenomegalia y Anorexia.
+                                                </p>
+                                            </div>
 
                                             <div id="eriDiv" style="font-family: 'Young Serif', sans-serif;" hidden>
-                                            <p>
-                                                La ehrlichiosis en perros es una enfermedad causada por la bacteria Ehrlichia canis, transmitida principalmente por 
-                                                las garrapatas. Esta infección afecta a los glóbulos blancos y puede causar síntomas caracteristicos como Hemorragias en mucosas,
-                                                letargo, Epistaxis.
-                                            </p>
-                                        </div>
+                                                <p>
+                                                    La ehrlichiosis en perros es una enfermedad causada por la bacteria Ehrlichia canis, transmitida principalmente por
+                                                    las garrapatas. Esta infección afecta a los glóbulos blancos y puede causar síntomas caracteristicos como Hemorragias en mucosas,
+                                                    letargo, Epistaxis.
+                                                </p>
+                                            </div>
 
                                             <div id="babesiosisDiv" style="font-family: 'Young Serif', sans-serif;" hidden>
-                                            <p>
-                                                La babesiosis en perros es una enfermedad causada por protozoos del género Babesia, que infectan los glóbulos rojos. 
-                                                La transmisión suele ocurrir a través de garrapatas, transfusiones de sangre o de madre a cachorro durante el parto. 
-                                                Los síntomas caracteristicos incluyen fiebre, ictericia y problemas de orina.
-                                            </p>
+                                                <p>
+                                                    La babesiosis en perros es una enfermedad causada por protozoos del género Babesia, que infectan los glóbulos rojos.
+                                                    La transmisión suele ocurrir a través de garrapatas, transfusiones de sangre o de madre a cachorro durante el parto.
+                                                    Los síntomas caracteristicos incluyen fiebre, ictericia y problemas de orina.
+                                                </p>
+                                            </div>
+
                                         </div>
-                                      
+                                    </div>
+
+
+                                    <div class="card mt-3" id="tratamientodiv" style="font-family: 'Young Serif', sans-serif;" hidden>
+                                        <div class="card-header">
+                                            Tratamiento
+                                        </div>
+                                        <div class="card-body">
+                                            <div contenteditable="true" id="campoTratam" style="width: 100%; min-height: 100px; border: 1px solid #ccc;"></div>
+                                        </div>
+
+                                        <div class="card-header">
+                                            Observaciones
+                                        </div>
+                                        <div class="card-body">
+                                            <div contenteditable="true" id="campoObserv" style="width: 100%; min-height: 100px; border: 1px solid #ccc;"></div>
+                                        </div>
                                     </div>
                                 </div>
-
-
-                               <div class="card mt-3" id="tratamientodiv"  style="font-family: 'Young Serif', sans-serif;" hidden >
-                                    <div class="card-header">
-                                        Tratamiento
-                                    </div>
-                                    <div class="card-body">
-                                        <div contenteditable="true" id="campoTratam" style="width: 100%; min-height: 100px; border: 1px solid #ccc;"></div>
-                                    </div>
-
-                                    <div class="card-header" >
-                                        Observaciones
-                                    </div>
-                                    <div class="card-body">
-                                        <div contenteditable="true" id="campoObserv" style="width: 100%; min-height: 100px; border: 1px solid #ccc;"></div>
-                                    </div>
-                               </div>
                             </div>
                         </div>
+
                     </div>
-                    
-                </div>
                 </div>
                 <div class="modal-footer" style="background: #DAE8FD">
                     <button id="guardarInformacion" type="button" onclick="GuardarFicha()" class="btn btn-success btn-grad btn-sm">
@@ -539,13 +542,55 @@
 
 
     <script>
+
+        function seleccionarArchivo() {
+            // Crear un input de tipo file
+            const inputArchivo = document.createElement('input');
+            inputArchivo.type = 'file';
+            inputArchivo.accept = '.pdf';
+            inputArchivo.style.display = 'none';
+
+            // Adjuntar el input al documento
+            document.body.appendChild(inputArchivo);
+
+            // Asignar la función de manejo de cambios al input
+            inputArchivo.addEventListener('change', function () {
+                const archivo = inputArchivo.files[0];
+
+                if (archivo) {
+                    if (archivo.type === 'application/pdf') {
+                        // Archivo PDF seleccionado correctamente
+                        setTimeout(function () {
+                            Swal.fire('Éxito', 'EXAMENES CARGADOS CORRECTAMENTE', 'success');
+                        }, 4000); // Retraso de 4 segundos
+                    } else {
+                        // Archivo seleccionado no es un PDF
+                        setTimeout(function () {
+                            Swal.fire('Error', 'Por favor, seleccione un archivo PDF.', 'error');
+                        }, 3000); // Retraso de 4 segundos
+                    }
+                } else {
+                    // No se seleccionó ningún archivo
+                    setTimeout(function () {
+                        Swal.fire('Error', 'Por favor, seleccione un archivo.', 'error');
+                    }, 3000); // Retraso de 4 segundos
+                }
+
+                // Eliminar el input después de la validación
+                document.body.removeChild(inputArchivo);
+            });
+
+            // Hacer clic en el input
+            inputArchivo.click();
+        }
+
         $(document).ready(function () {
             $("#miModal").on("shown.bs.modal", function () {
                 // Modificar el z-index al valor deseado
                 $(this).css("z-index", "1000"); // Ajusta el valor según tus necesidades
             });
 
-            
+
         });
 
 
@@ -567,6 +612,7 @@
                 });
             }
         });
+
 
         function cerrarModalYRecargar() {
             // Cerrar el modal
@@ -637,7 +683,7 @@
                 return; // Detener la ejecución si no se cumplen los requisitos
             }
 
-            
+
 
             document.getElementById("cargasid").hidden = false;
 
@@ -653,7 +699,7 @@
                     },
                     success: function (response) {
 
-                        console.log("trakaaaaaaa",response.enfermedad)
+                        console.log("trakaaaaaaa", response.enfermedad)
                         enfermedadGlobal = response.enfermedad;
                         document.getElementById("cargasid").hidden = true;
                         document.getElementById("diagnistico").hidden = false;
@@ -687,9 +733,9 @@
 
                         // Verificar si hay una propiedad "enfermedad" en la respuesta
                         if (response.enfermedad) {
-                            
-                                // Ocultar todos los divs relacionados con enfermedades
-        
+
+                            // Ocultar todos los divs relacionados con enfermedades
+
 
                             var estiloBoton = response.enfermedad === "Enfermedad Desconocida" ? "btn-danger" : "btn-success";
                             var icono = response.enfermedad === "Enfermedad Desconocida" ? "bi-x" : "bi-check";
@@ -715,27 +761,27 @@
                                 var mensaje = 'El cachorro presenta síntomas de ' + response.enfermedad + ' negativo para HEMOPARASITOSIS';
                             }
 
-                                
-                                $('#mensajeEnfermedad').text(mensaje);
-                                $('#mensajeEnfermedad').show(); // Mostrar el mensaje
 
-                                // Agregar el código para abrir el card después de agregar datos a la tabla
-                                $('#acor3').removeClass('collapsed'); // Elimina la clase 'collapsed' para expandir el botón
-                                $('#collapseThree').addClass('show'); // Agrega la clase 'show' para mostrar el contenido del card
+                            $('#mensajeEnfermedad').text(mensaje);
+                            $('#mensajeEnfermedad').show(); // Mostrar el mensaje
 
-                                // Cerrar otros cards
-                                $('#acor1').addClass('collapsed'); // Agrega la clase 'collapsed' para cerrar el card DATOS PACIENTE
-                                $('#collapseOne').removeClass('show'); // Elimina la clase 'show' para ocultar el contenido del card DATOS PACIENTE
+                            // Agregar el código para abrir el card después de agregar datos a la tabla
+                            $('#acor3').removeClass('collapsed'); // Elimina la clase 'collapsed' para expandir el botón
+                            $('#collapseThree').addClass('show'); // Agrega la clase 'show' para mostrar el contenido del card
 
-                                $('#acor2').addClass('collapsed'); // Agrega la clase 'collapsed' para cerrar el card SINTOMAS
-                                $('#collapseTwo').removeClass('show'); // Elimina la clase 'show' para ocultar el contenido del card SINTOMAS
-                                // Después de mostrar el mensaje de enfermedad, agregar el siguiente código:
+                            // Cerrar otros cards
+                            $('#acor1').addClass('collapsed'); // Agrega la clase 'collapsed' para cerrar el card DATOS PACIENTE
+                            $('#collapseOne').removeClass('show'); // Elimina la clase 'show' para ocultar el contenido del card DATOS PACIENTE
 
-                                // // Calcular un porcentaje aleatorio entre 89% y 95%
-                                // var porcentajeAleatorio = Math.floor(Math.random() * (93 - 89 + 1)) + 89;
+                            $('#acor2').addClass('collapsed'); // Agrega la clase 'collapsed' para cerrar el card SINTOMAS
+                            $('#collapseTwo').removeClass('show'); // Elimina la clase 'show' para ocultar el contenido del card SINTOMAS
+                            // Después de mostrar el mensaje de enfermedad, agregar el siguiente código:
 
-                                // // Actualizar el porcentaje en el gráfico
-                                // document.getElementById("precisionPorcentaje").textContent = porcentajeAleatorio + "%";
+                            // // Calcular un porcentaje aleatorio entre 89% y 95%
+                            // var porcentajeAleatorio = Math.floor(Math.random() * (93 - 89 + 1)) + 89;
+
+                            // // Actualizar el porcentaje en el gráfico
+                            // document.getElementById("precisionPorcentaje").textContent = porcentajeAleatorio + "%";
 
                             // Calcular un porcentaje aleatorio en función de la cantidad de síntomas seleccionados
                             var cantidadSintomas = sintomasSeleccionados.length;
@@ -752,10 +798,10 @@
 
                             // Actualizar el porcentaje en el gráfico
                             document.getElementById("precisionPorcentaje").textContent = porcentajeAleatorio + "%";
-    
-    
 
-                            
+
+
+
 
                         }
 

@@ -18,40 +18,50 @@
                 <div class="row">
                     <h4 class="widget-title col-md-12" style="font-weight:400 !important;font-size: 29px; color: black;font-family: 'Young Serif', sans-serif;">Reporte Incidencia de la Enfermedad</h4>
                 </div>
-                <form asp-action="ReporteInspeccionLlantas">
-                    <div class="col-md-12 alert alert-info mt-3">
-                        <div class="row" style="padding-bottom: 15px !important;">
-                            <div class="input-group col-md-2">
-                                <label class="form-label" for="desde" style="font-size:16px; margin-right: 3px; font-weight: bold;">Desde:</label>
-                                <input type="date" id="desde" style="max-width: 140px;" asp-for="@Model.Filtro.desde" class="form-control " />
-                            </div>
-                            <div class="input-group col-md-2">
-                                <label class="form-label" for="hasta" style="font-size:16px; margin-right: 5px; font-weight: bold;">Hasta:</label>
-                                <input type="date" id="hasta" style="max-width: 140px;" asp-for="@Model.Filtro.hasta" class="form-control" />
-                            </div>
-
-@* 
-                            @if (Model.MascotasViewModel != null)
-                            {
-                                <div class="input-group col-md-2">
-                                    <label class="form-label" for="IdMascota" style="font-size:16px; font-weight: bold; margin-right: 5px;">Tipo Llanta:</label>
-                                    @Html.DropDownListFor(m => m.Filtro.IdMascota,
-                                             new SelectList(Model.MascotasViewModel, "idTipo", "descripcion", Model.Filtro.IdMascota),
-                                             new { @class = "form-control ", id = "IdMascota", style = "" })
+                <form asp-action="ReporteInspeccionLlantas" style="font-family: 'Young Serif', sans-serif; ">
+                    <div class="container-fluid alert alert-info mt-3">
+                        <div class="row">
+                            <div class="col-md-4 col-sm-12 mb-2">
+                                <div class="input-group">
+                                    <label class="form-label me-3" for="desde">Desde:</label>
+                                    <input type="date" id="desde" asp-for="@Model.Filtro.desde" class="form-control" />
                                 </div>
-                            }
-                            else
-                            {
-                                <select class="custom-select col-md-2" id="IdMascota" style="font-size:16px; font-weight: bold; margin-right: 5px;">
-                                </select>
-                            } *@
-                            <div class="input-group col-md-2">
-                                <label class="form-label" for="Termico" style="font-size:16px; margin-right: 5px; font-weight: bold;">Parámetro Mascota:</label>
-                                <input type="text" id="Termico" style="" asp-for="@Model.Filtro.Termico" class="form-control" />
                             </div>
-                            <button id="Filtrar" type="submit" class="col-md-1 btn p-v-sm btn-primary" style="margin-left: 10px; max-height: 40px; "> Filtrar </button>
+                            <div class="col-md-4 col-sm-12 mb-2 ">
+                                <div class="input-group">
+                                    <label class="form-label me-3" for="hasta">Hasta:</label>
+                                    <input type="date" id="hasta" asp-for="@Model.Filtro.hasta" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-12 mb-2">
+                                <div class="input-group">
+                                    <label class="form-label me-3" for="parametroMascota">Parámetro Mascota:</label>
+                                    <select id="parametroMascota" asp-for="@Model.Filtro.IdMascota" class="form-select">
+                                        <option value="Seleccione">Seleccione</option>
+                                        <option value="RAZA">RAZA</option>
+                                        <option value="SEXO">SEXO</option>
+                                        <option value="EDAD">EDAD</option>
+                                        <option value="DIAGNOSTICO">DIAGNOSTICO</option>
+                                        <option value="PESO">PESO</option>
+                                    </select>
+                                </div>
+                            </div>
 
-                            <button type="submit" name="operacion" value="excel" class="col-md-2 btn p-v-sm btn-success " style="margin-left: 50px; max-width: 150px;"><i class="zmdi zmdi-download" title="Descargar Excel"></i>Descargar Excel</button>
+                        </div>
+
+                        
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 col-sm-12 mb-2 mx-auto">
+                            <!-- Botón Filtrar -->
+                            <button id="Filtrar" type="submit" class="btn btn-primary btn-block">Filtrar</button>
+                        </div>
+                        <div class="col-md-3 col-sm-12 mb-2 mx-auto">
+                            <!-- Botón Descargar Excel -->
+                            <button type="submit" name="operacion" value="excel" class="btn btn-success btn-block">
+                                <i class="zmdi zmdi-download" title="Descargar Excel"></i> Descargar Excel
+                            </button>
                         </div>
                     </div>
                 </form>
