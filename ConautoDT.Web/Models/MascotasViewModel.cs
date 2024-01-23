@@ -40,6 +40,8 @@
         public long? IdCliente { get; set; }
         public List<ItemMascota> ListaMascota { get; set; }
         public List<ItemCliente> ListaClientes { get; set; }
+        public FiltroReporteInspeccion Filtro { get; set; }
+        public List<HistoricoInspeccionLlantaViewModel> ListaInspeccion { get; set; }
 
         public long idMascota { get; set; }
         public string codigo { get; set; }
@@ -67,6 +69,60 @@
         public string motivo { get; set; }
         public float peso { get; set; }
         public string observacion { get; set; }
+    }
+
+    public class HistoricoInspeccionLlantaViewModel
+    {
+        public long idHistoInspeLlanta { get; set; }
+        public long idLlanta { get; set; }
+
+        public string termico { get; set; }
+        public long idVehiculo { get; set; }
+
+        public string placa { get; set; }
+        public long idEstadoLLanta { get; set; }
+
+        public string estadoLlanta { get; set; }
+        public long idTipoVehiculo { get; set; }
+
+        public string tipoVehiculo { get; set; }
+        public int numeroPosicion { get; set; }
+
+        public string posicion { get; set; }
+        public long idLLantaInspe { get; set; }
+        public DateTime fechaInspeccion { get; set; }
+        public long idMarcaLLanta { get; set; }
+
+        public string marcaLlanta { get; set; }
+        public long idMedidaLLanta { get; set; }
+
+        public string medidaLlanta { get; set; }
+        public long idDisenioLLanta { get; set; }
+
+        public string disenioLlanta { get; set; }
+    }
+
+    public class FiltroReporteInspeccion
+    {
+        public DateTime? desde { get; set; }
+        public DateTime? hasta { get; set; }
+        public string Termico { get; set; }
+        public long IdMascota { get; set; }
+    }
+
+    public class ReporteExcelInspeccionLlanta
+    {
+        public long idHistoInspeLlanta { get; set; }
+        public string termico { get; set; }
+        public string placa { get; set; }
+        public string estadoLlanta { get; set; }
+        public string tipoVehiculo { get; set; }
+        public int numeroPosicion { get; set; }
+        public string posicion { get; set; }
+        public DateTime fechaInspeccion { get; set; }
+        public string marcaLlanta { get; set; }
+        public string medidaLlanta { get; set; }
+        public string disenioLlanta { get; set; }
     }
 
     public class ItemMascotaFichas

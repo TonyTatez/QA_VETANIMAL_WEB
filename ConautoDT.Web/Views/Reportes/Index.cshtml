@@ -1,0 +1,190 @@
+﻿<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.css" />
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.css" />
+<link rel="stylesheet" href="~/Theme/js/bootstrap-filestyle/bootstrap-filestyle.js" />
+
+<link rel="stylesheet" href="~/Content/bootstrap.css" />
+<link rel="stylesheet" href="~/Content/Site.css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
+@model VET_ANIMAL.WEB.Models.MascotasViewModel
+@{
+    ViewData["Title"] = "Reportes";
+}
+
+
+<div class="row" style="font-size: 13px !important;">
+    <div class="col-md-12">
+        <div class="widget">
+            <header class="widget-header " style="padding-bottom: 5px !important;">
+                <div class="row">
+                    <h4 class="widget-title col-md-12" style="font-weight:400 !important;font-size: 29px; color: black;font-family: 'Young Serif', sans-serif;">Reporte Incidencia de la Enfermedad</h4>
+                </div>
+                <form asp-action="ReporteInspeccionLlantas">
+                    <div class="col-md-12 alert alert-info mt-3">
+                        <div class="row" style="padding-bottom: 15px !important;">
+                            <div class="input-group col-md-2">
+                                <label class="form-label" for="desde" style="font-size:16px; margin-right: 3px; font-weight: bold;">Desde:</label>
+                                <input type="date" id="desde" style="max-width: 140px;" asp-for="@Model.Filtro.desde" class="form-control " />
+                            </div>
+                            <div class="input-group col-md-2">
+                                <label class="form-label" for="hasta" style="font-size:16px; margin-right: 5px; font-weight: bold;">Hasta:</label>
+                                <input type="date" id="hasta" style="max-width: 140px;" asp-for="@Model.Filtro.hasta" class="form-control" />
+                            </div>
+
+@* 
+                            @if (Model.MascotasViewModel != null)
+                            {
+                                <div class="input-group col-md-2">
+                                    <label class="form-label" for="IdMascota" style="font-size:16px; font-weight: bold; margin-right: 5px;">Tipo Llanta:</label>
+                                    @Html.DropDownListFor(m => m.Filtro.IdMascota,
+                                             new SelectList(Model.MascotasViewModel, "idTipo", "descripcion", Model.Filtro.IdMascota),
+                                             new { @class = "form-control ", id = "IdMascota", style = "" })
+                                </div>
+                            }
+                            else
+                            {
+                                <select class="custom-select col-md-2" id="IdMascota" style="font-size:16px; font-weight: bold; margin-right: 5px;">
+                                </select>
+                            } *@
+                            <div class="input-group col-md-2">
+                                <label class="form-label" for="Termico" style="font-size:16px; margin-right: 5px; font-weight: bold;">Parámetro Mascota:</label>
+                                <input type="text" id="Termico" style="" asp-for="@Model.Filtro.Termico" class="form-control" />
+                            </div>
+                            <button id="Filtrar" type="submit" class="col-md-1 btn p-v-sm btn-primary" style="margin-left: 10px; max-height: 40px; "> Filtrar </button>
+
+                            <button type="submit" name="operacion" value="excel" class="col-md-2 btn p-v-sm btn-success " style="margin-left: 50px; max-width: 150px;"><i class="zmdi zmdi-download" title="Descargar Excel"></i>Descargar Excel</button>
+                        </div>
+                    </div>
+                </form>
+            </header>
+            <div class="widget-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-sm  dataTable" id="tablaInspeccion">
+
+                        <thead>
+                            <tr>
+                                <th>
+                                    Historia Clinica
+                                </th>
+                                <th>
+                                    Nombre Mascota
+                                </th>
+                                <th>
+                                    Raza
+                                </th>
+                                <th>
+                                    Edad
+                                </th>
+                                <th>
+                                    Peso
+                                </th>
+                                <th>
+                                    Sexo
+                                </th>
+                                <th>
+                                    Diagnóstico
+                                </th>
+                                
+                               
+                            </tr>
+                        </thead>
+                        @* <tbody>
+
+                            @if (Model.ListaInspeccion != null)
+                            {
+
+
+                                @foreach (var item in Model.ListaInspeccion)
+                                {
+                                    @Html.HiddenFor(model => item.idLlanta)
+                                    ;
+                                    @Html.HiddenFor(model => item.idEstadoLLanta)
+                                    ;
+                                    @Html.HiddenFor(model => item.idTipoVehiculo)
+                                    ;
+                                    @Html.HiddenFor(model => item.idLLantaInspe)
+                                    ;
+                                    @Html.HiddenFor(model => item.idMarcaLLanta)
+                                    ;
+                                    @Html.HiddenFor(model => item.idMedidaLLanta)
+                                    ;
+                                    @Html.HiddenFor(model => item.idDisenioLLanta)
+                                    ;
+
+
+                                    ;
+
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(model => item.idHistoInspeLlanta)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => item.termico)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => item.placa)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => item.estadoLlanta)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => item.tipoVehiculo)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => item.numeroPosicion)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => item.posicion)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => item.fechaInspeccion)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => item.marcaLlanta)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => item.medidaLlanta)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => item.disenioLlanta)
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>No existen datos para mostrar</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+
+                            }
+                        </tbody> *@
+                        
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="~/Content/jquery-2.2.4.js"></script>
+    <script src="~/Content/bootstrap.js"></script>
+    <script src="~/Content/modernizr-2.8.3.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#tablaInspeccion').DataTable();
+        });
+    </script>
+
+}

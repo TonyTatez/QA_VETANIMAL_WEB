@@ -222,62 +222,59 @@
                         </h2>
                         <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
                             <div class="accordion-body">
-                                <div class="form-row m-2" style="font-family: 'Young Serif', sans-serif; ">
+                                    <div class=" mt-2" style=" margin-top: 2%;font-family: 'Young Serif', sans-serif; ">
 
-                                    <div class="form-group col-md-4">
-                                        <label for="">Nombre</label>
-                                        <input type="text" style="color: blue;font-size: 16px;" class="form-control" id="editNombre2" readonly>
+                                        <div class="form-group col-md-12">
+                                            <label for="">Nombre</label>
+                                            <input type="text" style="color: blue;font-size: 16px;" class="form-control" id="editNombre2" readonly>
+                                        </div>
+                                        <br>
+                                        <div class="form-group col-md-12">
+                                            <label for="">Dueño</label>
+                                            <input id="editdueño22" type="text" class="form-control mb-3" style="width:100%!important; color: red" readonly>
+                                        </div>
+                                        <div class="form-group col-md-12" hidden>
+                                            <label for="">idmasc</label>
+                                            <input id="idmasc2" type="text" class="form-control mb-3" style="width:100%!important; color: red" readonly>
+                                        </div>
+                                        <br>
+                                        <div class="form-group col-md-12">
+                                            <label for="">Peso</label>
+                                            <input type="text" style="color: blue;font-size: 16px;" class="form-control" id="editPeso2" readonly onkeypress="return soloNumeros(event)" required>
+                                        </div>
+                                        <br>
+                                        <div class="form-group col-md-6">
+                                            <label for="">Raza</label>
+                                            <select readonly class="form-control" id="editRaza2" style="color: blue;font-size: 16px;" required>
+                                                <option value="">Seleccione</option>
+                                                <option value="Labrador">Labrador</option>
+                                                <option value="Bulldog">Bulldog</option>
+                                                <option value="Mestizo">Mestizo</option>
+                                                <option value="Chihuahua">Chihuahua</option>
+                                                <option value="French">French</option>
+                                                <option value="Golden Retriever">Golden Retriever</option>
+                                                <option value="Pitbull">Pitbull</option>
+                                            </select>
+                                        </div>
+
+                                        <br>
+                                        <div class="form-group col-md-6">
+                                            <label for="">Sexo</label>
+                                            <select class="form-control" id="editSexo2" style="color: blue;font-size: 16px;" readonly required>
+                                                <option value="">Seleccione</option>
+                                                <option value="Macho">Macho</option>
+                                                <option value="Hembra">Hembra</option>
+                                            </select>
+                                        </div>
+                                        <br>
+
+                                        <div class="form-group col-md-6">
+                                            <label for="">Fecha de Nacimiento</label>
+                                            <input style="color: blue;font-size: 16px;" class="form-control" id="editFecha2" name="editFecha2" readonly max="2024-12-31" type="text">
+                                        </div>
+
+
                                     </div>
-                                    <div class="form-group col-md-4">
-                                        <label for="">Dueño</label>
-                                        <input id="editdueño22" type="text" class="form-control mb-3" style="width:100%!important; color: red" readonly>
-                                    </div>
-                                    <div class="form-group col-md-6" hidden>
-                                        <label for="">idmasc</label>
-                                        <input id="idmasc2" type="text" class="form-control mb-3" style="width:100%!important; color: red" readonly>
-                                    </div>
-
-                                    <div class="form-group col-md-6" hidden>
-                                        <label for="">idHC</label>
-                                        <input id="idHC" type="text" class="form-control mb-3" style="width:100%!important; color: red" readonly>
-                                    </div>
-
-
-
-                                    <div class="form-group col-md-4">
-                                        <label for="">Peso</label>
-                                        <input readonly type="text" style="color: blue;font-size: 16px;" class="form-control" id="editPeso2" onkeypress="return soloNumeros(event)" required>
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                        <label for="">Raza</label>
-                                        <select disabled class="form-control" id="editRaza2" style="color: blue;font-size: 16px;" required>
-                                            <option value="">Seleccione</option>
-                                            <option value="Labrador">Labrador</option>
-                                            <option value="Bulldog">Bulldog</option>
-                                            <option value="Mestizo">Mestizo</option>
-                                            <option value="Chihuahua">Chihuahua</option>
-                                            <option value="French">French</option>
-                                            <option value="Golden Retriever">Golden Retriever</option>
-                                            <option value="Pitbull">Pitbull</option>
-                                        </select>
-                                    </div>
-
-
-                                    <div class="form-group col-md-4">
-                                        <label for="">Sexo</label>
-                                        <select disabled class="form-control" id="editSexo2" style="color: blue;font-size: 16px;" required>
-                                            <option value="">Seleccione</option>
-                                            <option value="Macho">Macho</option>
-                                            <option value="Hembra">Hembra</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                        <label for="">Fecha de Nacimiento</label>
-                                        <input readonly style="color: blue;font-size: 16px;width: 100%" class="form-control" id="editFecha2" name="editFecha2" readonly max="2024-12-31" type="text">
-                                    </div>
-
-
-                                </div>
                             </div>
                         </div>
                     </div>
