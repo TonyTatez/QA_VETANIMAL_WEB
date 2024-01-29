@@ -184,7 +184,7 @@ namespace VET_ANIMAL.WEB.Controllers
                 string tokenValue = Request.Cookies["token"];
 
                 // Configurar la solicitud al API
-                var request = new RestRequest("api/consulta/FichaHemoparasitosis", Method.Post);
+                var request = new RestRequest("/api/consulta/FichaHemoparasitosis", Method.Post);
                 request.AddParameter("Authorization", string.Format("Bearer " + tokenValue), ParameterType.HttpHeader);
                 request.AddJsonBody(guardarFicha);
 
