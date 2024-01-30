@@ -33,13 +33,27 @@
                                 <input type="text" asp-for="@Model.nombres" style="color: blue;font-size: 14px;" id="nombreCliente" class="form-control" placeholder="Ingrese nombres del cliente" />
                             </div>
 
-
-
                             <div class="form-group col-md-12">
-                                <label for="cedCliente">Cédula</label>
-                                <input type="text" asp-for="@Model.identificacion" style="color: blue;font-size: 14px;" onkeypress="return solo10Numeros(event)" id="cedCliente" class="form-control" placeholder="Ingrese cédula del cliente" required />
+                                <label for="tipoIdentificacion">Tipo de Identificación</label>
+                                <select id="tipoIdentificacion" class="form-control" style="color: blue; font-size: 14px;width: 50%" onchange="actualizarCampos()">
+                                    <option value="Cedula">-</option>
+                                    <option value="Cedula">Cédula</option>
+                                    <option value="Pasaporte">Pasaporte</option>
+                                </select>
                             </div>
 
+                            <div class="form-group col-md-12" >
+
+                            <input type="text" asp-for="@Model.identificacion" style="color: blue;font-size: 14px; display:none" onkeypress="return solo10Numeros(event)" id="cedCliente" class="form-control" required disabled />
+
+
+                            </div>
+                            <div class="form-group col-md-12">
+
+
+
+                            <input type="text" asp-for="@Model.identificacion" style="color: blue;font-size: 14px;display:none" id="pasCliente" class="form-control" required disabled />
+                            </div>
                             <div class="form-group col-md-12">
                                 <label for="dirCliente">Dirección</label>
                                 <input type="text" asp-for="@Model.direccion" style="color: blue;font-size: 14px;" id="dirCliente" class="form-control" placeholder="Ingrese dirección del cliente" />
@@ -54,7 +68,9 @@
                                 <label for="telefono">Teléfono</label>
                                 <input type="text" asp-for="@Model.telefono" onkeypress="return solo10Numeros(event)" style="color: blue;font-size: 14px;" id="telefono" class="form-control" placeholder="Ingrese teléfono del cliente" />
                             </div>
+                        
 
+                        
                         
 
                     </div>
@@ -338,16 +354,92 @@
             });
         });
 
-        function redirigirAVistaDeCarga() {
-            // Redirige a la vista de carga con la animación de loader
-            window.location.href = '/Loader/Index'; // Ajusta la ruta según la estructura de tu aplicación
+       
+        function validarEntrada(event) {
+            var charCode = (event.which) ? event.which : event.keyCode;
+            var tipoIdentificacion = document.getElementById('tipoIdentificacion').value;
+
+            if (tipoIdentificacion === 'Cedula') {
+                return (charCode >= 48 && charCode <= 57);
+            } else if (tipoIdentificacion === 'Pasaporte') {
+                return ((charCode >= 48 && charCode <= 57) || (charCode >= 65 && charCode <= 90) || (charCode >= 97 && charCode <= 122));
+            }
         }
 
-        // Esta función se llama cuando se hace clic en el botón de guardar
-        function procesarFormulario() {
-            // Llama a la función para redirigir a la vista de carga
-            redirigirAVistaDeCarga();
+        function actualizarCampos() {
+            var tipoIdentificacion = document.getElementById('tipoIdentificacion').value;
+            var cedClienteInput = document.getElementById('cedCliente');
+            var pasClienteInput = document.getElementById('pasCliente');
+
+            // Habilitar o deshabilitar la validación según el tipo de identificación
+            if (tipoIdentificacion === 'Cedula') {
+                cedClienteInput.style.display = 'block';
+                pasClienteInput.style.display = 'none';
+                cedClienteInput.placeholder = 'Ingrese cédula';
+                cedClienteInput.removeAttribute('disabled');  // Habilitar validación
+                pasClienteInput.setAttribute('disabled', 'disabled');  // Deshabilitar validación
+            } else if (tipoIdentificacion === 'Pasaporte') {
+                cedClienteInput.style.display = 'none';
+                pasClienteInput.style.display = 'block';
+                pasClienteInput.placeholder = 'Ingrese pasaporte';
+                pasClienteInput.removeAttribute('disabled');  // Habilitar validación
+                cedClienteInput.setAttribute('disabled', 'disabled');  // Deshabilitar validación
+            } else {
+                cedClienteInput.style.display = 'none';
+                pasClienteInput.style.display = 'none';
+                cedClienteInput.setAttribute('disabled', 'disabled');  // Deshabilitar validación
+                pasClienteInput.setAttribute('disabled', 'disabled');  // Deshabilitar validación
+            }
+
+            
         }
+
+        document.getElementById("cedCliente").addEventListener("input", function () {
+            var cedula = this.value;
+            var inputElement = this;
+
+            // Verificar si la longitud de la cédula es igual a 10 antes de validar
+            if (cedula.length === 10) {
+                if (validarCedulaReal(cedula)) {
+                    // La cédula es válida, cambia el color del borde a verde
+                    inputElement.style.border = "2px solid green";
+                } else {
+                    // La cédula no es válida, muestra una alerta con SweetAlert2
+                    Swal.fire({
+                        title: "Cédula Inválida",
+                        text: "La cédula ingresada no es válida. Por favor, corrige.",
+                        icon: "error",
+                        confirmButtonText: "Entendido",
+                    });
+
+                    // Restaura el color del borde al original
+                    inputElement.style.border = "1px solid #ced4da"; // Puedes usar el color original de tu diseño
+                }
+            } else {
+                // La longitud de la cédula no es 10, restaura el color del borde al original
+                inputElement.style.border = "1px solid #ced4da"; // Puedes usar el color original de tu diseño
+            }
+        });
+
+
+        
+        function validarCedulaReal(cedula) {
+            var suma = 0;
+            var coeficientes = [2, 1, 2, 1, 2, 1, 2, 1, 2];
+
+            for (var i = 0; i < coeficientes.length; i++) {
+                var digit = parseInt(cedula.charAt(i));
+                var product = digit * coeficientes[i];
+                suma += (product > 9) ? product - 9 : product;
+            }
+
+            var residuo = suma % 10;
+            var digitoVerificador = (residuo === 0) ? 0 : 10 - residuo;
+
+            return digitoVerificador === parseInt(cedula.charAt(9));
+        }
+
+        
         function editarCliente(Cliente) {
             console.log("esditarrr", Cliente);
             $('#nombreCliente2').val(Cliente.nombres);
@@ -372,8 +464,15 @@
 
         //}
         function nuevo() {
-            $("#idProvincia").val(0);
-            $("#bgcolor-input").val("");
+             var cedClienteInput = document.getElementById('cedCliente');
+            var pasClienteInput = document.getElementById('pasCliente');
+            $("#tipoIdentificacion").val("");
+            $("#pasCliente").val("");
+            $("#cedCliente").val("");
+
+
+            cedClienteInput.style.display = 'none';
+            pasClienteInput.style.display = 'none';
         }
         //function eliminar(Ciudad) {
         //    console.log(Ciudad);

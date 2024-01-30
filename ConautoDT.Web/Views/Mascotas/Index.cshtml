@@ -25,7 +25,7 @@
                 <div class="m-5">
                     <!-- Primer input y botón -->
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Ingrese Cedula del Cliente" id="CI" onkeypress="return solo10Numeros(event)" required>
+                        <input type="text" class="form-control" placeholder="Ingrese Identificación del Cliente" id="CI" onkeypress="return solo10Numeros(event)" required>
                         <div class="input-group-append">
                             <button class="btn btn-primary" type="button" onclick="buscarCliente2()"><i class="bi bi-search"></i></button>
                         </div>
@@ -59,8 +59,8 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="">Peso</label>
-                            <input type="text" asp-for="@Model.peso" class="form-control" id="verificarpeso" placeholder="Ingrese Peso Mascota" onkeypress="return soloNumeros(event)">
+                            <label for="">Peso (kg)</label>
+                            <input type="text" asp-for="@Model.peso" class="form-control" id="verificarpeso" placeholder="Ingrese Peso (kg) Mascota" onkeypress="return soloNumeros(event)">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="">Raza</label>
@@ -87,7 +87,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label for="">Fecha de Nacimiento</label>
-                            <input class="form-control" asp-for="@Model.fechaNacimiento" name="fechaNacimiento" style="width: 89%;" max="2029-11-11" type="date" >
+                            <input class="form-control" asp-for="@Model.fechaNacimiento" name="fechaNacimiento" style="width: 89%;" max="2029-11-11" type="date" oninput="validarFecha()">
                         </div>
                     </div>
 
@@ -122,10 +122,10 @@
             <form asp-action="EditarInfo" class="formEdit" style="font-family: 'Young Serif', sans-serif;">
 
                 
-                <div class="m-5">
+                <div class="m-5"hidden>
                     <!-- Primer input y botón -->
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" style="color: blue;font-size: 16px;" placeholder="Ingrese Cedula del Cliente" id="cedulaedit" onkeypress="return solo10Numeros(event)">
+                        <input type="text" class="form-control" style="color: blue;font-size: 16px;" placeholder="Ingrese Identificación del Cliente" id="cedulaedit" onkeypress="return solo10Numeros(event)">
                         <div class="input-group-append">
                             <button class="btn btn-primary"  type="button" onclick="buscarCliente()"><i class="bi bi-search"></i></button>
                         </div>
@@ -164,8 +164,8 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="">Peso</label>
-                            <input type="text" asp-for="@Model.peso" style="color: blue;font-size: 16px;" class="form-control" id="editPeso" placeholder="Ingrese Peso Mascota" onkeypress="return soloNumeros(event)" required>
+                            <label for="">Peso (kg)</label>
+                            <input type="text" asp-for="@Model.peso" style="color: blue;font-size: 16px;" class="form-control" id="editPeso" placeholder="Ingrese Peso (kg) Mascota" onkeypress="return soloNumeros(event)" required>
                         </div>
                         <div class="form-group col-md-6">
                             <label for="">Raza</label>
@@ -192,7 +192,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label for="">Fecha de Nacimiento</label>
-                            <input style="color: blue;font-size: 16px;" class="form-control" id="editFecha2" asp-for=" @Model.fechaNacimiento" name="fechaNacimiento" style="width: 89%;" max="2029-12-31" type="date">
+                            <input style="color: blue;font-size: 16px;" class="form-control" id="editFecha2" asp-for=" @Model.fechaNacimiento" name="fechaNacimiento" style="width: 89%;" max="2029-12-31" type="date" oninput="validarFecha()">
                         </div>
                     </div>
 
@@ -538,6 +538,23 @@
                 }
             });
         });
+
+        function validarFecha() {
+        var inputFecha = document.getElementById('fechaNacimiento');
+        var fechaSeleccionada = new Date(inputFecha.value);
+        var fechaLimite = new Date();
+        fechaLimite.setFullYear(fechaLimite.getFullYear() - 10);  // Resta 10 años a la fecha actual
+
+        if (fechaSeleccionada < fechaLimite) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Fecha Inválida',
+                text: 'La fecha debe ser no anterior a 10 años desde hoy.',
+                confirmButtonText: 'OK'
+            });
+            inputFecha.value = '';  // Limpiar la entrada si la fecha es inválida
+        }
+    }
 
         function eliminarMascota(guia) {
             console.log(guia);
