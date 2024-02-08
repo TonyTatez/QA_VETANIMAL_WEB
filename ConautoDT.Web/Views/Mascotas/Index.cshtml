@@ -62,17 +62,14 @@
                             <label for="">Peso (kg)</label>
                             <input type="text" asp-for="@Model.peso" class="form-control" id="verificarpeso" placeholder="Ingrese Peso (kg) Mascota" onkeypress="return soloNumeros(event)">
                         </div>
+
+                       
+
                         <div class="form-group col-md-6">
-                            <label for="">Raza</label>
+                            <label for="verificarraza">Raza</label>
                             <select asp-for="@Model.raza" class="form-control" id="verificarraza" >
                                 <option value="">Seleccione</option>
-                                <option value="Labrador">Labrador</option>
-                                <option value="Bulldog">Bulldog</option>
-                                <option value="Mestizo">Mestizo</option>
-                                <option value="Chihuahua">Chihuahua</option>
-                                <option value="French">French</option>
-                                <option value="Golden Retriever">Golden Retriever</option>
-                                <option value="Pitbull">Pitbull</option>
+                                <!-- Las opciones se agregarán dinámicamente aquí -->
                             </select>
                         </div>
                     </div>
@@ -167,19 +164,16 @@
                             <label for="">Peso (kg)</label>
                             <input type="text" asp-for="@Model.peso" style="color: blue;font-size: 16px;" class="form-control" id="editPeso" placeholder="Ingrese Peso (kg) Mascota" onkeypress="return soloNumeros(event)" required>
                         </div>
+
                         <div class="form-group col-md-6">
-                            <label for="">Raza</label>
+                            <label for="Raza">Raza</label>
                             <select asp-for="@Model.raza" class="form-control" id="editRaza" style="color: blue;font-size: 16px;" required>
                                 <option value="">Seleccione</option>
-                                <option value="Labrador">Labrador</option>
-                                <option value="Bulldog">Bulldog</option>
-                                <option value="Mestizo">Mestizo</option>
-                                <option value="Chihuahua">Chihuahua</option>
-                                <option value="French">French</option>
-                                <option value="Golden Retriever">Golden Retriever</option>
-                                <option value="Pitbull">Pitbull</option>
+                                <!-- Las opciones se agregarán dinámicamente aquí -->
                             </select>
                         </div>
+
+                        
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
@@ -241,8 +235,8 @@
 
                     <div class="row col-md-12">
                         <div class="form-group col-md-6">
-                            <label for="">Peso</label>
-                            <input asp-for="@Model.peso" type="text" style="color: blue;font-size: 16px;" class="form-control" id="fichaPeso" placeholder="Ingrese Peso Mascota" onkeypress="return soloNumeros(event)" required>
+                            <label for="">Peso (kg)</label>
+                            <input asp-for="@Model.peso" type="text" style="color: blue;font-size: 16px;" class="form-control" id="fichaPeso" placeholder="Ingrese Peso (kg) Mascota" onkeypress="return soloNumeros(event)" required>
                         </div>
                     </div>
 
@@ -520,6 +514,56 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
     <script type="text/javascript">
+        $(document).ready(function () {
+            buscarRazas(); // Llamada a la función buscarRazas() cuando el DOM esté listo
+        });
+
+        function buscarRazas() {
+            $.ajax({
+                url: '/Razas/ListaRazas', // Ruta al método que devuelve la lista de razas
+                method: 'GET',
+                success: function (data) {
+                    // Manipula los datos recibidos aquí
+                    console.log("Datos de las razas:", data);
+
+                    // Obtener el elemento select donde se colocarán las razas
+                    var selectRazas = $("#verificarraza");
+                    var selectRazas2 = $("#editRaza");
+
+                    // Limpiar los select antes de agregar nuevas opciones
+                    selectRazas.empty();
+                    selectRazas2.empty();
+
+                    // Agregar una opción predeterminada a cada select
+                    selectRazas.append($('<option>', {
+                        value: '',
+                        text: 'Seleccione'
+                    }));
+                    selectRazas2.append($('<option>', {
+                        value: '',
+                        text: 'Seleccione'
+                    }));
+
+                    // Iterar sobre los datos recibidos y agregar opciones a cada select
+                    $.each(data, function (index, raza) {
+                        // Crear una nueva opción para cada raza
+                        var option = $('<option>', {
+                            value: raza.id, // Suponiendo que cada raza tiene un campo "id"
+                            text: raza.descripcion // Suponiendo que cada raza tiene un campo "descripcion"
+                        });
+
+                        // Agregar la opción a cada select
+                        selectRazas.append(option.clone());
+                        selectRazas2.append(option.clone());
+                    });
+
+                },
+                error: function (error) {
+                    console.error('Error en la solicitud AJAX:', error);
+                }
+            });
+        }
+
         var table;
         $(document).ready(function () {
             $('#tablaMascotas').DataTable({
@@ -549,6 +593,7 @@
                 }
             });
         });
+        
 
         function validarFecha() {
         var inputFecha = document.getElementById('fechaNacimiento');
@@ -675,6 +720,7 @@
         }
 
         
+
         function editarMascota(Mascota) {
             console.log("esditarrr", Mascota);
             $('#editNombre').val(Mascota.nombreMascotas);

@@ -1,0 +1,268 @@
+﻿@model VET_ANIMAL.WEB.Models.RazasViewModel
+@{
+    ViewData["Title"] = "Razas";
+}
+
+
+
+<!-- Modal Guardar-->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content " style="width:100%">
+            <div class="modal-header ">
+                <h5 class="modal-title " style="font-family: 'Young Serif', sans-serif; font-weight: bold;">Razas</h5>
+                <div class="d-flex align-items-end flex-column">
+                    <button type="button" style="color: black" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+            </div>
+            <form asp-action="GuardaryEditarInfo">
+
+                <div class="modal-body " style="font-family: 'Young Serif', sans-serif; font-weight: bold;">
+                    @* <div class="form-outline mb-4">
+                    <label class="form-label btn-color-info TMSlabelText" for="ruc">Id</label>
+                    <input type="text" asp-for="@Model.idColor" class="form-control form-control-lg  TMSTextBoxValores"
+                    disabled />
+                    </div>*@
+                    <div class="form-outline mb-4">
+                        <label class="form-label btn-color-info TMSlabelText" for="raza">Raza</label>
+                        <input type="text" asp-for="@Model.descripcion" class="form-control form-control-lg  " id="razainput" placeholder="Ingrese la raza">
+
+                    </div>
+
+                    @*  <div class="form-outline mb-4">
+                    <label class="form-label btn-color-info TMSlabelText" for="ruc">Tipo Color</label>
+                    <input type="text" id="TipoColor1" class="form-control form-control-lg  TMSTextBoxValores"
+                    placeholder="Ingrese el tipo de la Color" />
+                    </div>*@
+                </div>
+                <div class="modal-footer">
+                    <button id="guardarInformacion" type="submit" class="btn btn-success bi bi-save btn-grad btn-sm"> Guardar </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Editar -->
+<div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content " style="width:100%">
+            <div class="modal-header ">
+                <h5 class="modal-title ">Razas</h5>
+                <div class="d-flex align-items-end flex-column">
+                    <button type="button" style="color: black" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+            </div>
+            <form asp-action="GuardaryEditarInfo">
+
+
+                <div class="modal-body ">
+                    <div hidden class="form-outline mb-4">
+                        <label class="form-label btn-color-info TMSlabelText">Id</label>
+                        <input type="text" asp-for="@Model.idRaza" id="idRaza" class="form-control form-control-lg  " />
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label btn-color-info TMSlabelText" for="desc">Descripción</label>
+                        <input id="descripcion2" type="text" asp-for="@Model.descripcion" class="form-control form-control-lg  " id="razainput2" placeholder="Ingrese el Pais">
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button id="guardarInfo2" type="submit" class="bi bi-pen btn btn-primary  btn-sm"> Editar </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Modal Eliminar -->
+<div class="modal fade" id="eliminarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content " style="width:100%">
+            <div class="modal-header ">
+                <h5 class="modal-title ">TMS Mantenimiento</h5>
+                <div class="d-flex align-items-end flex-column">
+                    <button type="button" style="color: black" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+            </div>
+            <form asp-action="DeleteInformacion">
+
+
+                <div class="modal-body ">
+                    <div hidden class="form-outline mb-4">
+                        <label class="form-label btn-color-info TMSlabelText">Id</label>
+                        <input type="text" asp-for="@Model.idRaza" id="idRazaEliminar" class="form-control form-control-lg  " />
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label btn-color-info TMSlabelText" style="margin-top:28px; font-size:13px">¿Está seguro de querer eliminar esta raza?</label>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button id="eliminarInfoData" style="padding:10px; width:50px;" type="submit" class=" btn btn-success  btn-sm">Sí </button>
+                    <button id="eliminarInfoDatos" style="padding:10px; width:50px;" data-bs-dismiss="modal" aria-label="Cerrar" type="button" class=" btn btn-danger  btn-sm">No </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="row" style="font-size: 13px !important;">
+    <div class="col-md-12">
+        <div class="widget">
+            <header class="widget-header" style="padding-bottom: 5px !important;">
+                <div class="row">
+                    <h4 class="widget-title col-md-12" style="font-weight:400 !important;font-size: 30px; color:black; font-family: 'Young Serif', sans-serif; ">Razas</h4>
+                </div>
+            </header>
+            <div class="loader"> </div>
+            <hr class="widget-separator" style="margin-top:2px !important">
+            <div class="widget-body">
+                <div class="btn-group" role="group" aria-label="Basic mixed styles example" style="margin-bottom:5px !important;">
+                    <button id="btnNuevo" type="button" class="btn btn-primary btn-sm bi bi-clipboard-plus" data-bs-toggle="modal" onclick="nuevo()" data-bs-target="#exampleModal">   Nuevo </button>
+                </div>
+                <div class="table-responsive" style="font-family: 'Young Serif', sans-serif; ">
+                    <table class="table table-bordered table-sm  dataTable table-striped" id="tablaMascotas">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Id
+                                </th>
+                                <th>
+                                    Descripción
+                                </th>
+
+                                <th>
+                                    Acciones
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.ItemRazas != null)
+                            {
+
+                                @foreach (var item in Model.ItemRazas)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(model => item.idRaza)
+                                        </td>
+                                        @*  <td>
+                                @Html.DisplayFor(model => item.tipoColor)
+                                </td>*@
+                                        <td>
+                                            @Html.DisplayFor(model => item.descripcion)
+                                        </td>
+
+                                        <td>
+                                            <button title="Editar Pais" class="btn p-v-sm btn-success btn-sm" id="btnEditar" data-bs-toggle="modal" data-bs-target="#editarModal" onclick="editar({idRaza:@item.idRaza ,descripcion:'@item.descripcion'});">
+                                                <i class="bi bi-pen"></i>
+                                            </button>
+
+                                            <button title="Eliminar Pais" class="btn p-v-sm btn-danger btn-sm" id="btnEliminar" data-bs-toggle="modal" data-bs-target="#eliminarModal" onclick="eliminarPais({idRaza:@item.idRaza});">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+
+                                        </td>
+                                    </tr>
+                                }
+
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td>-</td>
+                                    <td>No hay Datos que Mostrar</td>
+                                    <td>-</td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>
+                                    Id
+                                </th>
+                                @*  <th scope="col">
+                                Tipo Color
+                                </th>*@
+                                <th>
+                                    Descripción
+                                </th>
+
+                                <th>
+                                    Acciones
+                                </th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@section Scripts {
+    <script src="~/Content/jquery-2.2.4.js"></script>
+    <script src="~/Content/bootstrap.js"></script>
+    <script src="~/Content/modernizr-2.8.3.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    <script type="text/javascript">
+
+       
+
+        function editar(Pais) {
+            console.log(Pais);
+            $('#idRaza').val(Pais.idRaza);
+            $('#descripcion2').val(Pais.descripcion);
+            console.log($('#descripcion').val());
+        }
+        
+
+        function eliminar(Pais) {
+            console.log(Pais);
+            $('#idRaza').val(Pais.idRaza);
+
+
+        }
+
+
+        $("#btnNuevo").click(function () {
+
+            $("#razainput").val("");
+
+        });
+
+
+
+
+        function eliminarPais(guia) {
+            console.log(guia);
+
+            $("#idRazaEliminar").val(guia.idRaza);
+
+        }
+        //   $("#eliminarModal").modal({ backdrop: 'static', keyboard: false });
+
+
+    </script>
+}
+
+
+
+
+
+
+
+
+
+
+

@@ -39,6 +39,7 @@
     {
         public long? IdCliente { get; set; }
         public List<ItemMascota> ListaMascota { get; set; }
+       
         public List<ItemCliente> ListaClientes { get; set; }
         public FiltroReporteInspeccion Filtro { get; set; }
         public List<HistoricoInspeccionLlantaViewModel> ListaInspeccion { get; set; }
