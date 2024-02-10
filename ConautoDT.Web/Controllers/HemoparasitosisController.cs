@@ -173,6 +173,7 @@ namespace VET_ANIMAL.WEB.Controllers
                 {
                     idMascota = model.idMascota,
                     idHistoriaClinica = model.idHistoriaClinica,
+                    idFichaControl = model.idFichaControl,
                     idEnfermedad = model.idEnfermedad,
                     nombreMascota = model.nombreMascota,
                     tratamiento = model.tratamiento,

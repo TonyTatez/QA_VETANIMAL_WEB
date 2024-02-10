@@ -14,7 +14,14 @@
 @{
     ViewData["Title"] = "HEMOPARASITOSIS";
 }
-
+<div class="myLoader2" id="cargasgeneral" hidden>
+    <div class="loader2">
+        <span></span>
+        <span></span>
+        <span></span>
+        <h2>Cargando....</h2>
+    </div>
+</div>
 <body>
     <div class="container">
         <h2 class="mb-3" style="color: black; font-weight: bold; font-size: 2.2em;font-family: 'Young Serif', sans-serif;">DETECCIÓN HEMOPARASITOSIS </h2>
@@ -138,7 +145,7 @@
                                         <td>
 
 
-                                            <button title="Ficha Control" class="btn p-v-sm btn-primary btn-sm btn-editar" data-bs-toggle="modal" data-bs-target="#exampleModal"  onclick="FichaMascota({idMascota:@item.idMascota ,nombreMascotas:'@item.nombreMascota',nombres:'@item.cliente', peso:'@item.peso' ,raza:'@item.raza', sexo:'@item.sexo',fecha:'@item.fechaNacimiento',HC:'@item.idHistoriaClinica'});">
+                                            <button title="Ficha Control" class="btn p-v-sm btn-primary btn-sm btn-editar" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="FichaMascota({idMascota:@item.idMascota ,nombreMascotas:'@item.nombreMascota',nombres:'@item.cliente', peso:'@item.peso' ,raza:'@item.raza', sexo:'@item.sexo',fecha:'@item.fechaNacimiento',HC:'@item.idHistoriaClinica',FC:'@item.idFichaControl'});">
                                                 <i class="bi bi-file-earmark-richtext-fill"></i>
                                             </button>
 
@@ -176,24 +183,7 @@
         </div>
 
     </div>
-    <div class="modal fade loadingModal" id="loadingModal">
-        <div class="modal-dialog modal-dialog-centered modal-md" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="loading">
-                        <h2>Espere...</h2>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
     <div class="myLoader" id="cargasid" hidden>
         <div class="container1">
             <div class="ring"></div>
@@ -234,6 +224,10 @@
                                         <div class="form-group col-md-12" hidden>
                                             <label for="">HISTORIA CLINICA</label>
                                             <input type="text" style="color: blue;font-size: 16px;" class="form-control" id="idHC" readonly>
+                                        </div>
+                                        <div class="form-group col-md-12" hidden>
+                                            <label for="">FICHA CONTROL</label>
+                                            <input type="text" style="color: blue;font-size: 16px;" class="form-control" id="idFC" readonly>
                                         </div>
                                         <br>
                                         <div class="form-group col-md-12">
@@ -645,6 +639,7 @@
             $('#editRaza2').val(Mascota.raza);
             $('#editSexo2').val(Mascota.sexo);
             $('#idHC').val(Mascota.HC);
+            $('#idFC').val(Mascota.FC);
             $('#idmasc2').val(Mascota.idMascota);
 
             // Dividir la cadena de fecha
@@ -818,7 +813,7 @@
                         console.error("Error en la solicitud AJAX: ", error);
                     }
                 });
-            }, 1000); // 10 segundos en milisegundos
+            }, 10000); // 10 segundos en milisegundos
         }
 
 
@@ -826,6 +821,7 @@
             var idMascota = $("#idmasc2").val();
             var nombreMascota = $("#editNombre2").val();
             var idHistoriaClinica = $("#idHC").val();
+            var idFichaControl = $("#idFC").val();
             var tratamiento = $("#campoTratam").text();
             var observaciones = $("#campoObserv").text();
             var enfermedad = enfermedadGlobal;
@@ -848,7 +844,8 @@
                     observaciones: observaciones,
                     idSintomas: idSintomas,
                     enfermedad: enfermedad,
-                    idHistoriaClinica: idHistoriaClinica
+                    idHistoriaClinica: idHistoriaClinica,
+                    idFichaControl: idFichaControl
                 },
                 success: function (response) {
                     // Manejar la respuesta exitosa aquí
@@ -892,34 +889,73 @@
             // Obtener el valor del input de cédula
             var identificacion = $("#CI").val();
 
+            // Verificar si el campo de cédula está vacío
+            if (identificacion.trim() === "") {
+                // Mostrar un Sweet Alert pidiendo al usuario que ingrese un número de identificación
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Ingrese un número de identificación',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                return; // Salir de la función si el campo está vacío
+            }
+
+
+            document.getElementById("cargasgeneral").hidden = false;
+
             console.log("Cédula del cliente:", identificacion);
+            setTimeout(function () {
+                $.ajax({
+                    url: '/HistoriaClinica/BuscarClientePorCI',
+                    method: 'GET',
+                    data: { CI: identificacion },
+                    contentType: 'application/json',
+                    success: function (data) {
+                        console.log("Datos del cliente:", data);
 
-            // Hacer la solicitud al endpoint de tu API para consultar el cliente
-            $.ajax({
-                url: '/HistoriaClinica/BuscarClientePorCI',
-                method: 'GET',
-                data: { CI: identificacion },
-                contentType: 'application/json',
-                success: function (data) {
-                    console.log("Datos del cliente:", data);
-
-                    // Verifica si se está ejecutando y muestra los datos en la consola
+                        // Verifica si se está ejecutando y muestra los datos en la consola
 
 
-                    // Asegúrate de que los identificadores coincidan con los elementos HTML reales
-                    $("#nombreCliente").val(data.nombres);
-                    $("#dirCliente").val(data.direccion);
-                    $("#correoCliente").val(data.correo);
-                    $("#telefono").val(data.telefono);
-                    $("#cedCliente").val(data.nombres);
-                    $("#editdueño22").val(data.nombres);// Cambiado a data.cedula si es el nombre del cliente
+                        // Si la respuesta indica que no se encontró ningún cliente
+                        if (data.mensaje === 'Error al obtener la lista de clientes. Código de estado: NoContent') {
+                            // Mostrar un Sweet Alert indicando que el cliente no está registrado
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Cliente no registrado',
+                                text: 'El número de identificación no se encuentra en la base de datos',
+                                confirmButtonText: 'OK'
+                            });
+                            // Limpiar el valor del campo de entrada
+                            $("#CI").val("");
+                            return; // Salir de la función
+                        }
 
-                },
-                error: function (error) {
-                    // Imprime el mensaje de error en la consola para facilitar la depuración
-                    console.error('Error en la solicitud AJAX:', error);
-                }
-            });
+
+                        // Asegúrate de que los identificadores coincidan con los elementos HTML reales
+                        $("#nombreCliente").val(data.nombres);
+                        $("#dirCliente").val(data.direccion);
+                        $("#correoCliente").val(data.correo);
+                        $("#telefono").val(data.telefono);
+                        $("#cedCliente").val(data.nombres);
+                        $("#editdueño22").val(data.nombres);// Cambiado a data.cedula si es el nombre del cliente
+
+                    },
+                    error: function (error) {
+                        document.getElementById("cargasgeneral").hidden = true;
+                        // Manejar errores
+                        console.error("Error en la solicitud AJAX: ", error);
+                        // Imprime el mensaje de error en la consola para facilitar la depuración
+                        console.error('Error en la solicitud AJAX:', error);
+                    },
+                    complete: function () {
+                        // Ocultar el loader
+                        document.getElementById("cargasgeneral").hidden = true;
+                        console.log("Finalizando función buscarCliente2");
+                    }
+                });
+            }, 2000); // 10 segundos en milisegundos
+            console.log("Finalizando función buscarCliente2");
 
             console.log("Finalizando función buscarCliente2");
 

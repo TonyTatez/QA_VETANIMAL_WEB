@@ -6,7 +6,15 @@
     ViewData["Title"] = "Mascotas";
 }
 
-<div id="loader" style="display: none;">Cargando...</div>
+<div class="myLoader2" id="cargasgeneral" hidden>
+    <div class="loader2">
+        <span></span>
+        <span></span>
+        <span></span>
+        <h2 >Cargando....</h2>
+    </div>
+</div>
+
 
 <!-- Modal Guardar-->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -21,7 +29,7 @@
 
             <form asp-action="GuardaryEditarInfo" style="font-family: 'Young Serif', sans-serif;">
 
-                
+
                 <div class="m-5">
                     <!-- Primer input y botón -->
                     <div class="input-group mb-3">
@@ -45,11 +53,11 @@
 
                         <div class="form-group col-md-6">
                             <label for="">Nombre</label>
-                            <input type="text" asp-for="@Model.nombreMascota" class="form-control" id="verificarname" placeholder="Ingrese Nombre Mascota" >
+                            <input type="text" asp-for="@Model.nombreMascota" class="form-control" id="verificarname" placeholder="Ingrese Nombre Mascota">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="">Dueño</label>
-                            <input id="editdueño" type="text" class="form-control mb-3" readonly style="width:100%!important;font-size: 13px; color: red" >
+                            <input id="editdueño" type="text" class="form-control mb-3" readonly style="width:100%!important;font-size: 13px; color: red">
                         </div>
 
                         <div class="form-group col-md-6" hidden>
@@ -63,11 +71,11 @@
                             <input type="text" asp-for="@Model.peso" class="form-control" id="verificarpeso" placeholder="Ingrese Peso (kg) Mascota" onkeypress="return soloNumeros(event)">
                         </div>
 
-                       
+
 
                         <div class="form-group col-md-6">
                             <label for="verificarraza">Raza</label>
-                            <select asp-for="@Model.raza" class="form-control" id="verificarraza" >
+                            <select asp-for="@Model.raza" class="form-control" id="verificarraza">
                                 <option value="">Seleccione</option>
                                 <!-- Las opciones se agregarán dinámicamente aquí -->
                             </select>
@@ -118,17 +126,17 @@
 
             <form asp-action="EditarInfo" class="formEdit" style="font-family: 'Young Serif', sans-serif;">
 
-                
-                <div class="m-5"hidden>
+
+                <div class="m-5" hidden>
                     <!-- Primer input y botón -->
                     <div class="input-group mb-3">
                         <input type="text" class="form-control" style="color: blue;font-size: 16px;" placeholder="Ingrese Identificación del Cliente" id="cedulaedit" onkeypress="return solo10Numeros(event)">
                         <div class="input-group-append">
-                            <button class="btn btn-primary"  type="button" onclick="buscarCliente()"><i class="bi bi-search"></i></button>
+                            <button class="btn btn-primary" type="button" onclick="buscarCliente()"><i class="bi bi-search"></i></button>
                         </div>
                     </div>
 
-                    <div >
+                    <div>
                         <!-- Segundos y terceros inputs -->
                         <label for="nombreCliente">Id Cliente</label>
                         <input type="text" class="form-control mb-3" id="editidCliente" readonly style="width:20%!important; color: red">
@@ -151,10 +159,10 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label for="">Dueño</label>
-                            <input id="editdueño2"  type="text" class="form-control mb-3" readonly style="width:100%!important; color: red">
+                            <input id="editdueño2" type="text" class="form-control mb-3" readonly style="width:100%!important; color: red">
                         </div>
 
-                        <div class="form-group col-md-6" hidden >
+                        <div class="form-group col-md-6" hidden>
                             <label for="">Id Cliente</label>
                             <input id="editIdCliente2" asp-for="@Model.IdCliente" type="text" class="form-control mb-3" readonly style="width:50%!important; color: red">
                         </div>
@@ -173,7 +181,7 @@
                             </select>
                         </div>
 
-                        
+
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
@@ -217,8 +225,8 @@
                 </div>
             </div>
 
-            
-            
+
+
             <form asp-action="GuardarFichaControl" class="controles" style="font-family: 'Young Serif', sans-serif;">
 
                 <div class="modal-body" style="font-family: 'Young Serif', sans-serif;">
@@ -240,7 +248,7 @@
                         </div>
                     </div>
 
-                    <div class="form-row"hidden>
+                    <div class="form-row" hidden>
 
                         <div class="form-group col-md-12">
                             <label for="masct">Id Mascota</label>
@@ -256,12 +264,12 @@
                         </div>
                     </div>
                     <div class="form-group col-md-12">
-                        <label  for="Observacion">Motivo de la consulta</label>
-                        <input type="hidden"  />
+                        <label for="Observacion">Motivo de la consulta</label>
+                        <input type="hidden" />
                         <div class="row m-5">
                             <div class="form-check col-md-6">
                                 <input asp-for="@Model.motivo" class="form-check-input checkbox-option" type="checkbox" value="VACUNACION" id="checkvacuna">
-                                <label  class="form-check-label" for="checkvacuna">
+                                <label class="form-check-label" for="checkvacuna">
                                     Vacunación
                                     <span style="content: '\0000a0'; display: inline-block; height: 25px; width: 25px; margin-left: 10px; background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAACXBIWXMAAAsTAAALEwEAmpwYAAAEUUlEQVQ4jaWTb0xTVxjGH2wpWlq9jVUQ5U9BJwNF1M1golKCmduYiwkmMyGxcQt2oIkzfjOLkyxmccniwGSJMfuq+0MURMU1yNrVbE6QrcNVkAZrKTal9N7WllugXp59UJwxLKnu+XJOznnP77x58j7AHKqrqzvR1dX1QBCEDbNnJpNprtLUVVdXd4IkvV4vBUHYAwAqlQpbt259dWhtbe3RSCTCYDBIq9XqAqADAL1ej8rKyleDVldXf+h2u+l2u2mz2RgKhaZqa2ubAECtVs+zWCy7tVptwUtBDQZDcU9PD2/cuMHm5mba7XbOaufOnU0HDx48Q5INDQ0dL9uw8dixY79VVFScKS0t/dxms9Hj8ZAkBwcHqSgK+/v7aTAYPk0VqHq6yg6H40e/398RCoW6PB5PMjc3981EIpFhNBohyzL0ej1UKpVst9s7AUymCgaAKQAKAPj9fufixYvXb968uTQcDkMQBGRlZcFsNr+m0WjKuru7W2drUwEDAPLz8/dardavq6qqqqLRaPrIyAgURUFOTg7C4TDWlZevik3Iy2739nYCmEnJl6Kioq/GxsZIknfv3qXT6aTP52NbWxtrampYUGDi+e9amYyN8UDjx2cBqFPhvt/Y2EiSnJ6e4eHDx2nrukmSdLvdzMvLJwA2HzKTPhspB2ixWE6nYsWXiqKs3rGjBnLiDgwLv8Vqg4h4sgg/tLbjUsdVrDclcfQtLzLS9NAsyMY77+3adGfogXpgYMABgHN9sBSABICnTrVwcjJAcjs5upf3PT5u21ZJACwvWUh/ewHj3y9h3HGcvH+djI2yocF6FoDmRagAoB0AzWYz/9UUJTFI/2iAnZ2dFAQDAfCzwxsZulxI+dp2xn/5ghx10uvuoTpdU/E8dB6AdwEU6nS6mZaWlmcX8biCsJTAw9ER6HQ67NnzAQDIP98UxzUr8rBgyQw0yV8RDXpx8Ur38OPktO9F8AUAVWVlZffWrl0LAIhGoxgfD0ISQ5AkCYFAAMXFxcjM1Pt6XcFDf9zLGMbraqQXbMSBk+24dt2Ro9Vq814ETwIYz8pedg0A4hMTkCQJoigiEokgEokg+igGWU4gmZzqlWW5bdf+W5bOS7neb66mD1zo+Ml+p981Pzs7+8jz4LTZTZZRWHrufKtjeW5ucSgcgzwRgSiKCI6JSMREXLx44dat3t56AH89fZKHJwEZB7B/3759H7lcrpN9fX3nno2bFlCf/ySzesGiRW+YlqWvUKQBBIJhRKMi1iwJYFOJFiX5aeHlC+NKT7/kmwEiAKIAHgF4DOD3oaGhvvr6+tM+n+9vSZLuPxkLDYyBq9pRTphIKYdKXyaP7DW5dr9dfCXqzIgylk3G8xl36rkyC434j8QZjcbtTU1NtwsLC83PrFDPQ8m6Ndii1mD+4AD8kThuAnioUaN81UpsmJ4GPMMYJvAnnnQ8p3Q63Ra9Xr80jZwzMP9b/wBi2j0KLZDhVQAAAABJRU5ErkJggg==') no-repeat left center transparent; background-size: 100% 100%;"></span>
 
@@ -291,7 +299,7 @@
                                 </label>
                             </div>
 
-                            
+
 
                             <div class="form-check col-md-6">
                                 <input asp-for="@Model.motivo" class="form-check-input checkbox-option" type="checkbox" value="EMERGENCIA" id="checkboxEmergencia">
@@ -317,7 +325,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="form-group col-md-12" id="observacionContainer" style="display: none;">
                         <label for="Observacion">Observación</label>
                         <textarea asp-for="@Model.observacion" class="form-control" id="Observacion" name="Observacion" rows="4" style="width: 100%;"></textarea>
@@ -330,7 +338,7 @@
                 </div>
             </form>
 
-            
+
         </div>
     </div>
 </div>
@@ -593,24 +601,24 @@
                 }
             });
         });
-        
+
 
         function validarFecha() {
-        var inputFecha = document.getElementById('fechaNacimiento');
-        var fechaSeleccionada = new Date(inputFecha.value);
-        var fechaLimite = new Date();
-        fechaLimite.setFullYear(fechaLimite.getFullYear() - 10);  // Resta 10 años a la fecha actual
+            var inputFecha = document.getElementById('fechaNacimiento');
+            var fechaSeleccionada = new Date(inputFecha.value);
+            var fechaLimite = new Date();
+            fechaLimite.setFullYear(fechaLimite.getFullYear() - 10);  // Resta 10 años a la fecha actual
 
-        if (fechaSeleccionada < fechaLimite) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Fecha Inválida',
-                text: 'La fecha debe ser no anterior a 10 años desde hoy.',
-                confirmButtonText: 'OK'
-            });
-            inputFecha.value = '';  // Limpiar la entrada si la fecha es inválida
+            if (fechaSeleccionada < fechaLimite) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Fecha Inválida',
+                    text: 'La fecha debe ser no anterior a 10 años desde hoy.',
+                    confirmButtonText: 'OK'
+                });
+                inputFecha.value = '';  // Limpiar la entrada si la fecha es inválida
+            }
         }
-    }
 
         function eliminarMascota(guia) {
             console.log(guia);
@@ -643,33 +651,70 @@
             // Obtener el valor del input de cédula
             var identificacion = $("#CI").val();
 
+            // Verificar si el campo de cédula está vacío
+            if (identificacion.trim() === "") {
+                // Mostrar un Sweet Alert pidiendo al usuario que ingrese un número de identificación
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Ingrese un número de identificación',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                return; // Salir de la función si el campo está vacío
+            }
+
+            document.getElementById("cargasgeneral").hidden = false;
+
             console.log("Cédula del cliente:", identificacion);
+            setTimeout(function () {
+                // Hacer la solicitud al endpoint de tu API para consultar el cliente
+                $.ajax({
+                    url: '/Clientes/BuscarClientePorCI',
+                    method: 'GET',
+                    data: { CI: identificacion },
+                    contentType: 'application/json',
+                    success: function (data) {
+                        console.log("Datos del cliente:", data);
 
-            // Hacer la solicitud al endpoint de tu API para consultar el cliente
-            $.ajax({
-                url: '/Clientes/BuscarClientePorCI',
-                method: 'GET',
-                data: { CI: identificacion },
-                contentType: 'application/json',
-                success: function (data) {
-                    console.log("Datos del cliente:", data);
+                        // Verifica si se está ejecutando y muestra los datos en la consola
+                        console.log("Función success ejecutada. Datos:", data);
 
-                    // Verifica si se está ejecutando y muestra los datos en la consola
-                    console.log("Función success ejecutada. Datos:", data);
+                        // Si la respuesta indica que no se encontró ningún cliente
+                        if (data.mensaje === 'Error al obtener la lista de clientes. Código de estado: NoContent') {
+                            // Mostrar un Sweet Alert indicando que el cliente no está registrado
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Cliente no registrado',
+                                text: 'El número de identificación no se encuentra en la base de datos',
+                                confirmButtonText: 'OK'
+                            });
+                            // Limpiar el valor del campo de entrada
+                            $("#CI").val("");
+                            $("#editdueño").val("");
+                            return; // Salir de la función
+                        }
 
-                    // Asegúrate de que los identificadores coincidan con los elementos HTML reales
-                    $("#idCliente").val(data.idCliente);
-                    $("#idcliente2").val(data.idCliente);
-                    $("#editdueño").val(data.nombres);
-                    $("#cedCliente").val(data.cedula);  // Cambiado a data.cedula si es el nombre del cliente
-                    
-                },
-                error: function (error) {
-                    // Imprime el mensaje de error en la consola para facilitar la depuración
-                    console.error('Error en la solicitud AJAX:', error);
-                }
-            });
+                        // Asegúrate de que los identificadores coincidan con los elementos HTML reales
+                        $("#idCliente").val(data.idCliente);
+                        $("#idcliente2").val(data.idCliente);
+                        $("#editdueño").val(data.nombres);
+                        $("#cedCliente").val(data.cedula);  // Cambiado a data.cedula si es el nombre del cliente
 
+                    },
+                    error: function (error) {
+                        document.getElementById("cargasgeneral").hidden = true;
+                        // Manejar errores
+                        console.error("Error en la solicitud AJAX: ", error);
+                        // Imprime el mensaje de error en la consola para facilitar la depuración
+                        console.error('Error en la solicitud AJAX:', error);
+                    },
+                    complete: function () {
+                        // Ocultar el loader
+                        document.getElementById("cargasgeneral").hidden = true;
+                        console.log("Finalizando función buscarCliente2");
+                    }
+                });
+            }, 2000); // 10 segundos en milisegundos
             console.log("Finalizando función buscarCliente2");
         }
 
@@ -719,7 +764,7 @@
             console.log("Finalizando función buscarCliente2");
         }
 
-        
+
 
         function editarMascota(Mascota) {
             console.log("esditarrr", Mascota);
@@ -782,7 +827,8 @@
         }
 
         function nuevo() {
-            $("#cedulaCliente").val("");
+            $("#CI").val("");
+            $("#editdueño").val("");
         }
 
         $(document).ready(function () {
@@ -850,10 +896,10 @@
         }
 
 
-        
 
 
-       
+
+
         function solo10Numeros(e) {
             let tecla = (document.all) ? e.keyCode : e.which;
 
@@ -960,10 +1006,10 @@
 
         function cambioTermico() {
 
-            
-                
+
+
         }
-        
+
     </script>
 
 }

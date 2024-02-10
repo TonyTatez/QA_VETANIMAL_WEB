@@ -144,6 +144,7 @@
         public string observaciones { get; set; }
         public string tratamiento { get; set; }
         public long idHistoriaClinica { get; set; }
+        public long idFichaControl { get; set; }
         public string motivo { get; set; }
         public string codigoHistorial { get; set; }
         public string cedula { get; set; }
