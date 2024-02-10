@@ -37,9 +37,9 @@
 
                         <form style="color: black;font-family: 'Young Serif', sans-serif;">
                             <div class="mb-3">
-                                <label for="CI" class="form-label">Cédula del Cliente</label>
+                                <label for="CI" class="form-label">Identificación del Cliente</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="CI" placeholder="Ingrese Cédula" onkeypress="return solo10Numeros(event)" required>
+                                    <input type="text" class="form-control" id="CI" placeholder="Ingrese identificación" onkeypress="return solo10Numeros(event)" required>
                                     <button class="btn btn-primary" type="button" onclick="buscarCliente2()"><i class="bi bi-search"></i></button>
                                 </div>
                             </div>
@@ -288,6 +288,22 @@
 
         }
 
+        function solo10Numeros(e) {
+            let tecla = (document.all) ? e.keyCode : e.which;
+
+            // Permitir la tecla de retroceso (backspace)
+            if (tecla == 8) return true;
+
+            let patron = /[0-9]/;
+            let te = String.fromCharCode(tecla);
+
+            // Verificar si es un número y la longitud es menor o igual a 10
+            if (patron.test(te) && e.target.value.length < 10) {
+                return true;
+            } else {
+                return false;
+            }
+        }
 
 
         function buscarCliente2() {
