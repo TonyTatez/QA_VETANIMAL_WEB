@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using NLog;
 using RestSharp;
 using VET_ANIMAL.WEB.Engines;
@@ -164,6 +165,28 @@ namespace VET_ANIMAL.WEB.Controllers
             }
             return View();
         }
+
+        public ActionResult ListaDiagnostico()
+        {
+            string tokenValue = Request.Cookies["token"];
+            var request = new RestRequest("/api/Reportes/ListarDiagnostico", Method.Get);
+            request.AddParameter("Authorization", string.Format("Bearer " + tokenValue), ParameterType.HttpHeader);
+
+            var response = _apiClient.Execute(request);
+
+            if (response.Content.Length > 2)
+            {
+                var content = response.Content;
+                List<ItemDiagnostico> ListaDiagnostico = JsonConvert.DeserializeObject<List<ItemDiagnostico>>(content);
+                return Json(ListaDiagnostico); // Devuelve la lista de razas como JSON
+            }
+            else
+            {
+                return Json(null); // Devuelve null si no hay razas
+            }
+        }
+
+
 
         // GET: ReportesController/Details/5
         public ActionResult Details(int id)
