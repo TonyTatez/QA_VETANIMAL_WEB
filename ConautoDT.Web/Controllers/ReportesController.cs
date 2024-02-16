@@ -35,85 +35,6 @@ namespace VET_ANIMAL.WEB.Controllers
             _AccountService = new AccountService(configuration);
         }
 
-        //public async Task<ActionResult> Index (FiltroReporteInspeccion filtro, string operacion)
-        //{
-        //    TempData["menu"] = "";
-        //    MascotasViewModel model = new MascotasViewModel();
-        //    string tokenValue = Request.Cookies["token"];
-        //    var client = new RestClient(configuration["APIClient"]);
-        //    var request = new RestRequest("/api/HistoricoInspeccionLlanta/ListarHistoricoInspeccionesLlanta", Method.Get);
-        //    if (filtro.desde == null)
-        //        filtro.desde = DateTime.Today.AddDays(-7);
-        //    if (filtro.hasta == null)
-        //        filtro.hasta = DateTime.Today;
-        //    request.AddParameter("Authorization", string.Format("Bearer " + tokenValue), ParameterType.HttpHeader);
-        //    request.AddQueryParameter("FechaInicio", filtro.desde.ToString());
-        //    request.AddQueryParameter("FechaFin", filtro.hasta.ToString());
-        //    request.AddQueryParameter("Termico", filtro.Termico);
-        //    request.AddQueryParameter("IdTipoLlanta", filtro.IdTipoLlanta);
-        //    model.Filtro = filtro;
-        //    var response = await client.ExecuteAsync(request);
-        //    if (response.Content.Length > 2 && response.IsSuccessful == true)
-        //    {
-        //        var content = response.Content;
-
-        //        List<HistoricoInspeccionLlantaViewModel> ListaInspecciones = System.Text.Json.JsonSerializer.Deserialize<List<HistoricoInspeccionLlantaViewModel>>(content);
-
-        //        model.ListaInspeccion = ListaInspecciones;
-        //        if (operacion == "excel")
-        //        {
-        //            var reporteExcel = ListaInspecciones.Select(x => new ReporteExcelInspeccionLlanta
-        //            {
-        //                idHistoInspeLlanta = x.idHistoInspeLlanta,
-        //                termico = x.termico,
-        //                placa = x.placa,
-        //                estadoLlanta = x.estadoLlanta,
-        //                tipoVehiculo = x.tipoVehiculo,
-        //                numeroPosicion = x.numeroPosicion,
-        //                posicion = x.posicion,
-        //                fechaInspeccion = x.fechaInspeccion,
-        //                marcaLlanta = x.marcaLlanta,
-        //                medidaLlanta = x.medidaLlanta,
-        //                disenioLlanta = x.disenioLlanta
-        //            }).ToList();
-        //            var reporte = _reportingEngine.GenerateReportToByteArray(reporteExcel);
-        //            return File(reporte, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"Reporte Inspecciones Llantas.xlsx");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        model.ListaInspeccion = null;
-        //    }
-
-        //    ////TIPO LLANTA
-        //    //request = new RestRequest("/api/Tipos/Llantas/Listar", Method.Get);
-        //    //request.AddParameter("Authorization", string.Format("Bearer " + tokenValue), ParameterType.HttpHeader);
-        //    //response = client.Execute(request);
-
-        //    //if (response.Content.Length > 2 && response.IsSuccessful == true)
-        //    //{
-        //    //    var content = response.Content;
-
-        //    //    List<TipoViewModel> ListaTipoLlanta = System.Text.Json.JsonSerializer.Deserialize<List<TipoViewModel>>(content);
-        //    //    ListaTipoLlanta.Add(new TipoViewModel
-        //    //    {
-        //    //        idTipo = 0,
-        //    //        descripcion = "TODOS"
-        //    //    });
-        //    //    model.ListaTipoLlanta = ListaTipoLlanta;
-        //    //}
-        //    //else
-        //    //{
-        //    //    model.ListaTipoLlanta = null;
-        //    //}
-        //    //return View(model);
-
-        //    TempData["menu"] = "";
-
-        //    return View(model);
-        //}
-       
-        // GET: ReportesController
         public async Task<ActionResult> Index(FiltroReporteInspeccion filtro, string operacion)
         {
             TempData["menu"] = "";
@@ -128,43 +49,99 @@ namespace VET_ANIMAL.WEB.Controllers
             request.AddParameter("Authorization", string.Format("Bearer " + tokenValue), ParameterType.HttpHeader);
             request.AddQueryParameter("FechaInicio", filtro.desde.ToString());
             request.AddQueryParameter("FechaFin", filtro.hasta.ToString());
-            request.AddQueryParameter("Termico", filtro.Termico);
-            request.AddQueryParameter("IdTipoLlanta", filtro.IdMascota);
+           
             model.Filtro = filtro;
             var response = await client.ExecuteAsync(request);
-            if (response.Content.Length > 2 && response.IsSuccessful == true)
+            
+
+            TempData["menu"] = "";
+
+            return View(model);
+        }
+
+        public async Task<ActionResult> Indexxxxx(FiltroReporteInspeccion filtro, string operacion)
+        {
+            TempData["menu"] = "";
+            string tokenValue = Request.Cookies["token"];
+            var client = new RestClient(configuration["APIClient"]);
+
+            // Inicializar la lista de resultados
+            List<HistoricoInspeccion> resultados = new List<HistoricoInspeccion>();
+
+            // Iterar sobre cada valor de enfermedades, razas y sexos
+            foreach (var enfermedad in filtro.enfermedades)
             {
-                var content = response.Content;
-
-                List<HistoricoInspeccionLlantaViewModel> ListaInspecciones = System.Text.Json.JsonSerializer.Deserialize<List<HistoricoInspeccionLlantaViewModel>>(content);
-
-                model.ListaInspeccion = ListaInspecciones;
-                if (operacion == "excel")
+                foreach (var raza in filtro.razas)
                 {
-                    var reporteExcel = ListaInspecciones.Select(x => new ReporteExcelInspeccionLlanta
+                    foreach (var sexo in filtro.sexo)
                     {
-                        idHistoInspeLlanta = x.idHistoInspeLlanta,
-                        termico = x.termico,
-                        placa = x.placa,
-                        estadoLlanta = x.estadoLlanta,
-                        tipoVehiculo = x.tipoVehiculo,
-                        numeroPosicion = x.numeroPosicion,
-                        posicion = x.posicion,
-                        fechaInspeccion = x.fechaInspeccion,
-                        marcaLlanta = x.marcaLlanta,
-                        medidaLlanta = x.medidaLlanta,
-                        disenioLlanta = x.disenioLlanta
-                    }).ToList();
-                    var reporte = _reportingEngine.GenerateReportToByteArray(reporteExcel);
-                    return File(reporte, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"Reporte Inspecciones Llantas.xlsx");
+                        var request = new RestRequest("/api/Reportes/ReportesHistorico", Method.Get);
+                        if (filtro.desde == null)
+                            filtro.desde = DateTime.UtcNow.AddDays(-7);
+                        if (filtro.hasta == null)
+                            filtro.hasta = DateTime.UtcNow;
+                        request.AddParameter("Authorization", string.Format("Bearer " + tokenValue), ParameterType.HttpHeader);
+                        request.AddQueryParameter("FechaInicio", filtro.desde.ToString());
+                        request.AddQueryParameter("FechaFin", filtro.hasta.ToString());
+                        request.AddQueryParameter("enfermedades", enfermedad);
+                        request.AddQueryParameter("razas", raza);
+                        request.AddQueryParameter("sexo", sexo);
+
+                        var response = await client.ExecuteAsync(request);
+                        if (response.IsSuccessful)
+                        {
+                            var content = response.Content;
+                            List<HistoricoInspeccion> ListaDiagnostico = JsonConvert.DeserializeObject<List<HistoricoInspeccion>>(content);
+                            resultados.AddRange(ListaDiagnostico);
+                        }
+                    }
                 }
             }
-            else
+
+            // Verifica si no hay resultados y, si es así, inicialízalos con un valor por defecto
+            if (resultados.Count == 0)
             {
-                model.ListaInspeccion = null;
+                resultados.Add(new HistoricoInspeccion()); // o cualquier otro valor por defecto que necesites
             }
-            return View();
+
+            return Json(resultados);
         }
+
+        //public async Task<ActionResult> Indexxxxx(FiltroReporteInspeccion filtro, string operacion)
+        //{
+        //    TempData["menu"] = "";
+        //    HistoricoInspeccion model = new HistoricoInspeccion();
+        //    string tokenValue = Request.Cookies["token"];
+        //    var client = new RestClient(configuration["APIClient"]);
+        //    var request = new RestRequest("/api/Reportes/ReportesHistorico", Method.Get);
+        //    if (filtro.desde == null)
+        //        filtro.desde = DateTime.UtcNow.AddDays(-7);
+        //    if (filtro.hasta == null)
+        //        filtro.hasta = DateTime.UtcNow;
+        //    request.AddParameter("Authorization", string.Format("Bearer " + tokenValue), ParameterType.HttpHeader);
+        //    request.AddQueryParameter("FechaInicio", filtro.desde.ToString());
+        //    request.AddQueryParameter("FechaFin", filtro.hasta.ToString());
+        //    request.AddQueryParameter("enfermedades", string.Join(",", filtro.enfermedades));
+        //    request.AddQueryParameter("razas", string.Join(",", filtro.razas));
+        //    request.AddQueryParameter("sexo", string.Join(",", filtro.sexo));
+
+        //    var response = await client.ExecuteAsync(request);
+        //    if (response.IsSuccessful)
+        //    {
+        //        var content = response.Content;
+        //        List<HistoricoInspeccion> ListaDiagnostico = JsonConvert.DeserializeObject<List<HistoricoInspeccion>>(content);
+        //        return Json(ListaDiagnostico); // Devuelve la lista de razas como JSON
+
+        //    }
+
+        //    // Verifica si 'model' sigue siendo null y, si es así, inicialízalo con un valor por defecto
+        //    if (model == null)
+        //    {
+        //        model = new HistoricoInspeccion(); // o cualquier otro valor por defecto que necesites
+        //    }
+
+        //    return Json(model);
+        //}
 
         public ActionResult ListaDiagnostico()
         {

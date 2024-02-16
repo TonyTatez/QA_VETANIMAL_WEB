@@ -1,250 +1,180 @@
-﻿
-@model VET_ANIMAL.WEB.Models.MascotasViewModel
+﻿@model VET_ANIMAL.WEB.Models.MascotasViewModel
 @{
     ViewData["Title"] = "Reportes";
 }
-<html lang="es">
-<head>
-    <!-- Metadatos, título y otros elementos del head -->
 
-    <!-- Enlaces a las hojas de estilo CSS -->
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.css" />
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="~/css/bootstrap-multiselect.css" />
-</head>
-<body>
-    <div class="row" style="font-size: 13px !important;">
-        <div class="col-md-12">
-            <div class="widget">
-                <header class="widget-header " style="padding-bottom: 5px !important;">
-                    <div class="row">
-                        <h4 class="widget-title col-md-12" style="font-weight:400 !important;font-size: 29px; color: black;font-family: 'Young Serif', sans-serif;">Reporte Incidencia de la Enfermedad</h4>
-                    </div>
-                    <form asp-action="ReporteInspeccionLlantas" style="font-family: 'Young Serif', sans-serif; ">
-                        <div class="container-fluid alert alert-info mt-3">
-                            <div class="row">
-                                <div class="col-md-4 col-sm-12 mb-2">
-                                    <div class="input-group">
-                                        <label class="form-label me-3" for="desde">Desde:</label>
-                                        <input type="date" id="desde" asp-for="@Model.Filtro.desde" class="form-control" />
-                                    </div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@2.0.1/dist/css/multi-select-tag.css">
+<div class="row" style="font-size: 13px !important;">
+    <div class="col-md-12">
+        <div class="widget">
+            <header class="widget-header " style="padding-bottom: 5px !important;">
+                <div class="row">
+                    <h4 class="widget-title col-md-12" style="font-weight:400 !important;font-size: 29px; color: black;font-family: 'Young Serif', sans-serif;">Reporte Incidencia de la Enfermedad</h4>
+                </div>
+                <form style="font-family: 'Young Serif', sans-serif; ">
+                    <div class="container-fluid alert alert-info mt-3">
+                        <div class="row">
+                            <div class="col-md-4 col-sm-12 mb-2">
+                                <div class="input-group">
+                                    <label class="form-label me-3" for="desde">Desde:</label>
+                                    <input type="date" id="desde"  class="form-control" />
                                 </div>
-                                <div class="col-md-4 col-sm-12 mb-2 ">
-                                    <div class="input-group">
-                                        <label class="form-label me-3" for="hasta">Hasta:</label>
-                                        <input type="date" id="hasta" asp-for="@Model.Filtro.hasta" class="form-control" />
-                                    </div>
+                            </div>
+                            <div class="col-md-4 col-sm-12 mb-2 ">
+                                <div class="input-group">
+                                    <label class="form-label me-3" for="hasta">Hasta:</label>
+                                    <input type="date" id="hasta"  class="form-control" />
                                 </div>
-                                <div class="col-md-4 col-sm-12 mb-2">
-                                    <div class="input-group">
-                                        <label class="form-label me-3" for="parametroMascota">Parámetro Mascota:</label>
-                                        <div class="dropdown">
-                                            <button class="btn btn-success btn-sm" type="button" id="dropdownMenuButton" aria-haspopup="true" aria-expanded="false">
-                                                Seleccionar Parámetro
-                                            </button>
-                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                <div class="form-check m-2">
-                                                    <input class="form-check-input" type="checkbox" id="checkRAZA" value="RAZA">
-                                                    <label class="form-check-label" for="checkRAZA">RAZA</label>
-                                                </div>
-                                                <div class="form-check m-2">
-                                                    <input class="form-check-input" type="checkbox" id="checkSEXO" value="SEXO">
-                                                    <label class="form-check-label" for="checkSEXO">SEXO</label>
-                                                </div>
-                                                <div class="form-check m-2">
-                                                    <input class="form-check-input" type="checkbox" id="checkDIAGNOSTICO" value="DIAGNOSTICO">
-                                                    <label class="form-check-label" for="checkDIAGNOSTICO">DIAGNOSTICO</label>
-                                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-12 mb-2">
+                                <div class="input-group">
+                                    <label class="form-label me-3" for="parametroMascota">Parámetro Mascota:</label>
+                                    <div class="dropdown">
+                                        <button class="btn btn-success btn-sm" type="button" id="dropdownMenuButton" aria-haspopup="true" aria-expanded="false">
+                                            Seleccionar Parámetro
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <div class="form-check m-2">
+                                                <input class="form-check-input" type="checkbox" id="checkRAZA" value="RAZA">
+                                                <label class="form-check-label" for="checkRAZA">RAZA</label>
+                                            </div>
+                                            <div class="form-check m-2">
+                                                <input class="form-check-input" type="checkbox" id="checkSEXO" value="SEXO">
+                                                <label class="form-check-label" for="checkSEXO">SEXO</label>
+                                            </div>
+                                            <div class="form-check m-2">
+                                                <input class="form-check-input" type="checkbox" id="checkDIAGNOSTICO" value="DIAGNOSTICO">
+                                                <label class="form-check-label" for="checkDIAGNOSTICO">DIAGNOSTICO</label>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                             
                             </div>
+
+                        </div>
+
+
+                    </div>
+                    <div class="container-fluid alert alert-success mt-3">
+                        <div class="row">
+                            <div id="10" class="col-md-4 col-sm-12 " hidden>
+                                <div class="form ">
+                                    <label class="ms-2" for="editRaza">Raza</label>
+                                    <select class="form-control" id="editRaza" style="color: blue;font-size: 16px;" multiple  >
+                                       
+                                    </select>
+                                    
+                                </div>
+                                
+                                
+                            </div>
+                            <div id="11" class="col-md-4 col-sm-12 mb-2 " hidden>
+                                <div class="form ">
+                                    <label class="ms-2" for="verificarsexo">Sexo</label>
+                                    <select class="form-control" id="verificarsexo" style="color: blue;font-size: 16px;" multiple>
+                                        <option value="Macho">Macho</option>
+                                        <option value="Hembra">Hembra</option>
+                                    </select>
+                                   
+                                </div>
+                            </div>
+
+                            <div id="12" class="col-md-4 col-sm-12 mb-2" hidden>
+                                <div class="form ">
+                                    <label class="ms-2" for="enfermedad">Diagnóstico</label>
+                                    <select class="form-control" id="enfermedad" style="color: blue;font-size: 16px;" multiple>
+                                        
+                                    </select>
+                                    
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 col-sm-12 mb-2 mx-auto">
+                            <!-- Botón Filtrar -->
+                            <button id="Filtrar" type="button" onclick="datosFiltrados()" class="btn btn-primary btn-block">Filtrar</button>
+                        </div>
+                        <div class="col-md-3 col-sm-12 mb-2 mx-auto">
+                            <!-- Botón Descargar Excel -->
+                            <button type="submit" name="operacion" value="excel" class="btn btn-success btn-block">
+                                <i class="zmdi zmdi-download" title="Descargar Excel"></i> Descargar Excel
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </header>
+            <div class="widget-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-sm  dataTable" id="tablaMascotas">
+
+                        <thead>
+                            <tr>
+                                <th>
+                                    Historia Clinica
+                                </th>
+                                <th>
+                                    Nombre Mascota
+                                </th>
+                                <th>
+                                    Raza
+                                </th>
+                               
+                                <th>
+                                    Peso
+                                </th>
+                                <th>
+                                    Sexo
+                                </th>
+                                <th>
+                                    Diagnóstico
+                                </th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
 
                         
-                        </div>
-                        <div class="container-fluid alert alert-success mt-3">
-                            <div class="row">
-                                <div id="10" class="col-md-4 col-sm-12 mb-2" hidden>
-                                    <div class="form-floating">
-                                        <select asp-for="@Model.raza" class="form-control" id="editRaza" style="color: blue;font-size: 16px;">
-                                            <option value="">Seleccione</option>
-                                            <!-- Las opciones se agregarán dinámicamente aquí -->
-                                        </select>
-                                        <label for="editRaza">Raza</label>
-                                    </div>
-                                </div>
-                                <div id="11" class="col-md-4 col-sm-12 mb-2 " hidden>
-                                    <div class="form-floating">
-                                        <select asp-for="@Model.sexo" class="form-control" id="verificarsexo" style="color: blue;font-size: 16px;">
-                                            <option value="">Seleccione</option>
-                                            <option value="Macho">Macho</option>
-                                            <option value="Hembra">Hembra</option>
-                                        </select>
-                                        <label for="verificarsexo">Sexo</label>
-                                    </div>
-                                </div>
+                        </tbody>
 
-                                <div id="12" class="col-md-4 col-sm-12 mb-2" hidden>
-                                    <div class="form-floating">
-                                        <select asp-for="@Model.sexo" class="form-control" id="enfermedad" style="color: blue;font-size: 16px;">
-                                            <option value="">Seleccione</option>
-                                        </select>
-                                        <label for="enfermedad">Diagnóstico</label>
-                                    </div>
-                                </div>
-
-                            </div>
-
-
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3 col-sm-12 mb-2 mx-auto">
-                                <!-- Botón Filtrar -->
-                                <button id="Filtrar" type="submit" class="btn btn-primary btn-block">Filtrar</button>
-                            </div>
-                            <div class="col-md-3 col-sm-12 mb-2 mx-auto">
-                                <!-- Botón Descargar Excel -->
-                                <button type="submit" name="operacion" value="excel" class="btn btn-success btn-block">
-                                    <i class="zmdi zmdi-download" title="Descargar Excel"></i> Descargar Excel
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </header>
-                <div class="widget-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-sm  dataTable" id="tablaMascotas">
-
-                            <thead>
-                                <tr>
-                                    <th>
-                                        Historia Clinica
-                                    </th>
-                                    <th>
-                                        Nombre Mascota
-                                    </th>
-                                    <th>
-                                        Raza
-                                    </th>
-                                    <th>
-                                        Edad
-                                    </th>
-                                    <th>
-                                        Peso
-                                    </th>
-                                    <th>
-                                        Sexo
-                                    </th>
-                                    <th>
-                                        Diagnóstico
-                                    </th>
-
-
-                                </tr>
-                            </thead>
-                            @* <tbody>
-
-                                @if (Model.ListaInspeccion != null)
-                                {
-
-
-                                    @foreach (var item in Model.ListaInspeccion)
-                                    {
-                                        @Html.HiddenFor(model => item.idLlanta)
-                                        ;
-                                        @Html.HiddenFor(model => item.idEstadoLLanta)
-                                        ;
-                                        @Html.HiddenFor(model => item.idTipoVehiculo)
-                                        ;
-                                        @Html.HiddenFor(model => item.idLLantaInspe)
-                                        ;
-                                        @Html.HiddenFor(model => item.idMarcaLLanta)
-                                        ;
-                                        @Html.HiddenFor(model => item.idMedidaLLanta)
-                                        ;
-                                        @Html.HiddenFor(model => item.idDisenioLLanta)
-                                        ;
-
-
-                                        ;
-
-                                        <tr>
-                                            <td>
-                                                @Html.DisplayFor(model => item.idHistoInspeLlanta)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(model => item.termico)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(model => item.placa)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(model => item.estadoLlanta)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(model => item.tipoVehiculo)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(model => item.numeroPosicion)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(model => item.posicion)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(model => item.fechaInspeccion)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(model => item.marcaLlanta)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(model => item.medidaLlanta)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(model => item.disenioLlanta)
-                                            </td>
-                                        </tr>
-                                    }
-                                }
-                                else
-                                {
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>No existen datos para mostrar</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-
-                                }
-                            </tbody> *@
-
-                        </table>
-                    </div>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 
 
-</body>
+
 
 @section Scripts {
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
-    <script type="text/javascript" src="~/js/bootstrap-multiselect.js"></script>
+
+
+    <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@2.0.1/dist/js/multi-select-tag.js"></script>
+    
     <script type="text/javascript">
 
+        new MultiSelectTag('verificarsexo', {
+            rounded: true,    // default true
+            shadow: true,      // default false
+            placeholder: 'Search',  // default Search...
+            tagColor: {
+                textColor: '#327b2c',
+                borderColor: '#92e681',
+                bgColor: '#eaffe6',
+            },
+            onChange: function (values) {
+                console.log(values)
+
+            },
+
+
+        });
         document.addEventListener('DOMContentLoaded', function () {
             var dropdownMenuButton = document.getElementById('dropdownMenuButton');
             var checkboxes = document.querySelectorAll('.form-check-input');
@@ -272,9 +202,7 @@
             });
         });
 
-            $(document).ready(function () {
-                $('#tablaInspeccion').DataTable();
-            });
+       
 
         $(document).ready(function () {
             $('#checkRAZA').change(function () {
@@ -303,12 +231,17 @@
         });
 
         $(document).ready(function () {
-            buscarRazas(); // Llamada a la función buscarRazas() cuando el DOM esté listo
-        });
-
-        $(document).ready(function () {
             buscarDiagnostico(); // Llamada a la función buscarRazas() cuando el DOM esté listo
         });
+
+
+        $(document).ready(function () {
+            buscarRazas(); // Llamada a la función buscarRazas() cuando el DOM esté listo
+        });
+        
+       
+
+
 
         function buscarRazas() {
             $.ajax({
@@ -324,11 +257,6 @@
                     // Limpiar los select antes de agregar nuevas opciones
                     selectRazas.empty();
 
-                    // Agregar una opción predeterminada a cada select
-                    selectRazas.append($('<option>', {
-                        value: '',
-                        text: 'Seleccione'
-                    }));
                     
 
                     // Iterar sobre los datos recibidos y agregar opciones a cada select
@@ -339,10 +267,29 @@
                             text: raza.descripcion // Suponiendo que cada raza tiene un campo "descripcion"
                         });
 
+
                         // Agregar la opción a cada select
                         selectRazas.append(option.clone());
-                       
+
                     });
+
+                    new MultiSelectTag('editRaza', {
+                        rounded: true,    // default true
+                        shadow: true,      // default false
+                        placeholder: 'Search',  // default Search...
+                        tagColor: {
+                            textColor: '#327b2c',
+                            borderColor: '#92e681',
+                            bgColor: '#eaffe6',
+                        },
+                        onChange: function (values) {
+                            console.log(values)
+                            
+                        },
+
+
+                    });
+                    
 
                 },
                 error: function (error) {
@@ -351,6 +298,9 @@
             });
         }
 
+
+        
+      
         function buscarDiagnostico() {
             $.ajax({
                 url: '/Reportes/ListaDiagnostico', // Ruta al método que devuelve la lista de razas
@@ -361,17 +311,12 @@
 
                     // Obtener el elemento select donde se colocarán las razas
                     var selectRazas = $("#enfermedad");
-                    
+
 
                     // Limpiar los select antes de agregar nuevas opciones
                     selectRazas.empty();
-                    
 
-                    // Agregar una opción predeterminada a cada select
-                    selectRazas.append($('<option>', {
-                        value: '',
-                        text: 'Seleccione'
-                    }));
+
                     
 
                     // Iterar sobre los datos recibidos y agregar opciones a cada select
@@ -384,15 +329,108 @@
 
                         // Agregar la opción a cada select
                         selectRazas.append(option.clone());
-                       
-                    });
 
+                    });
+                    new MultiSelectTag('enfermedad', {
+                        rounded: true,    // default true
+                        shadow: true,      // default false
+                        placeholder: 'Search',  // default Search...
+                        tagColor: {
+                            textColor: '#327b2c',
+                            borderColor: '#92e681',
+                            bgColor: '#eaffe6',
+                        },
+                        onChange: function (values) {
+                            console.log(values)
+
+                        },
+
+
+                    });
                 },
                 error: function (error) {
                     console.error('Error en la solicitud AJAX:', error);
                 }
             });
         }
-        </script>
+
+        function validarFechas() {
+            var desde = new Date(document.getElementById('desde').value);
+            var hasta = new Date(document.getElementById('hasta').value);
+
+            var diff = hasta.getTime() - desde.getTime();
+            var diffDays = Math.ceil(diff / (1000 * 3600 * 24));
+
+            if (diffDays > 365) { // Si la diferencia es mayor a un año
+                // Muestra Sweet Alert con swal.fire
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'El rango de fechas no puede ser mayor a un año.'
+                });
+                document.getElementById('hasta').value = ''
+                return false; // Evita enviar el formulario si hay un error
+            }
+
+            return true; // Si no hay error, permite enviar el formulario
+        }
+
+        // Event listener para cambios en el campo 'desde'
+        document.getElementById('desde').addEventListener('change', validarFechas);
+
+        // Event listener para cambios en el campo 'hasta'
+        document.getElementById('hasta').addEventListener('change', validarFechas);
+
+
+
+        function datosFiltrados() {
+            // Capturar los datos seleccionados en los dropdowns
+            var selectedRazas = $('#editRaza').val();
+            var selectedEnfermedades = $('#enfermedad').val();
+            var selectedSexo = $('#verificarsexo').val();
+
+            // Crear un objeto con los datos recolectados
+            var filtro = {
+                desde: $('#desde').val(),
+                hasta: $('#hasta').val(),
+              
+                // Agrega otros campos si los necesitas
+                enfermedades: selectedEnfermedades,
+                sexo: selectedSexo,
+                razas: selectedRazas
+            };
+             console.log ("trakaaaaa", filtro)
+            // Realizar la solicitud AJAX al método del controlador
+            $.ajax({
+                url: '/Reportes/Indexxxxx',
+                method: 'POST', // Ajusta el método HTTP según sea necesario
+                data: { filtro: filtro }, // Envía los datos recolectados como parte del cuerpo de la solicitud
+                success: function (response) {
+                    // Manejar la respuesta del servidor según sea necesario
+                    console.log('Respuesta del servidor:', response);
+
+                    // Obtén la referencia del cuerpo de la tabla
+                    var tableBody = $("#tablaMascotas tbody");
+
+                    // Limpiar filas existentes
+                    tableBody.empty();
+                    // Iterar sobre los datos recibidos y agregar filas a la tabla
+                    response.forEach(function (data) {
+                        var row = $("<tr>");
+                        row.append($("<td>").text(data.idHistoriaClinica));
+                        row.append($("<td>").text(data.nombreMascota));
+                        row.append($("<td>").text(data.raza));
+                        row.append($("<td>").text(data.peso));
+                        row.append($("<td>").text(data.sexo));
+                        row.append($("<td>").text(data.resultado));
+                        tableBody.append(row);
+                    });
+                },
+                error: function (error) {
+                    console.error('Error en la solicitud AJAX:', error);
+                }
+            });
+        }
+    </script>
 
 }

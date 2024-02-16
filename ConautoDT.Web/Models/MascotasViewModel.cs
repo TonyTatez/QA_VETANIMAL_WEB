@@ -74,6 +74,21 @@
 
     public class HistoricoInspeccionLlantaViewModel
     {
+        public long IdFichaControl { get; set; }
+        public string CodigoFichaControl { get; set; }
+        public DateTime Fecha { get; set; }
+        public DateTime? FechaNacimiento { get; set; }
+        public long IdHistoriaClinica { get; set; }
+        public long IdMotivo { get; set; }
+        public long IdMascota { get; set; }
+        public string Motivo { get; set; }
+        public float? Peso { get; set; }
+        public string Observacion { get; set; }
+        public string NombreMascota { get; set; }
+        public string Raza { get; set; }
+        public string Sexo { get; set; }
+        public string Cliente { get; set; }
+        public string Resultado { get; set; }
         public long idHistoInspeLlanta { get; set; }
         public long idLlanta { get; set; }
 
@@ -107,23 +122,29 @@
     {
         public DateTime? desde { get; set; }
         public DateTime? hasta { get; set; }
-        public string Termico { get; set; }
-        public long IdMascota { get; set; }
+        public List<string> enfermedades  { get; set; }
+        public List<string> sexo { get; set; }
+        public List<string> razas { get; set; }
     }
 
-    public class ReporteExcelInspeccionLlanta
+    public class HistoricoInspeccion
     {
-        public long idHistoInspeLlanta { get; set; }
-        public string termico { get; set; }
-        public string placa { get; set; }
-        public string estadoLlanta { get; set; }
-        public string tipoVehiculo { get; set; }
-        public int numeroPosicion { get; set; }
-        public string posicion { get; set; }
-        public DateTime fechaInspeccion { get; set; }
-        public string marcaLlanta { get; set; }
-        public string medidaLlanta { get; set; }
-        public string disenioLlanta { get; set; }
+        public long IdFichaControl { get; set; }
+        public string CodigoFichaControl { get; set; }
+        public DateTime Fecha { get; set; }
+        public DateTime? FechaNacimiento { get; set; }
+        public long IdHistoriaClinica { get; set; }
+        public long IdMotivo { get; set; }
+        public long IdMascota { get; set; }
+        public string Motivo { get; set; }
+        public float? peso { get; set; }
+        public string Observacion { get; set; }
+        public string nombreMascota { get; set; }
+        public string raza { get; set; }
+        public string sexo { get; set; }
+        public string cliente { get; set; }
+        public string resultado { get; set; }
+
     }
 
     public class ItemMascotaFichas
