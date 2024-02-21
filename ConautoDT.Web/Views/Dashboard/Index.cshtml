@@ -1,0 +1,206 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+   
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Main CSS-->
+    
+    <link rel="stylesheet" type="text/css" href="https://awtluae.000webhostapp.com//css/main.css">
+    <!-- Font-icon css-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" ></script>
+
+</head>
+<body >
+    
+    
+    <div class="m-5">
+        <div class="app-title">
+            <div>
+                <h1><i class=" bi bi-speedometer2"></i> Dashboard</h1>
+               
+            </div>
+           
+        </div>
+        <div class="row mt-5">
+            <div class="col-md-6 col-lg-3">
+                <div class="widget-small primary coloured-icon">
+                    <i class="icon bi bi-virus"></i>
+                    <div class="info">
+                        <h4>ANAPLASMOSIS</h4>
+                        <p id="anap"><b></b></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="widget-small info coloured-icon">
+                    <i class="icon bi bi-bug-fill"></i>
+                    <div class="info">
+                        <h4>BABESIOSIS</h4>
+                        <p id="babe"><b></b></p>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="widget-small warning coloured-icon">
+                    <i class="icon bi bi-virus2"></i>
+                    <div class="info">
+                        <h4>EHRLICHIOSIS</h4>
+                        <p id="eri"><b></b></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="widget-small danger coloured-icon">
+                    <i class="icon bi bi-exclamation-diamond-fill"></i>
+                    <div class="info">
+                        <h4>ENFERMEDAD DESCONOCIDA</h4>
+                        <p id="desc"><b></b></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-6" hidden>
+                <div class="tile">
+                    <h3 class="tile-title">Weekly Sales - Last week</h3>
+                    <div class="ratio ratio-16x9">
+                        <div id="salesChart"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="tile">
+                    <h3 class="tile-title">Tipos de Hemoparasitos</h3>
+                    <div class="ratio ratio-16x9">
+                        <div id="supportRequestChart" ></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $.ajax({
+                url: '/Dashboard/Indexxx',
+                type: 'GET',
+                success: function (data) {
+                    // Aquí puedes hacer algo con los datos recibidos, como actualizar tu interfaz de usuario
+                    console.log('Respuesta exitosa trakaaaaaa:', data);
+                    // Recorrer los datos recibidos
+                    $.each(data, function (key, value) {
+                        // Asignar el valor a la etiqueta con el ID correspondiente
+                        $('#anap').text(data["ANAPLASMOSIS"]);
+                        $('#babe').text(data["BABESIOSIS"]);
+                        $('#eri').text(data["EHRLICHIOSIS"]);
+                        $('#desc').text(data["Enfermedad Desconocida"]);
+
+                        // Actualizar los valores en la serie del gráfico
+                        if (key === 'ANAPLASMOSIS') {
+                            supportRequests.series[0].data[0].value = value;
+                        } else if (key === 'BABESIOSIS') {
+                            supportRequests.series[0].data[1].value = value;
+                        } else if (key === 'EHRLICHIOSIS') {
+                            supportRequests.series[0].data[2].value = value;
+                        } else if (key === 'Enfermedad Desconocida') {
+                            supportRequests.series[0].data[3].value = value;
+                        }
+                    });
+
+                    // Inicializar el gráfico con los datos actualizados
+                    var myChart = echarts.init(document.getElementById('supportRequestChart'));
+                    myChart.setOption(supportRequests);
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    // Manejar errores de la solicitud
+                    console.error('Error en la solicitud:', errorThrown);
+                }
+            });
+        });
+
+
+        const salesData = {
+            xAxis: {
+                type: 'category',
+                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+            },
+            yAxis: {
+                type: 'value',
+                axisLabel: {
+                    formatter: '${value}'
+                }
+            },
+            series: [
+                {
+                    data: [150, 230, 224, 218, 135, 147, 260],
+                    type: 'line',
+                    smooth: true
+                }
+            ],
+            tooltip: {
+                trigger: 'axis',
+                formatter: "<b>{b0}:</b> ${c0}"
+            }
+        }
+
+        const supportRequests = {
+            tooltip: {
+                trigger: 'item'
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left'
+            },
+           
+            series: [
+                {
+                    name: 'Casos tipológicos de hemoparasitos',
+                    type: 'pie',
+                    radius: '50%',
+                    data: [
+                        { value:0 , name: 'ANAPLASMOSIS' },
+                        { value: 0, name: 'BABESIOSIS' },
+                        { value: 0, name: 'EHRLICHIOSIS' },
+                        { value: 0, name: 'ENFERMEDAD DESCONOCIDA' }
+                    ],
+                    emphasis: {
+                        itemStyle: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+
+        const salesChartElement = document.getElementById('salesChart');
+        const salesChart = echarts.init(salesChartElement, null, { renderer: 'svg' });
+        salesChart.setOption(salesData);
+        new ResizeObserver(() => salesChart.resize()).observe(salesChartElement);
+
+        const supportChartElement = document.getElementById("supportRequestChart")
+        const supportChart = echarts.init(supportChartElement, null, { renderer: 'svg' });
+        supportChart.setOption(supportRequests);
+        new ResizeObserver(() => supportChart.resize()).observe(supportChartElement);
+    </script>
+    <!-- Google analytics script-->
+    <script type="text/javascript">
+        if (document.location.hostname == 'pratikborsadiya.in') {
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+            ga('create', 'UA-72504830-1', 'auto');
+            ga('send', 'pageview');
+        }
+    </script>
+</body>
+</html>

@@ -68,6 +68,27 @@ namespace VET_ANIMAL.WEB.Controllers
             // Inicializar la lista de resultados
             List<HistoricoInspeccion> resultados = new List<HistoricoInspeccion>();
 
+            // Verificar si la lista de enfermedades es null
+            if (filtro.enfermedades == null)
+            {
+                // Si es null, asignar una lista vacía
+                filtro.enfermedades = new List<string> { "" }; // O cualquier valor por defecto que desees
+            }
+
+            // Verificar si la lista de razas es null
+            if (filtro.razas == null)
+            {
+                // Si es null, asignar una lista vacía
+                filtro.razas = new List<string> { "" }; // O cualquier valor por defecto que desees
+            }
+
+            // Verificar si la lista de sexos es null
+            if (filtro.sexo == null)
+            {
+                // Si es null, asignar una lista con un valor predeterminado
+                filtro.sexo = new List<string> { "" }; // O cualquier valor por defecto que desees
+            }
+
             // Iterar sobre cada valor de enfermedades, razas y sexos
             foreach (var enfermedad in filtro.enfermedades)
             {
@@ -106,7 +127,6 @@ namespace VET_ANIMAL.WEB.Controllers
 
             return Json(resultados);
         }
-
         //public async Task<ActionResult> Indexxxxx(FiltroReporteInspeccion filtro, string operacion)
         //{
         //    TempData["menu"] = "";
