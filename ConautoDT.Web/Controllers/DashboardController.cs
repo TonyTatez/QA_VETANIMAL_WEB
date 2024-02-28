@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using NLog;
 using RestSharp;
 using VET_ANIMAL.WEB.Engines;
+using VET_ANIMAL.WEB.Models;
 using VET_ANIMAL.WEB.Servicios;
 
 namespace VET_ANIMAL.WEB.Controllers
@@ -43,28 +44,53 @@ namespace VET_ANIMAL.WEB.Controllers
             
         }
 
-        public async Task<ActionResult> Indexxx()
+        public async Task<ActionResult> Indexxx(int? año, int? mes)
         {
-            string tokenValue = Request.Cookies["token"];
-            var client = new RestClient(configuration["APIClient"]);
-
-            var request = new RestRequest("/api/Reportes/ContarCasosPorEnfermedad", Method.Get);
-            request.AddHeader("Authorization", $"Bearer {tokenValue}");
-
-            var response = await client.ExecuteAsync(request);
-
-            if (response.IsSuccessful)
+            try
             {
-                var content = response.Content;
-                var casosPorEnfermedad = JsonConvert.DeserializeObject<Dictionary<string, int>>(content);
+                string tokenValue = Request.Cookies["token"];
+                var client = new RestClient(configuration["APIClient"]);
 
-                // Devolver los datos como JSON
-                return Json(casosPorEnfermedad);
+                var request = new RestRequest("/api/Reportes/ContarCasosPorEnfermedad", Method.Get);
+                request.AddHeader("Authorization", $"Bearer {tokenValue}");
+
+                // Agregar filtros de año y/o mes si están presentes
+                if (año.HasValue && mes.HasValue)
+                {
+                    request.AddParameter("año", año.Value);
+                    request.AddParameter("mes", mes.Value);
+                }
+                else if (año.HasValue)
+                {
+                    request.AddParameter("año", año.Value);
+                }
+                else if (mes.HasValue)
+                {
+                    request.AddParameter("mes", mes.Value);
+                }
+
+
+                var response = await client.ExecuteAsync(request);
+
+                if (response.IsSuccessful)
+                {
+                    var content = response.Content;
+                    var casosPorEnfermedad = JsonConvert.DeserializeObject<List<CasoEnfermedad>>(content);
+                    // Si deseas manejar los datos de una manera específica, puedes hacerlo aquí antes de devolverlos
+                    // Por ejemplo, podrías convertirlos a un formato específico o procesarlos de alguna manera
+                    casosPorEnfermedad = casosPorEnfermedad.OrderBy(caso => caso.Enfermedad).ToList();
+                    return Json(casosPorEnfermedad);
+                }
+                else
+                {
+                    // Manejar el error según sea necesario
+                    return BadRequest($"Error al obtener la cantidad de casos por enfermedad. Estado de la respuesta: {response.StatusCode}");
+                }
             }
-            else
+            catch (Exception ex)
             {
                 // Manejar el error según sea necesario
-                return BadRequest($"Error al obtener la cantidad de casos por enfermedad. Estado de la respuesta: {response.StatusCode}");
+                return BadRequest($"Error al obtener la cantidad de casos por enfermedad: {ex.Message}");
             }
         }
 

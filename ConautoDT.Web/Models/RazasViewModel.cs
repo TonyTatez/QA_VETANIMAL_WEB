@@ -40,4 +40,10 @@ namespace VET_ANIMAL.WEB.Models
         public string descripcion { get; set; }
         //   public string tipoCiudad { get; set; }
     }
+
+    public class RazaCantidadViewModel
+    {
+        public string descripcionRaza { get; set; }
+        public int cantidad { get; set; }
+    }
 }

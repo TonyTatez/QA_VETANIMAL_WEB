@@ -5,6 +5,7 @@ using RestSharp;
 using VET_ANIMAL.WEB.Models;
 using VET_ANIMAL.WEB.Servicios;
 
+using System.Text.Json;
 namespace VET_ANIMAL.WEB.Controllers
 {
     public class CargaMasivaController : Controller
@@ -33,45 +34,46 @@ namespace VET_ANIMAL.WEB.Controllers
             return View();
         }
 
-        public async Task<IActionResult> MostrarNumeroClientes()
+        public async Task<int[]> ObtenerNumeroClientesYNumeroMascotas()
         {
             try
             {
                 string tokenValue = Request.Cookies["token"];
 
-                // Crear la solicitud a la API para obtener el número de clientes
+                // Crear la solicitud a la API para obtener el número de clientes y mascotas
                 var request = new RestRequest("/api/cat/NumeroClientes", Method.Get);
                 request.AddHeader("Authorization", $"Bearer {tokenValue}");
 
                 // Realizar la solicitud
-                var response = await _apiClient.ExecuteAsync<long>(request);
+                var response = await _apiClient.ExecuteAsync(request);
 
                 if (response.IsSuccessful)
                 {
-                    // Crea el modelo
-                    var viewModel = new CargaMasivaViewModel
-                    {
-                        numeroClientes = response.Data
-                    };
+                    // Deserializar la respuesta
+                    var content = response.Content;
+                    var data = JsonSerializer.Deserialize<Dictionary<string, int>>(content);
 
-                    // Devuelve la vista con el modelo
-                    return View("CargaMasiva", viewModel);
+                    // Extraer los números de clientes y mascotas
+                    int numeroClientes = data["item1"];
+                    int numeroMascotas = data["item2"];
+
+                    // Devolver los números de clientes y mascotas en forma de matriz
+                    return new int[] { numeroClientes, numeroMascotas };
                 }
                 else
                 {
                     // Manejar el caso en que la solicitud no fue exitosa
-                    _log.Error($"Error al obtener el número de clientes. Código de estado: {response.StatusCode}, Mensaje: {response.ErrorMessage}");
-                    return View("Error");
+                    _log.Error($"Error al obtener el número de clientes y mascotas. Código de estado: {response.StatusCode}, Mensaje: {response.ErrorMessage}");
+                    throw new Exception("Error al obtener el número de clientes y mascotas");
                 }
             }
             catch (Exception ex)
             {
                 // Manejar errores según tus necesidades
-                _log.Error(ex, "Error al obtener el número de clientes");
-                return View("Error");
+                _log.Error(ex, "Error al obtener el número de clientes y mascotas");
+                throw;
             }
         }
-
 
         // ... (otros métodos)
 

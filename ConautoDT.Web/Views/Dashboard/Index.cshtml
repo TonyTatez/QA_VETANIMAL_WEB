@@ -8,18 +8,19 @@
     <!-- Main CSS-->
     
     <link rel="stylesheet" type="text/css" href="https://awtluae.000webhostapp.com//css/main.css">
+
     <!-- Font-icon css-->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" ></script>
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@2.0.1/dist/css/multi-select-tag.css">
 </head>
 <body >
-    
+ 
     
     <div class="m-5">
         <div class="app-title">
             <div>
-                <h1><i class=" bi bi-speedometer2"></i> Dashboard</h1>
+                <h1 id="letrero"><i class=" bi bi-speedometer2"></i> DASHBOARD ANIMAL PLACE</h1>
                
             </div>
            
@@ -64,14 +65,7 @@
             </div>
         </div>
         <div class="row mt-3">
-            <div class="col-md-6" hidden>
-                <div class="tile">
-                    <h3 class="tile-title">Weekly Sales - Last week</h3>
-                    <div class="ratio ratio-16x9">
-                        <div id="salesChart"></div>
-                    </div>
-                </div>
-            </div>
+            
             <div class="col-md-9">
                 <div class="tile">
                     <h3 class="tile-title">Tipos de Hemoparasitos</h3>
@@ -80,73 +74,168 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-md-3" style="font-family: 'Young Serif', sans-serif; font-size:15px">
+                <div class="tile">
+                   
+
+                    <div class="row " style="width:100%">
+                        <label class="ms-2" for="fechas" >Año : </label>
+                        <select class="form-control" id="fechas"   multiple>
+                            
+                            <option value="2024">2024</option>
+                            <option value="2023">2023</option>
+                            <option value="2022">2022</option>
+                            <option value="2021">2021</option>
+                            <option value="2020">2020</option>
+                            <option value="2019">2019</option>
+                        </select>
+
+                    </div>
+                    <div class="row " style="width:100%">
+                        <label class="ms-2" for="mes">Mes : </label>
+                        <select class="form-control" id="mes"  multiple>
+
+                            <option value="1">Enero</option>
+                            <option value="2">Febrero</option>
+                            <option value="3">Marzo</option>
+                            <option value="4">Abril</option>
+                            <option value="5">Mayo</option>
+                            <option value="6">Junio</option>
+                            <option value="7">Julio</option>
+                            <option value="8">Agosto</option>
+                            <option value="9">Septiembre</option>
+                            <option value="10">Octubre</option>
+                            <option value="11">Noviembre</option>
+                            <option value="12">Diciembre</option>
+                        </select>
+
+                    </div>
+                    <div class="row justify-content-center">
+                        <button style="width:30%; " id="filtrarBtn" class="btn btn-success mt-3" onclick="filtrar()">
+                            Filtrar <i class="bi bi-arrow-repeat" style="font-size: 1.3em; font-weight: bold;"></i>
+                        </button>
+                    </div>
+                </div>
+                
+            </div>
+            
         </div>
     </div>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@2.0.1/dist/js/multi-select-tag.js"></script>
     <script type="text/javascript">
 
+        new MultiSelectTag('fechas', {
+            rounded: true,    // default true
+            shadow: true,      // default false
+            placeholder: 'Search',  // default Search...
+            tagColor: {
+                textColor: '#000000',
+                borderColor: '#92e681',
+                bgColor: '#A0D8D8',
+            },
+            onChange: function (values) {
+                console.log(values)
+
+            },
+
+
+        });
+
+        new MultiSelectTag('mes', {
+            rounded: true,    // default true
+            shadow: true,      // default false
+            placeholder: 'Search',  // default Search...
+            tagColor: {
+                textColor: '#000000',
+                borderColor: '#92e681',
+                bgColor: '#A0D8D8',
+            },
+            onChange: function (values) {
+                console.log(values)
+
+            },
+
+
+        });
+
+        // Definir la función que se ejecuta cuando haces clic en el botón "Filtrar"
+        function filtrar() {
+            var fechasSeleccionadas = parseInt($("#fechas").val());
+            var mesesSeleccionados = parseInt($("#mes").val());
+            console.log("okdd", fechasSeleccionadas)
+            // Llamar a la función que ya se ejecuta en el $(document).ready()
+            ejecutarFuncionInicial(fechasSeleccionadas, mesesSeleccionados);
+        }
+
+        // Esta función se ejecuta en el $(document).ready()
         $(document).ready(function () {
+            ejecutarFuncionInicial();
+        });
+
+        function ejecutarFuncionInicial(fechasSeleccionadas, mesesSeleccionados) {
+            
             $.ajax({
                 url: '/Dashboard/Indexxx',
-                type: 'GET',
+                method: 'GET',
+                data: { año: fechasSeleccionadas, mes: mesesSeleccionados },
+                contentType: 'application/json',
                 success: function (data) {
-                    // Aquí puedes hacer algo con los datos recibidos, como actualizar tu interfaz de usuario
-                    console.log('Respuesta exitosa trakaaaaaa:', data);
-                    // Recorrer los datos recibidos
-                    $.each(data, function (key, value) {
-                        // Asignar el valor a la etiqueta con el ID correspondiente
-                        $('#anap').text(data["ANAPLASMOSIS"]);
-                        $('#babe').text(data["BABESIOSIS"]);
-                        $('#eri').text(data["EHRLICHIOSIS"]);
-                        $('#desc').text(data["Enfermedad Desconocida"]);
+                    console.log('Respuesta exitosa:', data);
 
-                        // Actualizar los valores en la serie del gráfico
-                        if (key === 'ANAPLASMOSIS') {
-                            supportRequests.series[0].data[0].value = value;
-                        } else if (key === 'BABESIOSIS') {
-                            supportRequests.series[0].data[1].value = value;
-                        } else if (key === 'EHRLICHIOSIS') {
-                            supportRequests.series[0].data[2].value = value;
-                        } else if (key === 'Enfermedad Desconocida') {
-                            supportRequests.series[0].data[3].value = value;
-                        }
+                    // Objeto para almacenar las cantidades de todas las enfermedades
+                    var enfermedades = {
+                        'ANAPLASMOSIS': 0,
+                        'BABESIOSIS': 0,
+                        'EHRLICHIOSIS': 0,
+                        'Enfermedad Desconocida': 0
+                    };
+
+                    // Actualizar las cantidades de enfermedades según los datos recibidos
+                    $.each(data, function (key, value) {
+                        enfermedades[value.enfermedad] = value.cantidad;
                     });
 
+                    // Actualizar las etiquetas con las cantidades
+                    $('#anap').text(enfermedades['ANAPLASMOSIS']);
+                    $('#babe').text(enfermedades['BABESIOSIS']);
+                    $('#eri').text(enfermedades['EHRLICHIOSIS']);
+                    $('#desc').text(enfermedades['Enfermedad Desconocida']);
                     // Inicializar el gráfico con los datos actualizados
                     var myChart = echarts.init(document.getElementById('supportRequestChart'));
-                    myChart.setOption(supportRequests);
+
+                    // Recorrer los datos y actualizar la serie del gráfico
+                    var seriesData = [];
+                    $.each(data, function (key, value) {
+                        seriesData.push({
+                            name: value["enfermedad"],
+                            value: value["cantidad"]
+                        });
+                    });
+
+                    // Configurar la opción del gráfico
+                    var option = {
+                        tooltip: {},
+                        series: [{
+                            name: 'Casos por enfermedad',
+                            type: 'pie',
+                            data: seriesData
+                        }]
+                    };
+
+                    // Aplicar la opción al gráfico
+                    myChart.setOption(option);
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     // Manejar errores de la solicitud
                     console.error('Error en la solicitud:', errorThrown);
                 }
             });
-        });
-
-
-        const salesData = {
-            xAxis: {
-                type: 'category',
-                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-            },
-            yAxis: {
-                type: 'value',
-                axisLabel: {
-                    formatter: '${value}'
-                }
-            },
-            series: [
-                {
-                    data: [150, 230, 224, 218, 135, 147, 260],
-                    type: 'line',
-                    smooth: true
-                }
-            ],
-            tooltip: {
-                trigger: 'axis',
-                formatter: "<b>{b0}:</b> ${c0}"
-            }
         }
+
+
+        
 
         const supportRequests = {
             tooltip: {
@@ -179,10 +268,7 @@
             ]
         };
 
-        const salesChartElement = document.getElementById('salesChart');
-        const salesChart = echarts.init(salesChartElement, null, { renderer: 'svg' });
-        salesChart.setOption(salesData);
-        new ResizeObserver(() => salesChart.resize()).observe(salesChartElement);
+       
 
         const supportChartElement = document.getElementById("supportRequestChart")
         const supportChart = echarts.init(supportChartElement, null, { renderer: 'svg' });

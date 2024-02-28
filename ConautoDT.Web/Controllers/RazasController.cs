@@ -188,6 +188,41 @@ namespace VET_ANIMAL.WEB.Controllers
             }
         }
 
+
+
+
+        public ActionResult CantidadesRazas()
+        {
+            RazaCantidadViewModel model = new RazaCantidadViewModel();
+
+            string tokenValue = Request.Cookies["token"];
+            var client = new RestClient(configuration["APIClient"]);
+            var request = new RestRequest("/api/Razas/CantidadXRazas", Method.Get);
+
+            // Agregar el token de autorización en la cabecera de la solicitud
+            request.AddHeader("Authorization", "Bearer " + tokenValue);
+
+            // Realizar la llamada a la API
+            var response = client.Execute(request);
+            if (response.IsSuccessful)
+            {
+                // Si la llamada fue exitosa, devolver la data obtenida de la API
+                return Content(response.Content, "application/json");
+            }
+            else
+            {
+                // Si hubo un error en la llamada, manejarlo según sea necesario
+                // Por ejemplo, puedes devolver un mensaje de error.
+                return Content("Error al obtener los datos de la API.", "text/plain");
+            }
+        }
+
+
+
+
+
+
+
         // GET: PaisController/Delete/5
         [HttpPost]
         public async Task<ActionResult> DeleteInformacion(ItemRazas model)

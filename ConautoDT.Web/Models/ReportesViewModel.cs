@@ -21,7 +21,11 @@ namespace VET_ANIMAL.WEB.Models
         public long idEnfermedad { get; set; }
         public string nombre { get; set; }
     }
-
+    public class CasoEnfermedad
+    {
+        public string Enfermedad { get; set; }
+        public int Cantidad { get; set; }
+    }
     public class EliminarReporte
     {
         public long Id { get; set; }

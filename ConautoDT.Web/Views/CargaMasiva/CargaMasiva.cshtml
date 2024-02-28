@@ -21,34 +21,57 @@
         <div class="widget" >
             <header class="widget-header" >
                 <div class="row">
-                    <h4 class="widget-title col-md-12" style="font-weight: 400 !important; font-size: 30px; font-family: 'Young Serif', sans-serif;">CARGA MASIVA</h4>
+                    <h4 class="widget-title col-md-12" id="letrero"  >CARGA MASIVA</h4>
                 </div>
             </header>
             <hr class="widget-separator" style="margin-top: 2px !important; border-color: #007bff;">
             <div class="widget-body" style="padding: 20px;">
 
+
                 <div class="d-flex justify-content-end mb-2">
+
+                   
                     <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                        <button title="Agregar Registros" class="btn btn-primary btn-sm btn-editar mx-2" style="height: 40px;" data-bs-toggle="modal" data-bs-target="#masivo">
+                        <button title="Agregar Registros" class="btn btn-success btn-sm btn-editar mx-2" style="height: 40px;" data-bs-toggle="modal" data-bs-target="#masivo">
                             <i class="bi bi-arrow-bar-up"></i> REGISTROS CLIENTES
                         </button>
 
-                        <button title="Entrenar Algoritmo" class="btn btn-success btn-sm btn-editar mx-2" style="height: 40px;" data-bs-toggle="modal" data-bs-target="#masivoTrain">
+                        <button title="Entrenar Algoritmo" class="btn btn-info btn-sm btn-editar mx-2" style="height: 40px;" data-bs-toggle="modal" data-bs-target="#masivoTrain">
                             <i class="bi bi-clipboard-minus"></i> REGISTROS ENTRENAMIENTO
                         </button>
                     </div>
                 </div>
-
+                
                 <div id="dashboard">
 
-                    <div id="clientes" style="background-color: #ffffff; padding: 15px; border: 1px solid #ced4da; border-radius: 5px; margin-bottom: 20px;">
-                        <h2 style="color: black;">Clientes</h2>
-                        <p id="cantidadClientes" style="color: blue;">Cargando...</p>
+                    <div id="" style="background-color: #ffffff; padding: 15px; border: 1px solid #ced4da; border-radius: 5px; margin-bottom: 20px;">
+                        <div class="row mt-5">
+
+                            <div class="col-md-6 col-lg-6">
+                                <div class="widget-small info coloured-icon">
+                                    <i class="icon bi bi-person-workspace"></i>
+                                    <div class="info">
+                                        <h4>CLIENTES</h4>
+                                        <p id="clientes"><b></b></p>
+
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6 col-lg-6">
+                                <div class="widget-small danger coloured-icon">
+                                    <i class="icon bi bi-github"></i>
+                                    <div class="info">
+                                        <h4>MASCOTAS </h4>
+                                        <p id="mascotas"><b></b></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div id="mascotas" style="background-color: #ffffff; padding: 15px; border: 1px solid #ced4da; border-radius: 5px;">
-                        <h2 style="color: black;">Mascotas</h2>
-                        <p id="cantidadMascotas" style="color: blue">Cargando...</p>
+                        
                         <div>
                             <h3 style="color: black;">Razas de mascotas</h3>
                             <canvas id="chartRazas" width="900" height="200"></canvas>
@@ -142,33 +165,52 @@
     <script src="~/Content/modernizr-2.8.3.js"></script>
     <script type="text/javascript">
 
+        $(document).ready(function () {
+            // Hacer la llamada AJAX al método ObtenerNumeroClientesYNumeroMascotas
+            $.ajax({
+                url: "/CargaMasiva/ObtenerNumeroClientesYNumeroMascotas",
+                type: "GET",
+                success: function (data) {
+                    console.log("data:", data);
+                    // Actualizar el contenido del elemento #clientes con el número de clientes
+                    $("#clientes").text(data[0]);
+                    // Actualizar el contenido del elemento #mascotas con el número de mascotas
+                    $("#mascotas").text(data[1]);
+                },
+                error: function () {
+                    // Manejar errores si la llamada AJAX falla
+                    $("#clientes").text("Error al cargar el número de clientes");
+                    $("#mascotas").text("Error al cargar el número de mascotas");
+                }
+            });
+        });
+
         document.addEventListener("DOMContentLoaded", function () {
-            // Datos de ejemplo (reemplaza con tus datos reales)
-            var cantidadClientes = 100;
-            var cantidadMascotas = 200;
-            var razas = ["Labrador", "Poodle", "Bulldog"];
+            // Deja el array de razas vacío o con datos predeterminados
+            var razas = [];
+            var cantidades = [];
 
-            // Mostrar la cantidad de clientes y mascotas en el DOM
-            var cantidadClientesElement = document.getElementById("cantidadClientes");
-            if (cantidadClientesElement) {
-                cantidadClientesElement.textContent = `Cantidad de clientes: ${cantidadClientes}`;
-            }
+            // Colores de fondo para las barras
+            var coloresBarras = [
+                'rgba(255, 99, 132, 0.6)',
+                'rgba(54, 162, 235, 0.6)',
+                'rgba(255, 206, 86, 0.6)',
+                'rgba(75, 192, 192, 0.6)',
+                'rgba(153, 102, 255, 0.6)',
+                'rgba(255, 159, 64, 0.6)'
+            ];
 
-            var cantidadMascotasElement = document.getElementById("cantidadMascotas");
-            if (cantidadMascotasElement) {
-                cantidadMascotasElement.textContent = `Cantidad de mascotas: ${cantidadMascotas}`;
-            }
 
             // Crear un gráfico de barras para las razas de mascotas
             var ctxRazas = document.getElementById("chartRazas").getContext('2d');
             var chartRazas = new Chart(ctxRazas, {
                 type: 'bar',
                 data: {
-                    labels: razas,
+                    labels: razas, // Usaremos este array para las razas
                     datasets: [{
                         label: 'Razas de mascotas',
-                        data: [10, 20, 15], // Reemplaza con tus datos reales
-                        backgroundColor: 'rgba(15, 161, 220)',
+                        data: cantidades, // Inicialmente vacío, lo actualizaremos más tarde
+                        backgroundColor: coloresBarras,
                         borderColor: 'rgba(75, 192, 192, 1)',
                         borderWidth: 1
                     }]
@@ -182,8 +224,69 @@
                 }
             });
 
-            
+            // Función para buscar las razas desde el servidor
+            function buscarRazas() {
+                $.ajax({
+                    url: '/Razas/CantidadesRazas', // Ruta al método que devuelve la lista de razas
+                    method: 'GET',
+                    success: function (Content) {
+                        // Manipula los datos recibidos aquí
+                        console.log("Datos de las razas:", Content);
+
+                        // Limpiar el array de razas y actualizarlo con los datos reales
+                        razas = Content.map(function (raza) {
+                            return raza.descripcionRaza;
+                        });
+
+                        // Limpiar el array de cantidades y actualizarlo con los datos reales
+                        cantidades = Content.map(function (raza) {
+                            return raza.cantidad;
+                        });
+
+                        // Actualizar las etiquetas del gráfico de barras
+                        chartRazas.data.labels = razas;
+                        chartRazas.data.datasets[0].data = cantidades;
+
+                        // Actualizar el gráfico
+                        chartRazas.update();
+                    },
+                    error: function (error) {
+                        console.error('Error en la solicitud AJAX:', error);
+                    }
+                });
+            }
+
+            // Llamar a la función para buscar las razas cuando el DOM esté listo
+            buscarRazas();
         });
+
+
+
+
+
+        // // Esta función se ejecuta en el $(document).ready()
+        // $(document).ready(function () {
+        //     cantidadesRazas();
+        // });
+
+        // function cantidadesRazas() {
+        //     $.ajax({
+        //         url: '/Razas/CantidadesRazas', // Ruta al método que devuelve la lista de razas
+        //         method: 'GET',
+        //         success: function (data) {
+        //             // Manipula los datos recibidos aquí
+        //             console.log(" cantidades de las razas:", data);
+
+
+        //         },
+        //         error: function (error) {
+        //             console.error('Error en la solicitud AJAX:', error);
+        //         }
+        //     });
+        // }
+
+
+
 
         function uploadFile() {
             // Obtener el elemento de entrada de archivo

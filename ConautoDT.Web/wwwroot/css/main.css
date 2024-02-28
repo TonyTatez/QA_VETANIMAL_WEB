@@ -1,5 +1,14 @@
 
-
+#letrero {
+    text-align: left;
+    background-image: url('/imagenes/1.jpg');
+    background-repeat: repeat;
+    background-position: left;
+    color: white;
+    background-clip: text;
+    font-size: 3.0em;
+    font-weight: bold;
+}
 .widget-small {
     display: -webkit-box;
     display: -ms-flexbox;
