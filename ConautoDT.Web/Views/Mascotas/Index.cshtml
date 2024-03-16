@@ -1,6 +1,7 @@
 ﻿<link rel="stylesheet" href="~/Content/bootstrap.css" />
 
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
+<link rel="stylesheet" type="text/css" href="https://awtluae.000webhostapp.com//css/loaderPet.css">
 @model VET_ANIMAL.WEB.Models.MascotasViewModel
 @{
     ViewData["Title"] = "Mascotas";
@@ -8,11 +9,29 @@
 
 <div class="myLoader2" id="cargasgeneral" hidden>
     <div class="loader2">
-        <span></span>
-        <span></span>
-        <span></span>
-        <h2 >Cargando....</h2>
+        <div aria-label="Orange and tan hamster running in a metal wheel" role="img" class="wheel-and-hamster">
+            <div class="wheel"></div>
+            <div class="hamster">
+                <div class="hamster__body">
+                    <div class="hamster__head">
+                        <div class="hamster__ear"></div>
+                        <div class="hamster__eye"></div>
+                        <div class="hamster__nose"></div>
+                    </div>
+                    <div class="hamster__limb hamster__limb--fr"></div>
+                    <div class="hamster__limb hamster__limb--fl"></div>
+                    <div class="hamster__limb hamster__limb--br"></div>
+                    <div class="hamster__limb hamster__limb--bl"></div>
+                    <div class="hamster__tail"></div>
+                    
+                </div>
+               
+            </div>
+            <div class="spoke"></div>
+        </div>
+        
     </div>
+   
 </div>
 
 
@@ -714,7 +733,7 @@
                         console.log("Finalizando función buscarCliente2");
                     }
                 });
-            }, 2000); // 10 segundos en milisegundos
+            }, 3000); // 10 segundos en milisegundos
             console.log("Finalizando función buscarCliente2");
         }
 

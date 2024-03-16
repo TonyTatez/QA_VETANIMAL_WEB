@@ -3,6 +3,7 @@
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.css" />
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <link rel="stylesheet" href="~/Content/bootstrap.css" />
+<link rel="stylesheet" type="text/css" href="https://awtluae.000webhostapp.com//css/loaderPet.css">
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/qrious@4.0.2/dist/qrious.min.js"></script>
 <meta charset="UTF-8">
@@ -15,10 +16,26 @@
 }
 <div class="myLoader2" id="cargasgeneral" hidden>
     <div class="loader2">
-        <span></span>
-        <span></span>
-        <span></span>
-        <h2>Cargando....</h2>
+        <div aria-label="Orange and tan hamster running in a metal wheel" role="img" class="wheel-and-hamster">
+            <div class="wheel"></div>
+            <div class="hamster">
+                <div class="hamster__body">
+                    <div class="hamster__head">
+                        <div class="hamster__ear"></div>
+                        <div class="hamster__eye"></div>
+                        <div class="hamster__nose"></div>
+                    </div>
+                    <div class="hamster__limb hamster__limb--fr"></div>
+                    <div class="hamster__limb hamster__limb--fl"></div>
+                    <div class="hamster__limb hamster__limb--br"></div>
+                    <div class="hamster__limb hamster__limb--bl"></div>
+                    <div class="hamster__tail"></div>
+
+                </div>
+
+            </div>
+            <div class="spoke"></div>
+        </div>
     </div>
 </div>
 <body>
@@ -346,7 +363,10 @@
                                                     Fecha
                                                 </th>
                                                 <th style="background: #021D5D; color: white;font-size: 14px;font-family: 'Ubuntu Mono', monospace;">
-                                                    Acciones
+                                                    Examen
+                                                </th>
+                                                <th style="background: #021D5D; color: white;font-size: 14px;font-family: 'Ubuntu Mono', monospace;">
+                                                    Archivo
                                                 </th>
                                             </tr>
                                         </thead>
@@ -693,14 +713,17 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal Test -->
     <div class="modal fade" id="pdfModal" tabindex="-1" role="dialog" aria-labelledby="pdfModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <!-- Imagen en el encabezado -->
                     <img src="https://awtluae.000webhostapp.com//imagenes/test.png" alt="Imagen del encabezado del modal" style="width: 100px; height: 60px; ">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    </button>
+                    <div class="d-flex align-items-end flex-column">
+                        <button type="button" style="color: black" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
                 </div>
                 <div class="modal-body">
 
@@ -709,6 +732,7 @@
             </div>
         </div>
     </div>
+
     <!-- Modal Eliminar -->
     <div class="modal fade" id="modalLoader" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -1362,7 +1386,7 @@
                             // Agregar el botón para cargar exámenes
                             var boton = $("<button>")
                                 .attr("title", "Comprobación")
-                                .addClass("btn p-v-sm btn-danger btn-sm ")
+                                .addClass("btn p-v-sm btn-info btn-sm ")
                                 .append($("<i>").addClass("bi bi-file-pdf"))
                                 .append("")
                                 .click(function () {
@@ -1381,7 +1405,34 @@
                                 });
 
                             row.append($("<td>").append(boton)); // Agrega el botón como una nueva columna
+                            // Verificar si idContenido es diferente de null
+                            if (fichasHemoparasitosis.idContenido !== null) {
+                                // Si idContenido no es null, agregar botón con icono de visto
+                                var botonVisto = $("<button>")
+                                    .addClass("btn p-v-sm btn-success btn-sm")
+                                    .attr("title", "Visto")
+                                    .append($("<i>").addClass("bi bi-check-circle"))
+                                    .append("")
+                                    .css("border-radius", "50%")
+                                    .click(function () {
+                                        // Aquí puedes agregar la lógica que desees para el botón de visto
+                                    });
 
+                                row.append($("<td>").append(botonVisto));
+                            } else {
+                                // Si idContenido es null, agregar botón con icono de X
+                                var botonX = $("<button>")
+                                    .addClass("btn p-v-sm btn-danger btn-sm")
+                                    .attr("title", "No Visto")
+                                    .append($("<i>").addClass("bi bi-x-circle"))
+                                    .append("")
+                                    .css("border-radius", "50%")
+                                    .click(function () {
+                                        // Aquí puedes agregar la lógica que desees para el botón de X
+                                    });
+
+                                row.append($("<td>").append(botonX));
+                            }
                             // Agrega la fila al cuerpo de la tabla
                             tableBody.append(row);
 
@@ -1400,6 +1451,9 @@
         }
 
         function uploadFile() {
+            // Mostrar el loader
+            document.getElementById("cargasgeneral").hidden = false;
+
             // Obtener el elemento de entrada de archivo
             const fileInput = document.getElementById('excelCM');
             // Obtener el archivo seleccionado
@@ -1411,33 +1465,49 @@
                 const formData = new FormData();
                 formData.append('Excel', file);
                 formData.append('idFichaHemo', idFichaHemo); // Agregar el idHemo al formData
-                console.log("feeeeeeeeeeee", formData)
-                console.log("feeeeeeeeeeee", idFichaHemo)
-                $.ajax({
-                    url: "@Url.Action("Upload", "Hemoparasitosis")",
-                    method: 'POST',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function (response) {
-                        // Manejar la respuesta exitosa aquí
-                        console.log("Guardado exitoso:", response);
-                        // Mostrar SweetAlert
-                        Swal.fire({
-                            title: 'Éxito',
-                            text: 'Fichas diagnóstico guardado correctamente',
-                            icon: 'success',
-                            confirmButtonText: 'Aceptar',
-                            allowOutsideClick: false,
-                            didClose: () => {
-                                cerrarModalYRecargar();
-                            }
-                        });
-                    },
-                    error: function (error) {
-                        console.error("Error en la solicitud AJAX: ", error);
-                    }
-                });
+
+                document.getElementById("cargasgeneral").hidden = false;
+                // Mostrar el loader durante 3 segundos antes de realizar la solicitud AJAX
+                setTimeout(function () {
+                    $.ajax({
+                        url: "@Url.Action("Upload", "Hemoparasitosis")",
+                        method: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function (response) {
+                            // Manejar la respuesta exitosa aquí
+                            console.log("Guardado exitoso:", response);
+
+                            // Cerrar el modal
+                            $('#modalTest').modal('hide');
+
+                            // Mostrar SweetAlert
+                            Swal.fire({
+                                title: 'Éxito',
+                                text: 'Fichas diagnóstico guardado correctamente',
+                                icon: 'success',
+                                confirmButtonText: 'Aceptar',
+                                allowOutsideClick: false
+                            }).then((result) => {
+                                // Callback ejecutado después de hacer clic en "Aceptar" en SweetAlert
+                                if (result.isConfirmed) {
+                                    // Recargar la página
+                                    location.reload();
+                                }
+                            });
+                        },
+
+                        error: function (error) {
+                            console.error("Error en la solicitud AJAX: ", error);
+                        },
+
+                        complete: function () {
+                            // Ocultar el loader después de completar la solicitud AJAX
+                            document.getElementById("cargasgeneral").hidden = true;
+                        }
+                    });
+                }, 3000); // 3 segundos en milisegundos
             } else {
                 Swal.fire({
                     title: 'Alerta',

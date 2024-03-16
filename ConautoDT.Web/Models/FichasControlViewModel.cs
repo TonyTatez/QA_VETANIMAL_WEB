@@ -22,6 +22,7 @@
         public DateTime fecha { get; set; }
         public long idMascota { get; set; }
         public long idEnfermedad { get; set; }
+        public long? idContenido { get; set; }
         public string enfermedad { get; set; }
         public string tratamiento { get; set; }
         public string observaciones { get; set; }
