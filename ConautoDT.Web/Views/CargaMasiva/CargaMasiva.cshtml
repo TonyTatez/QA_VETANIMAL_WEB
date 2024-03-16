@@ -2,15 +2,9 @@
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.css" />
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <link rel="stylesheet" href="~/Content/bootstrap.css" />
-
-
-
-
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
-
-
-
-
+<link rel="stylesheet" type="text/css" href="https://awtluae.000webhostapp.com//css/main.css">
+<link rel="stylesheet" type="text/css" href="https://awtluae.000webhostapp.com//css/style.css">
 @model VET_ANIMAL.WEB.Models.CargaMasivaViewModel
 @{
     ViewData["Title"] = "CARGA MASIVA";
@@ -44,7 +38,7 @@
                 
                 <div id="dashboard">
 
-                    <div id="" style="background-color: #ffffff; padding: 15px; border: 1px solid #ced4da; border-radius: 5px; margin-bottom: 20px;">
+                    <div  >
                         <div class="row mt-5">
 
                             <div class="col-md-6 col-lg-6">
@@ -87,14 +81,53 @@
 <div class="modal fade" id="masivo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lm">
         <div class="modal-content">
-            <div class="modal-header TMSHeaderModal" style="background: #DAE8FD">
+            @* <div class="modal-header TMSHeaderModal" style="background: #DAE8FD">
                 <h5 class="modal-title" style="font-family: 'Young Serif', sans-serif; font-weight: bold;">SINCRONIZACIÓN CARGA MASIVA</h5>
                 <div class="d-flex align-items-end flex-column">
                     <button type="button" style="color: black" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
+            </div> *@
+
+            <div class="modal-body ">
+                <form class="dropzone-box" asp-action="GuardaryEditarInfo">
+                    <h2 id="hola">
+                        CARGA MASIVA  CLIENTES 
+                    </h2>
+                    <p>
+                        Adjuntar archivos a este proyecto
+                    </p>
+                    <div class="dropzone-area">
+                        <div class="file-upload-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                                 stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                                <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
+                            </svg>
+                        </div>
+                        <p>
+                            Haga clic para cargar o arrastre y suelte
+                        </p>
+                        <input type="file" required id="excelCM" accept=".xls, .xlsx" name="excelCM">
+                        <p class="message">
+                            No hay archivos seleccionados
+                        </p>
+                    </div>
+                    <div class="dropzone-actions">
+                        <button type="button"  data-bs-dismiss="modal" aria-label="Cerrar">
+                            Cancelar
+                        </button>
+                        <button id="guardarInformacion" type="button" onclick="uploadFile()">
+                            Guardar
+                        </button>
+                    </div>
+                </form>
+
+                <script type="text/javascript" src="https://awtluae.000webhostapp.com/js/script.js"></script>
             </div>
 
-            <div class="modal-body">
+
+            @* <div class="modal-body">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-8 offset-md-2">
@@ -118,7 +151,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> *@
         </div>
     </div>
 </div>
@@ -143,7 +176,7 @@
             <form asp-action="TrainModel" method="post" enctype="multipart/form-data">
                 <div class="form-group col-md-12">
                     <label for="archivoEntrenamiento">Archivo de Entrenamiento</label>
-                    <input type="file" style="color: blue; font-size: 14px;" id="archivoEntrenamiento" name="file" accept=".csv" class="form-control" />
+                    <input type="file" style="color: blue; font-size: 14px;" id="archivoEntrenamiento" name="file" accept=".csv" class="form-control" required />
                 </div>
 
                 <br />
@@ -262,32 +295,6 @@
 
 
 
-
-
-        // // Esta función se ejecuta en el $(document).ready()
-        // $(document).ready(function () {
-        //     cantidadesRazas();
-        // });
-
-        // function cantidadesRazas() {
-        //     $.ajax({
-        //         url: '/Razas/CantidadesRazas', // Ruta al método que devuelve la lista de razas
-        //         method: 'GET',
-        //         success: function (data) {
-        //             // Manipula los datos recibidos aquí
-        //             console.log(" cantidades de las razas:", data);
-
-
-        //         },
-        //         error: function (error) {
-        //             console.error('Error en la solicitud AJAX:', error);
-        //         }
-        //     });
-        // }
-
-
-
-
         function uploadFile() {
             // Obtener el elemento de entrada de archivo
             const fileInput = document.getElementById('excelCM');
@@ -299,7 +306,7 @@
                 // Crear un objeto FormData y agregar el archivo
                 const formData = new FormData();
                 formData.append('Excel', file);
-
+                console.log("feeeeeeeeeeee", formData)
                 // Configurar la solicitud Fetch
                 fetch('Upload', {
                     method: 'POST',
@@ -337,7 +344,12 @@
                         });
                     });
             } else {
-                alert('Por favor, selecciona un archivo antes de subirlo.');
+                Swal.fire({
+                        title: 'Alerta',
+                        text: 'Selecciona un archivo primero',
+                        icon: 'info',
+                        confirmButtonText: 'Aceptar'
+                });
             }
         }
         

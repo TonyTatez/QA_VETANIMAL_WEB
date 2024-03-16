@@ -450,7 +450,7 @@
                                             @Html.DisplayFor(model => item.fechaNacimiento)
                                         </td>
                                         <td>
-                                            <button title="Editar Mascota" class="btn p-v-sm btn-info btn-sm btn-editar" data-bs-toggle="modal" data-bs-target="#exampleModalEdit" onclick="editarMascota({idMascota:@item.idMascota ,nombreMascotas:'@item.nombreMascota',peso:'@item.peso',raza:'@item.raza',idCliente:'@item.cliente',fechaNacimiento:'@item.fechaNacimiento',sexo:'@item.sexo'});">
+                                            <button title="Editar Mascota" class="btn p-v-sm btn-info btn-sm btn-editar" data-bs-toggle="modal" data-bs-target="#exampleModalEdit" onclick="editarMascota({idMascota:@item.idMascota ,nombreMascotas:'@item.nombreMascota',peso:'@item.peso',raza:'@item.raza',idCliente:'@item.idCliente',fechaNacimiento:'@item.fechaNacimiento',dueño:'@item.cliente',sexo:'@item.sexo'});">
                                                 <i class="bi bi-pen"></i>
                                             </button>
 
@@ -770,7 +770,7 @@
             console.log("esditarrr", Mascota);
             $('#editNombre').val(Mascota.nombreMascotas);
             $('#editIdCliente2').val(Mascota.idCliente);
-            $('#editdueño2').val(Mascota.idCliente);
+            $('#editdueño2').val(Mascota.dueño);
             $('#editPeso').val(Mascota.peso);
             $('#editRaza').val(Mascota.raza);
             $('#idMascota2').val(Mascota.idMascota);

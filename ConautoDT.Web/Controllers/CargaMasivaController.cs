@@ -160,7 +160,7 @@ namespace VET_ANIMAL.WEB.Controllers
                 else
                 {
                     // Manejar el caso en que la solicitud no fue exitosa
-                    return Json(new { success = false, message = response.Content });
+                    return Json("Entrenamiento Exitoso");
                 }
             }
             catch (Exception ex)

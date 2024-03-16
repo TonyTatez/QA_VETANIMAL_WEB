@@ -3,8 +3,8 @@
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.css" />
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <link rel="stylesheet" href="~/Content/bootstrap.css" />
-
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrious@4.0.2/dist/qrious.min.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -23,7 +23,7 @@
 </div>
 <body>
     <div class="container">
-        <h1 class="mb-3" id="letrero" >DETECCIÓN HEMOPARASITOSIS </h1>
+        <h1 class="mb-3" id="letrero">DETECCIÓN HEMOPARASITOSIS </h1>
 
         <div class="container mt-5">
             <div class="row justify-content-center">
@@ -58,129 +58,314 @@
                 </div>
             </div>
         </div>
-        <div class="card text-center mt-5">
-            <div class="card-header">
 
-                <div class="nav-item">
+        <div class="mt-5">
 
-                    <h1 class="mb-3 text-center" style="color: black; font-weight: bold;font-size: 1.2em; font-family: 'Young Serif', sans-serif;">
-                        CASOS SOPECHA DE HEMOPARASITOSIS
-                    </h1>
-                </div>
-                <div class="btn-group" role="group" aria-label="Basic mixed styles example" style="margin-bottom:5px !important;">
-                    <button id="btnNuevo" type="button" class="btn btn-primary btn-sm bi bi-clipboard-plus" data-bs-toggle="modal" data-bs-target="#exampleModal">   Nuevo </button>
-                </div>
-                @*<li class="nav-item">
-                <button class="btn btn-success active m-1" type="button" style="background-color: #007bff; color: #ffffff;">Active</button>
-                </li>
-                <li class="nav-item">
-                <button class="btn btn-danger active m-1" type="button" style="background-color: #007bff; color: #ffffff;">Active</button>
-                </li>*@
 
-            </div>
-            <div class="card-body">
 
-                <div class="table-responsive" style="font-family: 'Young Serif', sans-serif; ">
-                    <table class="table table-bordered table-sm  dataTable table-striped" id="tablaMascotas">
-                        <thead>
-                            <tr>
+            <h2 class="" style="display: flex; border-bottom: 1px solid #eee; flex: 1; align-items: center; justify-content: center;">
+                <button class="btn btn-success btn-lg btn-block" style="width: 100%; padding: 0.6rem 1rem; border: none;" type="button">
+                    CASOS SOSPECHA DE HEMOPARASITOSIS
+                    <span style="content: '\0000a0'; display: inline-block; height: 30px; width: 30px; margin-left: 10px; background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABS0lEQVRIidWVP0rEQBTGf0SQrdatJAewFI9gEZsljdikFO+gV7CUPUHYA7g3sBCstPAEKSysLGSLVWIjscg3u+MwSSYLAf3gg/Dm/Z95L/DHkIiD4V4MRjRQImvseGQpcAo8ApVkseRnwBh4A96BD51HwCUwAYquoFdyfCPHc6CUzGaps1i6lWw7EVkGK49jl59WQsEtjwOdG65kE4y5DJfAhbjsCJL3yd70fGbJZx0BSl8Vvp4dAyN9HwK74lFHYiPZepGwGaLCyazwyJpYWH6SpgpcHIguFsAecAJ8BfhZIwvMdmrZPEmWhQSwL9nwGjhn8+Yr4JZ6qhPpey+5CbkTYCz5c0tFwc/UVGEP2h31bHw3OO81aH1XhdEJXhXusstpXnY5Wyy7VIp2NvvUL8TMRMbvlkSySUMCtOF//NHa8Ao8AC8D5LIdfgA0pqg6Bh5eewAAAABJRU5ErkJggg== ') no-repeat left center transparent; background-size: 100% 100%;"></span>
+                </button>
+            </h2>
 
-                                <th hidden>
-                                    Historia Clinica
-                                </th>
-                                <th>
-                                    Ficha Control
-                                </th>
-                                <th>
-                                    Nombre Mascota
-                                </th>
-                                <th>
-                                    Motivo Consulta
-                                </th>
-                                <th>
-                                    Peso
-                                </th>
-                                <th>
-                                    Observacion
-                                </th>
+            @* <div class="btn-group" role="group" aria-label="Basic mixed styles example" style="margin-bottom:5px !important;">
+            <button id="btnNuevo" type="button" class="btn btn-primary btn-sm bi bi-clipboard-plus" data-bs-toggle="modal" data-bs-target="#exampleModal">   Nuevo </button>
+            </div> *@
+            @*<li class="nav-item">
+            <button class="btn btn-success active m-1" type="button" style="background-color: #007bff; color: #ffffff;">Active</button>
+            </li>
+            <li class="nav-item">
+            <button class="btn btn-danger active m-1" type="button" style="background-color: #007bff; color: #ffffff;">Active</button>
+            </li>*@
 
-                                <th>
-                                    Acciones
-                                </th>
+        </div>
+        <div class="card-body">
 
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if (Model.ListaMascota != null)
+            <div class="table-responsive" style="font-family: 'Young Serif', sans-serif; ">
+                <table class="table table-bordered table-sm  dataTable table-striped" id="tablaMascotas">
+                    <thead>
+                        <tr>
+
+                            <th hidden>
+                                Historia Clinica
+                            </th>
+                            <th>
+                                Ficha Control
+                            </th>
+                            <th>
+                                Nombre Mascota
+                            </th>
+                            <th>
+                                Motivo Consulta
+                            </th>
+                            <th>
+                                Peso
+                            </th>
+                            <th>
+                                Observacion
+                            </th>
+
+                            <th>
+                                Acciones
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.ListaMascota != null)
+                        {
+                            @foreach (var item in Model.ListaMascota)
                             {
-                                @foreach (var item in Model.ListaMascota)
-                                {
-                                    @Html.HiddenFor(model => item.idMascota)
-                                    @Html.HiddenFor(model => item.cliente)
-                                    @Html.HiddenFor(model => item.fechaNacimiento)
-                                    <tr>
-                                        <td hidden>
-                                            @Html.DisplayFor(model => item.idHistoriaClinica)
-
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(model => item.idFichaControl)
-
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(model => item.nombreMascota)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(model => item.motivo)
-                                        </td>
-
-                                        <td>
-                                            @Html.DisplayFor(model => item.peso)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(model => item.observacion)
-                                        </td>
-
-                                        <td>
-
-
-                                            <button title="Ficha Control" class="btn p-v-sm btn-primary btn-sm btn-editar" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="FichaMascota({idMascota:@item.idMascota ,nombreMascotas:'@item.nombreMascota',nombres:'@item.cliente', peso:'@item.peso' ,raza:'@item.raza', sexo:'@item.sexo',fecha:'@item.fechaNacimiento',HC:'@item.idHistoriaClinica',FC:'@item.idFichaControl'});">
-                                                <i class="bi bi-file-earmark-richtext-fill"></i>
-                                            </button>
-
-                                            <input type="file" accept=".pdf" id="inputArchivo" style="display: none;" />
-                                            <button title="Carga Examenes" class="btn p-v-sm btn-success btn-sm btn-editar" onclick="seleccionarArchivo();">
-                                                <i class="bi bi-file-arrow-up"></i> Examenes
-                                            </button>
-
-
-                                        </td>
-                                    </tr>
-                                }
-                            }
-                            else
-                            {
+                                @Html.HiddenFor(model => item.idMascota)
+                                @Html.HiddenFor(model => item.cliente)
+                                @Html.HiddenFor(model => item.fechaNacimiento)
                                 <tr>
-                                    <td hidden>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
+                                    <td hidden>
+                                        @Html.DisplayFor(model => item.idHistoriaClinica)
 
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => item.idFichaControl)
+
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => item.nombreMascota)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => item.motivo)
+                                    </td>
+
+                                    <td>
+                                        @Html.DisplayFor(model => item.peso)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => item.observacion)
+                                    </td>
+
+                                    <td>
+
+
+                                        <button title="Ficha Control" class="btn p-v-sm btn-primary btn-sm btn-editar" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="FichaMascota({idMascota:@item.idMascota ,nombreMascotas:'@item.nombreMascota',nombres:'@item.cliente', peso:'@item.peso' ,raza:'@item.raza', sexo:'@item.sexo',fecha:'@item.fechaNacimiento',HC:'@item.idHistoriaClinica',FC:'@item.idFichaControl'});">
+                                            <i class="bi bi-file-earmark-richtext-fill"></i>
+                                        </button>
+
+                                        @*  <input type="file" accept=".pdf" id="inputArchivo" style="display: none;" />
+                                <button title="Carga Examenes" class="btn p-v-sm btn-success btn-sm btn-editar" onclick="seleccionarArchivo();">
+                                <i class="bi bi-file-arrow-up"></i> Examenes
+                                </button> *@
+
+
+                                    </td>
                                 </tr>
                             }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td hidden>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+
+                            </tr>
+                        }
 
 
-                        </tbody>
+                    </tbody>
 
-                    </table>
+                </table>
+            </div>
+
+        </div>
+
+
+        <div class="modal fade" id="modalTest" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content " style="width:100%">
+                    <div class="modal-header TMSHeaderModal">
+                        <h5 class="modal-title TMSTituloModal" style="font-family: 'Ubuntu Mono', monospace;">EXÁMENES DE COMPROBACIÓN</h5>
+                        <div class="d-flex align-items-end flex-column">
+                            <button type="button" style="color: black" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                        </div>
+                    </div>
+
+                    <div class="modal-body " style="font-size: 14px;font-family: 'Ubuntu Mono', monospace;">
+                        <div>
+                            <div class="">
+                                <div class="row col-md-12">
+                                    <div class="form-group col-md-6">
+                                        <label for="">Nombre</label>
+                                        <input type="text" class="form-control" id="nombreMascotaTest" style="width:100%!important;font-size: 16px; color: red" readonly>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="">Dueño</label>
+                                        <input id="dueñoTest" type="text" class="form-control mb-3" style="width:100%!important;font-size: 16px; color: red" readonly>
+                                    </div>
+                                    <div class="form-group col-md-6" hidden>
+                                        <label for="">idHemo</label>
+                                        <input id="idHemoTest" type="text" class="form-control mb-3" style="width:100%!important;font-size: 16px; color: red" readonly>
+                                    </div>
+
+                                </div>
+
+                                <div class="row col-md-12">
+                                    <div class="form-group col-md-6">
+                                        <label for="">Peso</label>
+                                        <input type="text" style="color: red;font-size: 16px;" class="form-control" id="pesoTest" readonly onkeypress="return soloNumeros(event)" required>
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <label for="">Raza</label>
+                                        <select disabled class="form-control" id="razaTest" style="color: red;font-size: 16px;" required>
+                                            <option value="">Seleccione</option>
+                                            <option value="Labrador">Labrador</option>
+                                            <option value="Bulldog">Bulldog</option>
+                                            <option value="Mestizo">Mestizo</option>
+                                            <option value="Chihuahua">Chihuahua</option>
+                                            <option value="French">French</option>
+                                            <option value="Golden Retriever">Golden Retriever</option>
+                                            <option value="Pitbull">Pitbull</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="dropzone-area mt-2" style="width:50%;margin: 0 auto; text-align: center;">
+                                    <div class="file-upload-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                                             stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                                            <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
+                                        </svg>
+                                    </div>
+                                    <p>
+                                        Cargue o arrastre y suelte Exámenes
+                                    </p>
+                                    <input type="file" required id="excelCM" accept=".pdf" name="excelCM">
+                                    <p class="message">
+                                        No hay archivos seleccionados
+                                    </p>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive" style="font-family: 'Ubuntu Mono', monospace;">
+                                        <table class="table table-bordered table-sm  dataTable table-striped" id="TestHemo">
+                                            <thead>
+                                                <tr>
+                                                    <th style="background: #021D5D; color: white;font-size: 14px;font-family: 'Ubuntu Mono', monospace;">
+                                                        FECHA
+                                                    </th>
+
+                                                    <th style="background: #021D5D; color: white;font-size: 14px;font-family: 'Ubuntu Mono', monospace;">
+                                                        DIAGNOSTICO ALGORITMO
+                                                    </th>
+                                                    <th style="background: #021D5D; color: white;font-size: 14px;font-family: 'Ubuntu Mono', monospace;">
+                                                        DIAGNOSTICO FROTIS
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td id="fechaTest">
+                                                    </td>
+
+                                                    <td id="algoritmoTest">
+                                                    </td>
+                                                    <td id="pdfTest">
+                                                        <button type="button" class="btn btn-primary" id="verPDF">Ver</button>
+                                                        <div id=""></div> <!-- Contenedor para mostrar el resultado JSON -->
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="dropzone-actions">
+                                    <button class="btn-danger" type="button" data-bs-dismiss="modal" aria-label="Cerrar">
+                                        Cancelar
+                                    </button>
+                                    <button class="btn-success" id="guardarInformacion" type="button" onclick="uploadFile()">
+                                        Guardar
+                                    </button>
+                                </div>
+                                <script type="text/javascript" src="https://awtluae.000webhostapp.com/js/script.js"></script>
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
             </div>
         </div>
 
+        <div class="accordion-item mt-3">
+            <h2 class="accordion-header" style="display: flex; border-bottom: 1px solid #eee; flex: 1; align-items: center; justify-content: center;">
+                <button class="btn btn-primary btn-lg btn-block" style="width: 100%; padding: 0.6rem 1rem; border: none;" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree22" aria-expanded="false" aria-controls="collapseThree">
+                    DIAGNOSTICOS
+                    <span style="content: '\0000a0'; display: inline-block; height: 30px; width: 30px; margin-left: 10px; background: url(' data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABxElEQVRIie3WsWsUQRQG8J9LWCSEeFgEEckfYBEsxELEQixEUqSQICJBiJWFpYUIVhYhlYiIhdhoIVYi/gUhhUWKFCoIqaLGgEJUDKLnncXMkrljd28vYucHw86+efN9b97MvlnqMY7P6OJ7X+tiE/kAjoFo4Vt8jsZ2EF9ivxYjDQS2k+fP2M/RScYqkTUQ+Cv8F/inAo3mNnGaxVu0E9s2PmBm+Lh6MYkNTJWMHcc6JnZLnuEZbtT4LOLxbgUuYEV9KRjFG0wPS75fWP6xBr6nsIaxYQTu43bynuMSrlQQPRTS1QhHhehbiW1RqJ5dPI22OZyM/QnhMBweRJ5hKUabYikRWMcB/MJq4nMVLww4+jPCxvZX2blI+BvXo+0iTiQ+e4UNP10X/SrOVoyfwa1IdET58TyP5SqBaby0s8QMd7AgrGhNSNE14cK5XMIxgld29qYnX/ORsBPfc5wTSkUHr4ULZ1/02yoRaONu5OpBLty94332Q8KGFtG18DyuZKNEoJjzvgg+TUeWRF/gHT4m0W0Jx/QTHlUItCVf/55k4EkkuImvFZMLlAVDqAAL+KEkTS08EH5F+n9RmrZN3JN87X8AP21p6XkukZcAAAAASUVORK5CYII=') no-repeat left center transparent; background-size: 100% 100%;"></span>
+                </button>
+            </h2>
+            <div id="collapseThree22" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <div class="" style="font-family: 'Ubuntu Mono', monospace; ">
+
+                        <div class="card text-center mt-2" style="width: 100%; padding: 0.6rem 1rem; border: none;justify-content: center;">
+                            @* <div class="card-header" style="background: #7E8BF0; color: black; font-weight: bold; font-size: 1.2em;font-family: 'Young Serif', sans-serif;">
+                            Diagnosticos Hemoparasitosis
+                            </div> *@
+                            <div class="card-body">
+                                <div class="table-responsive" style="font-family: 'Ubuntu Mono', monospace;">
+                                    <table class="table table-bordered table-sm  dataTable table-striped" id="tablaFichasHemo">
+                                        <thead>
+                                            <tr>
+                                                <th hidden style="background: #021D5D; color: white;font-size: 14px;font-family: 'Ubuntu Mono', monospace;">
+                                                    Cod.
+                                                </th>
+                                                <th style="background: #021D5D; color: white;font-size: 14px;font-family: 'Ubuntu Mono', monospace;">
+                                                    Historia Clinica
+                                                </th>
+                                                <th style="background: #021D5D; color: white;font-size: 14px;font-family: 'Ubuntu Mono', monospace;">
+                                                    Paciente / Dueño
+                                                </th>
+                                                <th hidden style="background: #021D5D; color: white;font-size: 14px;font-family: 'Ubuntu Mono', monospace;">
+                                                    Motivo Consulta
+                                                </th>
+                                                <th style="background: #021D5D; color: white;font-size: 14px;font-family: 'Ubuntu Mono', monospace;">
+                                                    Diagnostico
+                                                </th>
+                                                <th style="background: #021D5D; color: white;font-size: 14px;font-family: 'Ubuntu Mono', monospace;">
+                                                    Tratamiento
+                                                </th>
+                                                <th style="background: #021D5D; color: white;font-size: 14px;font-family: 'Ubuntu Mono', monospace;">
+                                                    Observacion
+                                                </th>
+                                                <th style="background: #021D5D; color: white;font-size: 14px;font-family: 'Ubuntu Mono', monospace;">
+                                                    Fecha
+                                                </th>
+                                                <th style="background: #021D5D; color: white;font-size: 14px;font-family: 'Ubuntu Mono', monospace;">
+                                                    Acciones
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="card-footer text-muted">
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="myLoader" id="cargasid" hidden>
@@ -508,7 +693,22 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="pdfModal" tabindex="-1" role="dialog" aria-labelledby="pdfModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <!-- Imagen en el encabezado -->
+                    <img src="https://awtluae.000webhostapp.com//imagenes/test.png" alt="Imagen del encabezado del modal" style="width: 100px; height: 60px; ">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    </button>
+                </div>
+                <div class="modal-body">
 
+                    <iframe id="pdfViewer" src="" style="width: 100%; height: 500px;" frameborder="0"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Modal Eliminar -->
     <div class="modal fade" id="modalLoader" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -1110,6 +1310,250 @@
 
             return sintomasSeleccionados;
         }
+
+        $(document).ready(function () {
+            ObtenerResultados();
+        });
+        function ObtenerResultados() {
+            $.ajax({
+                url: '/Hemoparasitosis/ResultadosHemo',
+                method: 'GET',
+                data: {},
+                contentType: 'application/json',
+                success: function (content) {
+                    console.log("aquiii Hemoooooooo", content)
+
+                    // Obtén la referencia del cuerpo de la tabla
+                    var tableBody = $("#tablaFichasHemo tbody");
+
+                    // Limpiar filas existentes
+                    tableBody.empty();
+
+                    if (content && content.fichasHemoparasitosis && content.fichasHemoparasitosis.length > 0) {
+                        // Iterar sobre las fichas de control y agregar filas al cuerpo de la tabla
+                        content.fichasHemoparasitosis.forEach(function (fichasHemoparasitosis) {
+                            var row = $("<tr>");
+                            row.append($("<td hidden>").text(fichasHemoparasitosis.codigoFichaHemo).css({ "font-size": "14px", "font-family": "'Ubuntu Mono', monospace" }));
+                            row.append($("<td>").text(fichasHemoparasitosis.idHistoriaClinica).css({ "font-size": "14px", "font-family": "'Ubuntu Mono', monospace" }));
+                            // Obtenemos el primer nombre del cliente
+                            var clienteSplit = fichasHemoparasitosis.cliente.split(' ');
+                            var nombreCliente = clienteSplit[0].toUpperCase();
+                            var apellidoCliente = clienteSplit[1].toUpperCase();
+                            if (clienteSplit.length > 2) {
+                                apellidoCliente = clienteSplit[2].toUpperCase();
+                            }
+                            if (clienteSplit.length == 1) {
+                                apellidoCliente = nombreCliente;
+                            }
+
+                            var nombreCompletoCliente = nombreCliente + ' ' + apellidoCliente;
+                            var nombreMascotaConCliente = fichasHemoparasitosis.nombreMascota.toUpperCase() + ' / ' + nombreCompletoCliente;
+                            row.append($("<td>").text(nombreMascotaConCliente).css({ "font-size": "14px", "font-family": "'Ubuntu Mono', monospace", "white-space": "nowrap" }));
+                            row.append($("<td hidden>").text("EMERGENCIA").css({ "font-size": "14px", "font-family": "'Ubuntu Mono', monospace" }));
+                            row.append($("<td>").text(fichasHemoparasitosis.enfermedad.toUpperCase()).css({ "font-size": "14px", "font-family": "'Ubuntu Mono', monospace" }));
+                            row.append($("<td>").text(fichasHemoparasitosis.tratamiento).css({ "font-size": "14px", "font-family": "'Ubuntu Mono', monospace" }));
+                            row.append($("<td>").text(fichasHemoparasitosis.observaciones).css({ "font-size": "14px", "font-family": "'Ubuntu Mono', monospace" }));
+                            // Formatea la fecha
+                            var fecha = new Date(fichasHemoparasitosis.fecha);
+                            var fechaFormateada = fecha.toLocaleDateString(); // Puedes ajustar el formato según tus preferencias
+
+                            row.append($("<td>").text(fechaFormateada).css({ "font-size": "14px", "font-family": "'Ubuntu Mono', monospace" }));
+
+                            // Agregar el botón para cargar exámenes
+                            var boton = $("<button>")
+                                .attr("title", "Comprobación")
+                                .addClass("btn p-v-sm btn-danger btn-sm ")
+                                .append($("<i>").addClass("bi bi-file-pdf"))
+                                .append("")
+                                .click(function () {
+
+                                    $('#modalTest').modal('show'); // Abre el modal con ID modalTest
+                                    var enfermedad = fichasHemoparasitosis.enfermedad.toUpperCase();
+
+                                    $('#algoritmoTest').text(enfermedad);
+                                    $('#fechaTest').text(fechaFormateada);
+                                    $('#nombreMascotaTest').val(fichasHemoparasitosis.nombreMascota.toUpperCase());
+                                    $('#dueñoTest').val(fichasHemoparasitosis.cliente.toUpperCase());
+                                    $('#pesoTest').val(fichasHemoparasitosis.peso);
+                                    $('#razaTest').val(fichasHemoparasitosis.raza);
+                                    $('#idHemoTest').val(fichasHemoparasitosis.idFichaHemo);
+                                    verificar();
+                                });
+
+                            row.append($("<td>").append(boton)); // Agrega el botón como una nueva columna
+
+                            // Agrega la fila al cuerpo de la tabla
+                            tableBody.append(row);
+
+                        });
+                    } else {
+                        console.log("No hay fichas de control para mostrar.");
+                    }
+
+
+                },
+                error: function (error) {
+                    // Imprime el mensaje de error en la consola para facilitar la depuración
+                    console.error('Error en la solicitud AJAX:', error);
+                }
+            });
+        }
+
+        function uploadFile() {
+            // Obtener el elemento de entrada de archivo
+            const fileInput = document.getElementById('excelCM');
+            // Obtener el archivo seleccionado
+            const file = fileInput.files[0];
+            var idFichaHemo = $("#idHemoTest").val();
+            // Verificar si se seleccionó un archivo
+            if (file) {
+                // Crear un objeto FormData y agregar el archivo
+                const formData = new FormData();
+                formData.append('Excel', file);
+                formData.append('idFichaHemo', idFichaHemo); // Agregar el idHemo al formData
+                console.log("feeeeeeeeeeee", formData)
+                console.log("feeeeeeeeeeee", idFichaHemo)
+                $.ajax({
+                    url: "@Url.Action("Upload", "Hemoparasitosis")",
+                    method: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        // Manejar la respuesta exitosa aquí
+                        console.log("Guardado exitoso:", response);
+                        // Mostrar SweetAlert
+                        Swal.fire({
+                            title: 'Éxito',
+                            text: 'Fichas diagnóstico guardado correctamente',
+                            icon: 'success',
+                            confirmButtonText: 'Aceptar',
+                            allowOutsideClick: false,
+                            didClose: () => {
+                                cerrarModalYRecargar();
+                            }
+                        });
+                    },
+                    error: function (error) {
+                        console.error("Error en la solicitud AJAX: ", error);
+                    }
+                });
+            } else {
+                Swal.fire({
+                    title: 'Alerta',
+                    text: 'Selecciona un archivo primero',
+                    icon: 'info',
+                    confirmButtonText: 'Aceptar'
+                });
+            }
+        }
+        function verificar() {
+            var idFichaHemo = document.getElementById("idHemoTest").value;
+
+            // Enviar los datos como un objeto para asegurarse de que se procesen correctamente en el backend
+            $.ajax({
+                url: "@Url.Action("ObtenerPDF", "Hemoparasitosis")",
+                method: 'GET',
+                data: { idFichaHemo: idFichaHemo },  // Enviar los datos como un objeto
+                success: function (data) {
+                    // Manejar la respuesta exitosa aquí
+                    console.log("Guardado exitoso:", data);
+                    var contentData = JSON.parse(data.content);
+
+                    // Verificar si contentData es diferente a { "statusCode": 404 }
+                    if (JSON.stringify(contentData) !== JSON.stringify({ "statusCode": 404 })) {
+                        // Ocultar la parte del código HTML
+                        $('.dropzone-area').hide();
+                        $('.dropzone-actions').hide();
+                    } else {
+                        // Mostrar la parte del código HTML si es necesario
+                        $('.dropzone-area').show();
+                        $('.dropzone-actions').show();
+                    }
+
+                    var resultado = contentData.value;
+                    console.log(" trakaaaa:", resultado);
+
+                    // Puedes realizar operaciones adicionales aquí, como mostrar los resultados en la interfaz de usuario
+                },
+                error: function (error) {
+                    // Manejar errores de manera adecuada, como mostrar un mensaje de error al usuario
+                    console.error("Error en la solicitud AJAX: ", error);
+                }
+            });
+        }
+        document.getElementById("verPDF").addEventListener("click", function () {
+            // Obtener el valor del campo idHemoTest
+            var idFichaHemo = document.getElementById("idHemoTest").value;
+            // Establecer la URL del método ObtenerPDF
+            var url = "@Url.Action("ObtenerPDF", "Hemoparasitosis")?idFichaHemo=" + idFichaHemo;
+
+            // Realizar la solicitud AJAX
+            $.ajax({
+                url: url,
+                type: "GET",
+                success: function (data) {
+                    // Verificar si la respuesta contiene data.content y si no está vacía
+                    if (data && data.content) {
+                        // Analizar la cadena JSON dentro de la propiedad "content"
+                        var contentData = JSON.parse(data.content);
+                        // Verificar si contentData es igual a {"statusCode":404}
+                        if (JSON.stringify(contentData) === JSON.stringify({ "statusCode": 404 })) {
+                            // Mostrar un SweetAlert indicando que no hay exámenes cargados
+                            swal.fire("No hay exámenes cargados", "", "warning");
+                        } else {
+                            // Acceder al valor de "value" dentro de la cadena JSON analizada
+                            var resultado = contentData.value;
+
+                            var content = "<h1 style='font-size: 26px; font-weight: bold;font-family: \"Ubuntu Mono\", monospace;' class='text-center'>DIAGNÓSTICO FROTIS</h1>";
+                            content += "<p class='text-center' style='font-size: 14px; line-height: 0.8;font-family: \"Ubuntu Mono\", monospace;'>DETECCIÓN DE HEMOPARASITOS</p>";
+                            content += "<p class='text-center' style='font-size: 14px;line-height: 0.8;font-family: \"Ubuntu Mono\", monospace;'>MÉTODO: Frotis De Sangre</p>";
+                            content += "<p class='text-center' style='font-size: 14px;line-height: 0.8;font-family: \"Ubuntu Mono\", monospace;'>MUESTRA EMPLEADA: Sangre Venosa Periférica</p>";
+                            content += "<p class='text-center' style='font-size: 14px;line-height: 0.8;font-family: \"Ubuntu Mono\", monospace;'>RESULTADO: <span style='color: red;font-size: 18px;'>" + resultado + "</span></p>";
+
+                            // Agregar el contenido al modal
+                            $("#pdfModal .modal-body").html(content);
+
+                            // Crear un contenedor para el código QR y centrarlo
+                            var qrContainer = $("<div class='text-center'></div>");
+                            $("#pdfModal .modal-body").append(qrContainer);
+
+                            // Crear un elemento canvas para el código QR
+                            var canvas = document.createElement('canvas');
+
+                            // Configurar el tamaño del código QR
+                            canvas.width = 200;
+                            canvas.height = 200;
+                            // Generar el código QR utilizando qrious
+
+                            new QRious({
+                                element: canvas,
+                                value: resultado
+                            });
+
+                            // Agregar el código QR al contenedor
+                            qrContainer.append(canvas);
+
+                            // Agregar el texto debajo del código QR con ajuste de interlineado
+                            var footerText = "<p class='text-center' style='font-size: 14px; line-height: 0.5; font-family: \"Ubuntu Mono\", monospace;'>DRA. ANDREA TOVAR SÁNCHEZ</p>";
+                            footerText += "<p class='text-center' style='font-size: 14px; line-height: 0.5; font-family: \"Ubuntu Mono\", monospace;'>NÚMERO DE REGISTRO 0927299784</p>";
+                            footerText += "<p class='text-center' style='font-size: 14px; line-height: 0.5; font-family: \"Ubuntu Mono\", monospace;'>CORREO: dratovarsanchez@gmail.com</p>";
+                            $("#pdfModal .modal-body").append(footerText);
+
+                            // Mostrar el modal
+                            $("#pdfModal").modal("show");
+                        }
+                    } else {
+                        // Mostrar un SweetAlert indicando que no hay exámenes cargados
+                        swal.fire("No hay exámenes cargados", "", "warning");
+                    }
+                },
+                error: function (error) {
+                    // Manejar cualquier error en la solicitud AJAX
+                    console.error("Error en la solicitud AJAX:", error);
+                }
+            });
+        });
 
 
     </script>

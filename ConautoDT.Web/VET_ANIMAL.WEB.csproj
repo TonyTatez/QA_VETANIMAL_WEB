@@ -9,6 +9,8 @@
   <ItemGroup>
     <PackageReference Include="bootstrap" Version="5.3.0" />
     <PackageReference Include="GemBox.Spreadsheet" Version="41.3.30.1101" />
+    <PackageReference Include="itext7" Version="8.0.3" />
+    <PackageReference Include="iTextSharp" Version="5.5.13.3" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.0" />
     <PackageReference Include="Microsoft.ML" Version="3.0.0" />
@@ -16,6 +18,8 @@
     <PackageReference Include="Microsoft.Owin.Security" Version="4.2.2" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.16" />
     <PackageReference Include="NLog" Version="5.2.0" />
+    <PackageReference Include="PdfiumViewer" Version="2.13.0" />
+    <PackageReference Include="PdfSharp" Version="6.0.0" />
     <PackageReference Include="RestSharp" Version="110.2.0" />
     <PackageReference Include="RestSharp.Serializers.Utf8Json" Version="106.15.0" />
     <PackageReference Include="SendGrid" Version="9.28.1" />

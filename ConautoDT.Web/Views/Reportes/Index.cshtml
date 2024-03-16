@@ -4,153 +4,155 @@
 }
 <link rel="stylesheet" type="text/css" href="https://awtluae.000webhostapp.com//css/main.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@2.0.1/dist/css/multi-select-tag.css">
-<div class="row" style="font-size: 13px !important;">
-    <div class="col-md-12">
-        <div class="widget">
-            <header class="widget-header " style="padding-bottom: 5px !important;">
-                <div class="app-title">
-                    <div>
-                        <h1 id="letrero"><i class=" bi bi-file-earmark-bar-graph-fill"></i> REPORTE DE INCIDENCIA </h1>
+<link rel="stylesheet" type="text/css" href="https://awtluae.000webhostapp.com//css/fondocuadrados.css">
+<body>
+    <div class="row " style="font-size: 13px !important;">
+        <div class="col-md-12">
+            <div class="widget">
+                <header class="widget-header " style="padding-bottom: 5px !important;">
+                    <div class="app-title">
+                        <div>
+                            <h1 id="letrero"><i class=" bi bi-file-earmark-bar-graph-fill"></i> REPORTE DE INCIDENCIA </h1>
+
+                        </div>
 
                     </div>
+                    
 
-                </div>
-                <form style="font-family: 'Young Serif', sans-serif; ">
-                    <div class="container-fluid alert alert-info mt-3">
-                        <div class="row">
-                            <div class="col-md-4 col-sm-12 mb-2">
-                                <div class="input-group">
-                                    <label class="form-label me-3" for="desde">Desde:</label>
-                                    <input type="date" id="desde"  class="form-control" />
+                    <form style="font-family: 'Young Serif', sans-serif; ">
+                        <div class="container-fluid alert alert-info mt-3">
+                            <div class="row">
+                                <div class="col-md-4 col-sm-12 mb-2">
+                                    <div class="input-group">
+                                        <label class="form-label me-3" for="desde">Desde:</label>
+                                        <input type="date" id="desde" class="form-control" />
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4 col-sm-12 mb-2 ">
-                                <div class="input-group">
-                                    <label class="form-label me-3" for="hasta">Hasta:</label>
-                                    <input type="date" id="hasta"  class="form-control" />
+                                <div class="col-md-4 col-sm-12 mb-2 ">
+                                    <div class="input-group">
+                                        <label class="form-label me-3" for="hasta">Hasta:</label>
+                                        <input type="date" id="hasta" class="form-control" />
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4 col-sm-12 mb-2">
-                                <div class="input-group">
-                                    <label class="form-label me-3" for="parametroMascota">Parámetro Mascota:</label>
-                                    <div class="dropdown">
-                                        <button class="btn btn-success btn-sm" type="button" id="dropdownMenuButton" aria-haspopup="true" aria-expanded="false">
-                                            Seleccionar Parámetro
-                                        </button>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <div class="form-check m-2">
-                                                <input class="form-check-input" type="checkbox" id="checkRAZA" value="RAZA">
-                                                <label class="form-check-label" for="checkRAZA">RAZA</label>
-                                            </div>
-                                            <div class="form-check m-2">
-                                                <input class="form-check-input" type="checkbox" id="checkSEXO" value="SEXO">
-                                                <label class="form-check-label" for="checkSEXO">SEXO</label>
-                                            </div>
-                                            <div class="form-check m-2">
-                                                <input class="form-check-input" type="checkbox" id="checkDIAGNOSTICO" value="DIAGNOSTICO">
-                                                <label class="form-check-label" for="checkDIAGNOSTICO">DIAGNOSTICO</label>
+                                <div class="col-md-4 col-sm-12 mb-2">
+                                    <div class="input-group">
+                                        <label class="form-label me-3" for="parametroMascota">Parámetro Mascota:</label>
+                                        <div class="dropdown">
+                                            <button class="btn btn-success btn-sm" type="button" id="dropdownMenuButton" aria-haspopup="true" aria-expanded="false">
+                                                Seleccionar Parámetro
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <div class="form-check m-2">
+                                                    <input class="form-check-input" type="checkbox" id="checkRAZA" value="RAZA">
+                                                    <label class="form-check-label" for="checkRAZA">RAZA</label>
+                                                </div>
+                                                <div class="form-check m-2">
+                                                    <input class="form-check-input" type="checkbox" id="checkSEXO" value="SEXO">
+                                                    <label class="form-check-label" for="checkSEXO">SEXO</label>
+                                                </div>
+                                                <div class="form-check m-2">
+                                                    <input class="form-check-input" type="checkbox" id="checkDIAGNOSTICO" value="DIAGNOSTICO">
+                                                    <label class="form-check-label" for="checkDIAGNOSTICO">DIAGNOSTICO</label>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
 
+
                         </div>
+                        <div class="container-fluid alert alert-success mt-3">
+                            <div class="row">
+                                <div id="10" class="col-md-4 col-sm-12 " hidden>
+                                    <div class="form ">
+                                        <label class="ms-2" for="editRaza">Raza</label>
+                                        <select class="form-control" id="editRaza" style="color: blue;font-size: 16px;" multiple>
+                                        </select>
+
+                                    </div>
 
 
-                    </div>
-                    <div class="container-fluid alert alert-success mt-3">
+                                </div>
+                                <div id="11" class="col-md-4 col-sm-12 mb-2 " hidden>
+                                    <div class="form ">
+                                        <label class="ms-2" for="verificarsexo">Sexo</label>
+                                        <select class="form-control" id="verificarsexo" style="color: blue;font-size: 16px;" multiple>
+                                            <option value="Macho">Macho</option>
+                                            <option value="Hembra">Hembra</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+
+                                <div id="12" class="col-md-4 col-sm-12 mb-2" hidden>
+                                    <div class="form ">
+                                        <label class="ms-2" for="enfermedad">Diagnóstico</label>
+                                        <select class="form-control" id="enfermedad" style="color: blue;font-size: 16px;" multiple>
+                                        </select>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                        </div>
                         <div class="row">
-                            <div id="10" class="col-md-4 col-sm-12 " hidden>
-                                <div class="form ">
-                                    <label class="ms-2" for="editRaza">Raza</label>
-                                    <select class="form-control" id="editRaza" style="color: blue;font-size: 16px;" multiple  >
-                                       
-                                    </select>
-                                    
-                                </div>
-                                
-                                
+                            <div class="col-md-3 col-sm-12 mb-2 mx-auto">
+                                <!-- Botón Filtrar -->
+                                <button id="Filtrar" type="button" onclick="datosFiltrados()" class="btn btn-primary btn-block">Filtrar</button>
                             </div>
-                            <div id="11" class="col-md-4 col-sm-12 mb-2 " hidden>
-                                <div class="form ">
-                                    <label class="ms-2" for="verificarsexo">Sexo</label>
-                                    <select class="form-control" id="verificarsexo" style="color: blue;font-size: 16px;" multiple>
-                                        <option value="Macho">Macho</option>
-                                        <option value="Hembra">Hembra</option>
-                                    </select>
-                                   
-                                </div>
+                            <div class="col-md-3 col-sm-12 mb-2 mx-auto">
+                                <!-- Botón Descargar Excel -->
+                                <button type="submit" name="operacion" value="excel" class="btn btn-success btn-block">
+                                    <i class="zmdi zmdi-download" title="Descargar Excel"></i> Descargar Excel
+                                </button>
                             </div>
-
-                            <div id="12" class="col-md-4 col-sm-12 mb-2" hidden>
-                                <div class="form ">
-                                    <label class="ms-2" for="enfermedad">Diagnóstico</label>
-                                    <select class="form-control" id="enfermedad" style="color: blue;font-size: 16px;" multiple>
-                                        
-                                    </select>
-                                    
-                                </div>
-                            </div>
-
                         </div>
+                    </form>
+                </header>
+                <div class="widget-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-sm  dataTable" id="tablaMascotas">
+
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Historia Clinica
+                                    </th>
+                                    <th>
+                                        Nombre Mascota
+                                    </th>
+                                    <th>
+                                        Raza
+                                    </th>
+
+                                    <th>
+                                        Peso
+                                    </th>
+                                    <th>
+                                        Sexo
+                                    </th>
+                                    <th>
+                                        Diagnóstico
+                                    </th>
 
 
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+
+                        </table>
                     </div>
-                    <div class="row">
-                        <div class="col-md-3 col-sm-12 mb-2 mx-auto">
-                            <!-- Botón Filtrar -->
-                            <button id="Filtrar" type="button" onclick="datosFiltrados()" class="btn btn-primary btn-block">Filtrar</button>
-                        </div>
-                        <div class="col-md-3 col-sm-12 mb-2 mx-auto">
-                            <!-- Botón Descargar Excel -->
-                            <button type="submit" name="operacion" value="excel" class="btn btn-success btn-block">
-                                <i class="zmdi zmdi-download" title="Descargar Excel"></i> Descargar Excel
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </header>
-            <div class="widget-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered table-sm  dataTable" id="tablaMascotas">
-
-                        <thead>
-                            <tr>
-                                <th>
-                                    Historia Clinica
-                                </th>
-                                <th>
-                                    Nombre Mascota
-                                </th>
-                                <th>
-                                    Raza
-                                </th>
-                               
-                                <th>
-                                    Peso
-                                </th>
-                                <th>
-                                    Sexo
-                                </th>
-                                <th>
-                                    Diagnóstico
-                                </th>
-
-
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                        
-                        </tbody>
-
-                    </table>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</body>
+
 
 
 
