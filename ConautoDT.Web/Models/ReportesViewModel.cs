@@ -32,6 +32,8 @@ namespace VET_ANIMAL.WEB.Models
         public Boolean Activo { get; set; }
     }
 
+    
+
     //public class ListaAnio
     //{
     //    public List<ItemAnio> ItemAnio { get; set; }
@@ -43,5 +45,20 @@ namespace VET_ANIMAL.WEB.Models
         public long idEnfermedad { get; set; }
         public string nombre { get; set; }
         //   public string tipoCiudad { get; set; }
+    }
+    public class DetallesFichas
+    {
+        public int IdFichaControl { get; set; }
+        public int IdFichaHemo { get; set; }
+        public string ResultadoAlgoritmo { get; set; }
+        public string ResultadoFrotis { get; set; }
+        public int IdHistoriaClinica { get; set; }
+
+    }
+    public class ResponseDatas
+    {
+        public List<DetallesFichas> DetallesFichas { get; set; }
+        public int DiagnosticoAlgoritmo { get; set; } // Nuevo campo
+        public int DiagnosticoFrotis { get; set; } // Nuevo campo
     }
 }

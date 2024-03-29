@@ -394,7 +394,7 @@
             
         }
 
-        document.getElementById("cedCliente").addEventListener("input", function () {
+        document.getElementById("cedCliente").addEventListener("blur", function () {
             var cedula = this.value;
             var inputElement = this;
 
@@ -416,11 +416,29 @@
                     // Restaura el color del borde al original
                     inputElement.style.border = "1px solid #ced4da"; // Puedes usar el color original de tu diseño
                 }
+            } else if (cedula.length < 10) {
+                // La longitud de la cédula es menor que 10, muestra un mensaje con SweetAlert2
+                Swal.fire({
+                    title: "Cédula Incompleta",
+                    text: "La cédula ingresada debe contener 10 dígitos. Por favor, ingresa los 10 dígitos.",
+                    icon: "warning",
+                    confirmButtonText: "Entendido",
+                });
+                // Restaura el color del borde al original
+                inputElement.style.border = "1px solid #ced4da"; // Puedes usar el color original de tu diseño
             } else {
-                // La longitud de la cédula no es 10, restaura el color del borde al original
+                // La longitud de la cédula es mayor que 10, muestra un mensaje con SweetAlert2
+                Swal.fire({
+                    title: "Cédula Excede Longitud",
+                    text: "La cédula ingresada contiene más de 10 dígitos. Por favor, ingresa solo 10 dígitos.",
+                    icon: "warning",
+                    confirmButtonText: "Entendido",
+                });
+                // Restaura el color del borde al original
                 inputElement.style.border = "1px solid #ced4da"; // Puedes usar el color original de tu diseño
             }
         });
+
 
 
         
@@ -492,23 +510,7 @@
 
         }
 
-        function solo10Numeros(e) {
-            let tecla = (document.all) ? e.keyCode : e.which;
-
-            // Permitir la tecla de retroceso (backspace)
-            if (tecla == 8) return true;
-
-            let patron = /[0-9]/;
-            let te = String.fromCharCode(tecla);
-
-            // Verificar si es un número y la longitud es menor o igual a 10
-            if (patron.test(te) && e.target.value.length < 10) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-
+        
         
 
         function soloNumeros(e) {

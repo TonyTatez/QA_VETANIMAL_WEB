@@ -455,7 +455,7 @@ namespace VET_ANIMAL.WEB.Controllers
             request.AddParameter("Authorization", string.Format("Bearer " + tokenValue), ParameterType.HttpHeader);
             request.AddJsonBody(guardarFicha);
 
-            if (model.observaciones == null)
+            if (model.enfermedad == null)
             {
                 TempData["MensajeError"] = "Rellene todos los campos";
                 return Redirect("Index");
@@ -469,7 +469,7 @@ namespace VET_ANIMAL.WEB.Controllers
                     throw new ArgumentException("Historia Clinica no encontrada ");
                 }
 
-                if (model.observaciones != null)
+                if (model.enfermedad != null)
                 {
                     if (ModelState.IsValid)
                     {

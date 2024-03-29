@@ -1,0 +1,168 @@
+﻿﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Main CSS-->
+    <link rel="stylesheet" type="text/css" href="https://awtluae.000webhostapp.com//css/main.css">
+    <!-- Font-icon css-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@2.0.1/dist/css/multi-select-tag.css">
+</head>
+<body>
+
+
+    <div class="m-3">
+        <div class="app-title">
+            <div>
+                <h1 id="letrerob"><i class=" bi bi-speedometer2"></i> DASHBOARD COMPROBACIÓN ALGORITMO</h1>
+
+            </div>
+
+        </div>
+        <div class="row mt-5 justify-content-center">
+            
+            <div class="col-md-6 col-lg-3">
+                <div class="widget-small primary coloured-icon">
+                    <i class="icon bi bi-bug-fill"></i>
+                    <div class="info">
+                        <h4>DIAGNÓSTICO ALGORITMO</h4>
+                        <p id="algo"><b></b></p>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="widget-small info coloured-icon">
+                    <i class="icon bi bi-virus2"></i>
+                    <div class="info">
+                        <h4>DIAGNÓSTICO FROTIS</h4>
+                        <p id="frotis"><b></b></p>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="row mt-3">
+
+            <div class="col-md-6">
+                <div class="tile">
+                    <h3 class="tile-title">Casos diagnósticados</h3>
+                    <div class="ratio ratio-16x9">
+                        <div id="supportRequestChart"></div>
+                    </div>
+                </div>
+            </div>
+
+           
+
+        </div>
+    </div>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@2.0.1/dist/js/multi-select-tag.js"></script>
+    <script type="text/javascript">
+
+       
+        $(document).ready(function () {
+            ejecutarFuncionInicial();
+        });
+
+        function ejecutarFuncionInicial() {
+
+            $.ajax({
+                url: '/Testing/Examenes',
+                method: 'GET',
+                
+                contentType: 'application/json',
+                success: function (data) {
+                    console.log('Respuesta exitosa:', data);
+
+                    // Asignar los valores de diagnóstico algoritmo y frotis a los elementos HTML
+                    $("#algo").text(data.diagnosticoAlgoritmo);
+                    $("#frotis").text(data.diagnosticoFrotis);
+
+                    var myChart = echarts.init(document.getElementById('supportRequestChart'));
+
+                    // Datos para el gráfico de pastel
+                    var pieData = [
+                        { name: 'Diagnóstico Algoritmo', value: data.diagnosticoAlgoritmo },
+                        { name: 'Diagnóstico Frotis', value: data.diagnosticoFrotis }
+                    ];
+
+                    // Configuración del gráfico
+                    var option = {
+                        tooltip: {
+                            trigger: 'item',
+                            formatter: '{a} <br/>{b}: {c} '
+                        },
+                        legend: {
+                            orient: 'vertical',
+                            left: 10,
+                            data: ['Diagnóstico Algoritmo', 'Diagnóstico Frotis']
+                        },
+                        series: [
+                            {
+                                name: 'Diagnóstico',
+                                type: 'pie',
+                                radius: ['60%', '40%'],
+                                avoidLabelOverlap: false,
+                                label: {
+                                    show: false,
+                                    position: 'center'
+                                },
+                                emphasis: {
+                                    label: {
+                                        show: true,
+                                        fontSize: '30',
+                                        fontWeight: 'bold'
+                                    }
+                                },
+                                labelLine: {
+                                    show: false
+                                },
+                                data: pieData
+                            }
+                        ]
+                    };
+
+                    // Aplicar la opción al gráfico
+                    myChart.setOption(option);
+
+                    
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    // Manejar errores de la solicitud
+                    console.error('Error en la solicitud:', errorThrown);
+                }
+            });
+        }
+
+
+
+
+       
+
+
+        
+        
+    </script>
+    <!-- Google analytics script-->
+    <script type="text/javascript">
+        if (document.location.hostname == 'pratikborsadiya.in') {
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+            ga('create', 'UA-72504830-1', 'auto');
+            ga('send', 'pageview');
+        }
+    </script>
+</body>
+</html>
+
+
