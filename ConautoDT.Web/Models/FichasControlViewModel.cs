@@ -74,8 +74,27 @@
         public List<fichasHemoparasitosis> fichasHemoparasitosis { get; set; }
 
     }
+    public class FichaTEST
+    {
+        
+        public List<FichaComparativa> FichaComparativa { get; set; }
+        public int TotalRegistros { get; set; }
+        public int ResultadoAcertado { get; set; }
+        public int ResultadoErroneo { get; set; }
+
+    }
+    public class FichaComparativa
+    {
+        public long idHistoriaClinica { get; set; }
+        public long idFichaHemo { get; set; }
+        public long? idContenido { get; set; }
+        public string resultadoAlgoritmo { get; set; }
+        public string resultadoFrotis { get; set; }
+        public string resultadoFinal { get; set; }
+       
 
 
+    }
     public class FichasHemoViewModel
     {
         public long idHistoriaClinica { get; set; }

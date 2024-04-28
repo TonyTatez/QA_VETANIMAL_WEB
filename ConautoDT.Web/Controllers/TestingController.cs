@@ -93,6 +93,60 @@ namespace VET_ANIMAL.WEB.Controllers
             }
         }
 
+
+        [HttpGet]
+        public ActionResult ResultadosComparativos()
+        {
+            try
+            {
+                FichaTEST model = new FichaTEST();
+                string tokenValue = Request.Cookies["token"];
+                var client = new RestClient(configuration["APIClient"]);
+                var request = new RestRequest("/api/consulta/GetAllResultados", Method.Get);
+                request.AddParameter("Authorization", string.Format("Bearer " + tokenValue), ParameterType.HttpHeader);
+
+                var response = client.Execute(request);
+
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    var content = response.Content;
+                    List<FichaComparativa> FichaComparativa= System.Text.Json.JsonSerializer.Deserialize<List<FichaComparativa>>(content);
+                    model.FichaComparativa = FichaComparativa;
+
+                    if (FichaComparativa != null)
+                    {
+                        // Calcular la cantidad total de registros
+                        model.TotalRegistros = FichaComparativa.Count;
+
+                        // Calcular la cantidad de registros con resultadoFinal igual a "1"
+                        model.ResultadoAcertado = FichaComparativa.Count(f => f.resultadoFinal == "1");
+
+                        // Calcular la cantidad de registros con resultadoFinal igual a "0"
+                        model.ResultadoErroneo = FichaComparativa.Count(f => f.resultadoFinal == "0");
+                        return Json(model);
+                    }
+                    else
+                    {
+                        return Json(new { Mensaje = "Registros no encontrados" });
+                    }
+                }
+                else
+                {
+                    return Json(new { Mensaje = $"Error al obtener la lista de clientes. Código de estado: {response.StatusCode}" });
+                }
+            }
+            catch (Exception ex)
+            {
+                // Manejar excepciones aquí y registrar información de depuración si es necesario
+                return Json(new { Mensaje = $"Error: {ex.Message}" });
+            }
+
+        }
+
+
+
+
+
         // GET: TestingController/Details/5
         public ActionResult Details(int id)
         {
