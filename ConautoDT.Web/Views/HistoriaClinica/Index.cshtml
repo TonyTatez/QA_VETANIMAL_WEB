@@ -217,7 +217,7 @@
                                                     <th>
                                                         Motivo Consulta
                                                     </th>
-                                                    <th>
+                                                    <th hidden>
                                                         Peso
                                                     </th>
                                                     <th>
@@ -474,7 +474,7 @@
                                         row.append($("<td>").text(fichaControl.codigoFichaControl));
                                         row.append($("<td>").text(data.idHistoriaClinica));
                                         row.append($("<td>").text(fichaControl.motivo));
-                                        row.append($("<td>").text(fichaControl.peso));
+                                        // row.append($("<td>").text(fichaControl.peso));
                                         row.append($("<td>").text(fichaControl.observacion));
                                         // Manipula la cadena de fecha para mostrar solo la fecha
                                         var fechaPartes = fichaControl.fecha.split('T');

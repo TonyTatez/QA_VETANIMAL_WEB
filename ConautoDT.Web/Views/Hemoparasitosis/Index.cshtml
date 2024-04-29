@@ -232,7 +232,7 @@
 
                                 <div class="row col-md-12">
                                     <div class="form-group col-md-6">
-                                        <label for="">Peso</label>
+                                        <label for="">Peso(Kg) </label>
                                         <input type="text" style="color: red;font-size: 16px;" class="form-control" id="pesoTest" readonly onkeypress="return soloNumeros(event)" required>
                                     </div>
 
@@ -443,14 +443,18 @@
                                             <input id="idmasc2" type="text" class="form-control mb-3" style="width:100%!important; color: red" readonly>
                                         </div>
                                         <br>
-                                        <div class="form-group col-md-12">
+                                        <div class="form-group col-md-12" hidden>
                                             <label for="">Peso</label>
                                             <input type="text" style="color: blue;font-size: 16px;" class="form-control" id="editPeso2" readonly onkeypress="return soloNumeros(event)" required>
                                         </div>
                                         <br>
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-6" hidden>
                                             <label for="">Raza</label>
-                                            <select readonly class="form-control" id="editRaza2" style="color: blue;font-size: 16px;" required>
+                                            <select asp-for="@Model.raza" class="form-control" id="editraza2">
+                                                <option value="">Seleccione</option>
+                                                <!-- Las opciones se agregarán dinámicamente aquí -->
+                                            </select>
+                                            @* <select readonly class="form-control" id="editRaza2" style="color: blue;font-size: 16px;" required>
                                                 <option value="">Seleccione</option>
                                                 <option value="Labrador">Labrador</option>
                                                 <option value="Bulldog">Bulldog</option>
@@ -459,11 +463,11 @@
                                                 <option value="French">French</option>
                                                 <option value="Golden Retriever">Golden Retriever</option>
                                                 <option value="Pitbull">Pitbull</option>
-                                            </select>
+                                            </select> *@
                                         </div>
 
                                         <br>
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-6 mt--3">
                                             <label for="">Sexo</label>
                                             <select class="form-control" id="editSexo2" style="color: blue;font-size: 16px;" readonly required>
                                                 <option value="">Seleccione</option>
@@ -659,15 +663,14 @@
                                             <div id="anaplasmasDiv" style="font-family: 'Young Serif', sans-serif;" hidden>
                                                 <p>
                                                     La anaplasmosis en perros es una enfermedad infecciosa causada por bacterias transmitidas por garrapatas,
-                                                    como Anaplasma phagocytophilum y Anaplasma platys. Los síntomas caracteristicos incluyen Esplenomegalia y Anorexia.
+                                                    como Anaplasma phagocytophilum y Anaplasma platys.
                                                 </p>
                                             </div>
 
                                             <div id="eriDiv" style="font-family: 'Young Serif', sans-serif;" hidden>
                                                 <p>
                                                     La ehrlichiosis en perros es una enfermedad causada por la bacteria Ehrlichia canis, transmitida principalmente por
-                                                    las garrapatas. Esta infección afecta a los glóbulos blancos y puede causar síntomas caracteristicos como Hemorragias en mucosas,
-                                                    letargo, Epistaxis.
+                                                    las garrapatas. Esta infección afecta a los glóbulos blancos y puede causar síntomas caracteristicos como Hemorragias en mucosas.
                                                 </p>
                                             </div>
 
@@ -675,7 +678,7 @@
                                                 <p>
                                                     La babesiosis en perros es una enfermedad causada por protozoos del género Babesia, que infectan los glóbulos rojos.
                                                     La transmisión suele ocurrir a través de garrapatas, transfusiones de sangre o de madre a cachorro durante el parto.
-                                                    Los síntomas caracteristicos incluyen fiebre, ictericia y problemas de orina.
+                                                   
                                                 </p>
                                             </div>
 
@@ -763,7 +766,55 @@
 
 
     <script>
+        $(document).ready(function () {
+            buscarRazas(); // Llamada a la función buscarRazas() cuando el DOM esté listo
+        });
 
+        function buscarRazas() {
+            $.ajax({
+                url: '/Razas/ListaRazas', // Ruta al método que devuelve la lista de razas
+                method: 'GET',
+                success: function (data) {
+                    // Manipula los datos recibidos aquí
+                    console.log("Datos de las razas:", data);
+
+                    // Obtener el elemento select donde se colocarán las razas
+                    var selectRazas = $("#editraza2");
+                    // var selectRazas2 = $("#editRaza2");
+
+                    // Limpiar los select antes de agregar nuevas opciones
+                    selectRazas.empty();
+                    // selectRazas2.empty();
+
+                    // Agregar una opción predeterminada a cada select
+                    selectRazas.append($('<option>', {
+                        value: '',
+                        text: 'Seleccione'
+                    }));
+                    // selectRazas2.append($('<option>', {
+                    //     value: '',
+                    //     text: 'Seleccione'
+                    // }));
+
+                    // Iterar sobre los datos recibidos y agregar opciones a cada select
+                    $.each(data, function (index, raza) {
+                        // Crear una nueva opción para cada raza
+                        var option = $('<option>', {
+                            value: raza.id, // Suponiendo que cada raza tiene un campo "id"
+                            text: raza.descripcion // Suponiendo que cada raza tiene un campo "descripcion"
+                        });
+
+                        // Agregar la opción a cada select
+                        selectRazas.append(option.clone());
+                        // selectRazas2.append(option.clone());
+                    });
+
+                },
+                error: function (error) {
+                    console.error('Error en la solicitud AJAX:', error);
+                }
+            });
+        }
         function seleccionarArchivo() {
             // Crear un input de tipo file
             const inputArchivo = document.createElement('input');
@@ -859,7 +910,7 @@
             $('#editNombre2').val(Mascota.nombreMascotas);
             $('#editdueño22').val(Mascota.nombres);
             $('#editPeso2').val(Mascota.peso);
-            $('#editRaza2').val(Mascota.raza);
+            $('#editRaza2').text(Mascota.raza);
             $('#editSexo2').val(Mascota.sexo);
             $('#idHC').val(Mascota.HC);
             $('#idFC').val(Mascota.FC);
@@ -1057,50 +1108,60 @@
             console.log("enfermedad:", enfermedad);
             console.log("Síntomas seleccionados:", idSintomas);
 
-            $.ajax({
-                type: "POST",
-                url: "@Url.Action("GuardarFicha", "Hemoparasitosis")",
-                data: {
-                    idMascota: idMascota,
-                    nombreMascota: nombreMascota,
-                    tratamiento: tratamiento,
-                    observaciones: observaciones,
-                    idSintomas: idSintomas,
-                    enfermedad: enfermedad,
-                    idHistoriaClinica: idHistoriaClinica,
-                    idFichaControl: idFichaControl
-                },
-                success: function (response) {
-                    // Manejar la respuesta exitosa aquí
-                    console.log("Guardado exitoso:", response);
+            // Mostrar el indicador de carga
+            document.getElementById("cargasgeneral").hidden = false;
 
-                    // Obtener el valor de idHistoriaClinica desde el botón clicado
-                    var idHistoriaClinicaEliminar = $("#btnNuevo").data("idhistoriaclinica");
+            setTimeout(function () {
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("GuardarFicha", "Hemoparasitosis")",
+                    data: {
+                        idMascota: idMascota,
+                        nombreMascota: nombreMascota,
+                        tratamiento: tratamiento,
+                        observaciones: observaciones,
+                        idSintomas: idSintomas,
+                        enfermedad: enfermedad,
+                        idHistoriaClinica: idHistoriaClinica,
+                        idFichaControl: idFichaControl
+                    },
+                    success: function (response) {
+                        // Manejar la respuesta exitosa aquí
+                        console.log("Guardado exitoso:", response);
 
-                    // Eliminar la fila correspondiente de la tabla
-                    $("#tablaMascotas tbody tr").filter(function () {
-                        return $(this).find("td:first-child").text() == idHistoriaClinicaEliminar;
-                    }).remove();
+                        // Obtener el valor de idHistoriaClinica desde el botón clicado
+                        var idHistoriaClinicaEliminar = $("#btnNuevo").data("idhistoriaclinica");
 
-                    // Mostrar SweetAlert
-                    // Mostrar SweetAlert
-                    Swal.fire({
-                        title: 'Éxito',
-                        text: 'Fichas diagnóstico guardado correctamente',
-                        icon: 'success',
-                        confirmButtonText: 'Aceptar',
-                        allowOutsideClick: false,  // Evitar cerrar el SweetAlert haciendo clic afuera
-                        didClose: () => {
-                            // Esta función se ejecutará cuando se cierre el SweetAlert
-                            // Llamar a la función cerrarModalYRecargar después de mostrar SweetAlert
-                            cerrarModalYRecargar();
-                        }
-                    });
-                },
-                error: function (error) {
-                    console.error("Error en la solicitud AJAX: ", error);
-                }
-            });
+                        // Eliminar la fila correspondiente de la tabla
+                        $("#tablaMascotas tbody tr").filter(function () {
+                            return $(this).find("td:first-child").text() == idHistoriaClinicaEliminar;
+                        }).remove();
+
+                        // Mostrar SweetAlert después de un breve retraso
+                        setTimeout(function () {
+                            // Ocultar el indicador de carga
+                            document.getElementById("cargasgeneral").hidden = true;
+
+                            // Mostrar SweetAlert
+                            Swal.fire({
+                                title: 'Éxito',
+                                text: 'Fichas diagnóstico guardado correctamente',
+                                icon: 'success',
+                                confirmButtonText: 'Aceptar',
+                                allowOutsideClick: false,  // Evitar cerrar el SweetAlert haciendo clic afuera
+                                didClose: () => {
+                                    // Esta función se ejecutará cuando se cierre el SweetAlert
+                                    // Llamar a la función cerrarModalYRecargar después de mostrar SweetAlert
+                                    cerrarModalYRecargar();
+                                }
+                            });
+                        }, 2000); // 2 segundos de retraso
+                    },
+                    error: function (error) {
+                        console.error("Error en la solicitud AJAX: ", error);
+                    }
+                });
+            }, 2000); // 2 segundos de retraso antes de la solicitud AJAX
         }
 
 
