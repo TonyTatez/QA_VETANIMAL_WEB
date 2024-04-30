@@ -316,7 +316,7 @@ namespace VET_ANIMAL.WEB.Controllers
                 observacion = model.observacion
             };
 
-            var request = new RestRequest("/api/Consulta/FichaControl", Method.Post);
+            var request = new RestRequest("/api/Consulta/GuardarFichaControl", Method.Post);
             request.AddParameter("Authorization", $"Bearer {tokenValue}", ParameterType.HttpHeader);
             request.AddJsonBody(guardarFicha);
 
