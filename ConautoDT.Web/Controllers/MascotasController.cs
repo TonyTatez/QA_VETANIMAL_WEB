@@ -296,15 +296,11 @@ namespace VET_ANIMAL.WEB.Controllers
             // return View(model);
         }
 
+
+
         [HttpPost]
         public async Task<ActionResult> GuardarFichaControl(ItemMascota model)
         {
-            if (!ModelState.IsValid || model.observacion == null)
-            {
-                TempData["MensajeError"] = "Rellene todos los campos";
-                return RedirectToAction("Index", "Mascotas");
-            }
-
             string tokenValue = Request.Cookies["token"];
 
             var guardarFicha = new ItemMascota
@@ -313,118 +309,85 @@ namespace VET_ANIMAL.WEB.Controllers
                 idMotivo = model.idMotivo,
                 motivo = model.motivo,
                 peso = model.peso,
-                observacion = model.observacion
+                observacion = model.observacion,
+
             };
 
             var request = new RestRequest("/api/Consulta/GuardarFichaControl", Method.Post);
-            request.AddParameter("Authorization", $"Bearer {tokenValue}", ParameterType.HttpHeader);
+            request.AddParameter("Authorization", string.Format("Bearer " + tokenValue), ParameterType.HttpHeader);
+
             request.AddJsonBody(guardarFicha);
 
-            _log.Info("Accediendo al API");
-            var response = await _apiClient.ExecuteAsync(request, Method.Post);
-            _log.Info("Registrando Mascota");
-
-            if (response.IsSuccessful)
+            if (model.observacion == null)
             {
-                TempData["MensajeExito"] = model.idHistoriaClinica != 0 ? "Ficha Control Registrada Exitosamente" : "Se editó correctamente";
+                TempData["MensajeError"] = "Rellene todos los campos";
+                return Redirect("Index");
+            }
+
+            try
+            {
+                // Validación del idHistoriaClinica
+                if (model.idHistoriaClinica <= 0)
+                {
+                    throw new ArgumentException("Historia Clinica no encontrada ");
+                }
+
+                if (model.idHistoriaClinica != 0)
+                {
+                    if (ModelState.IsValid)
+                    {
+                        _log.Info("Accediendo al API");
+                        var response = await _apiClient.ExecuteAsync(request, Method.Post);
+                        _log.Info("Registrando Mascota");
+                        if (response.IsSuccessful)
+                        {
+                            if (model.idHistoriaClinica != 0)
+                            {
+                                // SweetAlert para registro exitoso
+                                TempData["MensajeExito"] = "Ficha Control Registrada Exitosamente";
+                            }
+                            else
+                            {
+                                // SweetAlert para edición exitosa
+                                TempData["MensajeExito"] = "Se editó correctamente";
+                            }
+                            return RedirectToAction("Index", "Mascotas");
+                        }
+                        TempData["MensajeError"] = response.Content;
+                        return RedirectToAction("Index", "Mascotas");
+                    }
+                    // SweetAlert para campos no válidos
+                    TempData["MensajeError"] = "Rellene todos los campos";
+                    return View(model);
+                }
+                TempData["MensajeError"] = "Rellene todos los campos";
                 return RedirectToAction("Index", "Mascotas");
             }
-            else
+            catch (ArgumentException ex)
             {
-                TempData["MensajeError"] = response.Content;
+                // Manejo específico para ArgumentException
+                TempData["MensajeError"] = ex.Message;
                 return RedirectToAction("Index", "Mascotas");
+            }
+            catch (JsonParsingException e)
+            {
+                _log.Error(e, "Error Obteniendo Token");
+                _log.Error(e.GetUnderlyingStringUnsafe());
+                TempData["MensajeError"] = e.Message.ToString();
+                return View(model);
+            }
+            catch (Exception e)
+            {
+                // SweetAlert para error general
+                _log.Error(e, "Error al iniciar sesión");
+                TempData["MensajeError"] = e.Message;
+                return Redirect("Index");
             }
         }
 
-        //[HttpPost]
-        //public async Task<ActionResult> GuardarFichaControl(ItemMascota model)
-        //{
-        //    string tokenValue = Request.Cookies["token"];
-
-        //    var guardarFicha = new ItemMascota
-        //    {
-        //        idHistoriaClinica = model.idHistoriaClinica,
-        //        idMotivo = model.idMotivo,
-        //        motivo = model.motivo,
-        //        peso = model.peso,
-        //        observacion = model.observacion,
-
-        //    };
-
-        //    var request = new RestRequest("/api/Consulta/FichaControl", Method.Post);
-        //    request.AddParameter("Authorization", string.Format("Bearer " + tokenValue), ParameterType.HttpHeader);
-
-        //    request.AddJsonBody(guardarFicha);
-
-        //    if (model.observacion == null)
-        //    {
-        //        TempData["MensajeError"] = "Rellene todos los campos";
-        //        return Redirect("Index");
-        //    }
-
-        //    try
-        //    {
-        //        // Validación del idHistoriaClinica
-        //        if (model.idHistoriaClinica <= 0)
-        //        {
-        //            throw new ArgumentException("Historia Clinica no encontrada ");
-        //        }
-
-        //        if (model.idHistoriaClinica != 0)
-        //        {
-        //            if (ModelState.IsValid)
-        //            {
-        //                _log.Info("Accediendo al API");
-        //                var response = await _apiClient.ExecuteAsync(request, Method.Post);
-        //                _log.Info("Registrando Mascota");
-        //                if (response.IsSuccessful)
-        //                {
-        //                    if (model.idHistoriaClinica != 0)
-        //                    {
-        //                        // SweetAlert para registro exitoso
-        //                        TempData["MensajeExito"] = "Ficha Control Registrada Exitosamente";
-        //                    }
-        //                    else
-        //                    {
-        //                        // SweetAlert para edición exitosa
-        //                        TempData["MensajeExito"] = "Se editó correctamente";
-        //                    }
-        //                    return RedirectToAction("Index", "Mascotas");
-        //                }
-        //                TempData["MensajeError"] = response.Content;
-        //                return RedirectToAction("Index", "Mascotas");
-        //            }
-        //            // SweetAlert para campos no válidos
-        //            TempData["MensajeError"] = "Rellene todos los campos";
-        //            return View(model);
-        //        }
-        //        TempData["MensajeError"] = "Rellene todos los campos";
-        //        return RedirectToAction("Index", "Mascotas");
-        //    }
-        //    catch (ArgumentException ex)
-        //    {
-        //        // Manejo específico para ArgumentException
-        //        TempData["MensajeError"] = ex.Message;
-        //        return RedirectToAction("Index", "Mascotas");
-        //    }
-        //    catch (JsonParsingException e)
-        //    {
-        //        _log.Error(e, "Error Obteniendo Token");
-        //        _log.Error(e.GetUnderlyingStringUnsafe());
-        //        TempData["MensajeError"] = e.Message.ToString();
-        //        return View(model);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        // SweetAlert para error general
-        //        _log.Error(e, "Error al iniciar sesión");
-        //        TempData["MensajeError"] = e.Message;
-        //        return Redirect("Index");
-        //    }
-        //}
 
 
-        // POST: CiudadController/Delete/5
+        //POST: CiudadController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
