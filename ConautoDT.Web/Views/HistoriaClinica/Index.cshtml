@@ -208,7 +208,7 @@
                                         <table class="table table-bordered table-sm tablaMascotas dataTable table-striped" id="tablaMascotas">
                                             <thead>
                                                 <tr>
-                                                    <th>
+                                                    <th hidden>
                                                         Cod.
                                                     </th>
                                                     <th>
@@ -253,7 +253,7 @@
                                         <table class="table table-bordered table-sm  dataTable table-striped" id="tablaFichasHemo">
                                             <thead>
                                                 <tr>
-                                                    <th style="background: #021D5D; color: white;font-size: 14px;font-family: 'Young Serif', sans-serif;">
+                                                    <th hidden style="background: #021D5D; color: white;font-size: 14px;font-family: 'Young Serif', sans-serif;">
                                                         Cod.
                                                     </th>
                                                     <th style="background: #021D5D; color: white;font-size: 14px;font-family: 'Young Serif', sans-serif;">
@@ -471,7 +471,7 @@
                                     // Iterar sobre las fichas de control y agregar filas al cuerpo de la tabla
                                     data.fichasControl.forEach(function (fichaControl) {
                                         var row = $("<tr>");
-                                        row.append($("<td>").text(fichaControl.codigoFichaControl));
+                                        
                                         row.append($("<td>").text(data.idHistoriaClinica));
                                         row.append($("<td>").text(fichaControl.motivo));
                                         // row.append($("<td>").text(fichaControl.peso));
@@ -512,7 +512,7 @@
                                     // Iterar sobre las fichas de control y agregar filas al cuerpo de la tabla
                                     content.fichasHemoparasitosis.forEach(function (fichasHemoparasitosis) {
                                         var row = $("<tr>");
-                                        row.append($("<td>").text(fichasHemoparasitosis.codigoFichaHemo).css({ "font-size": "14px", "font-family": "'Young Serif', sans-serif" }));
+                                        
                                         row.append($("<td>").text(content.idHistoriaClinica).css({ "font-size": "14px", "font-family": "'Young Serif', sans-serif" }));
                                         row.append($("<td>").text("EMERGENCIA").css({ "font-size": "14px", "font-family": "'Young Serif', sans-serif" }));
                                         row.append($("<td>").text(fichasHemoparasitosis.enfermedad).css({ "font-size": "14px", "font-family": "'Young Serif', sans-serif" }));
