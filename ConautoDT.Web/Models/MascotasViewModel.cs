@@ -1,4 +1,6 @@
-﻿namespace VET_ANIMAL.WEB.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace VET_ANIMAL.WEB.Models
 {
     public class ItemMascota
     {
@@ -10,6 +12,7 @@
         public float? peso { get; set; }
         public string cliente { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? fechaNacimiento { get; set; }
         public long idCliente { get; set; }
         public long idMotivo { get; set; }

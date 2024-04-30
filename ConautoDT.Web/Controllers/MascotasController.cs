@@ -331,7 +331,7 @@ namespace VET_ANIMAL.WEB.Controllers
                     throw new ArgumentException("Historia Clinica no encontrada ");
                 }
 
-                if (model.observacion != null)
+                if (model.idHistoriaClinica != 0)
                 {
                     if (ModelState.IsValid)
                     {

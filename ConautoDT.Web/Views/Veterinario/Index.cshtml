@@ -1,0 +1,333 @@
+﻿@model VET_ANIMAL.WEB.Models.VeterinariosViewModel
+@{
+    ViewData["Title"] = "Veterinarios";
+}
+
+
+
+<!-- Modal Guardar-->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content " style="width:100%">
+            <div class="modal-header ">
+                <h5 class="modal-title " style="font-family: 'Young Serif', sans-serif; font-weight: bold;">Razas</h5>
+                <div class="d-flex align-items-end flex-column">
+                    <button type="button" style="color: black" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+            </div>
+            <form asp-action="GuardaryEditarInfo">
+
+                <div class="modal-body " style="font-family: 'Young Serif', sans-serif; font-weight: bold;">
+                   
+                    <div class="form-outline mb-4">
+                        <label class="" for="raza">Nombres *</label>
+                        <input type="text" asp-for="@Model.nombres" class="form-control form-control-lg  " id="nameVet" placeholder="Ingrese el nombre">
+
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class=" " for="raza">Telefono</label>
+                        <input type="text" asp-for="@Model.telefono" class="form-control form-control-lg  " id="celVet" onkeypress="return solo10Numeros(event)"  placeholder="Ingrese el telefono" oninput="soloNumeros(event)>
+
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class=" " for="raza">Correo</label>
+                        <input type="text" asp-for="@Model.correo" class="form-control form-control-lg  " id="correoVet" placeholder="Ingrese el correo">
+
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class=" " for="raza">Identificación *</label>
+                        <input type="text" asp-for="@Model.identificacion" class="form-control form-control-lg  " id="identificacionVet" placeholder="Ingrese la identificación" onkeypress="return solo10Numeros(event)" required>
+
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class=" " for="raza">Rol *</label>
+                        <select asp-for="@Model.rol" class="form-control" id="rolVet">
+                            <option value="">Seleccione</option>
+                            <option value="Admin">Administrador</option>
+                            <option value="Planta">Planta</option>
+                            <option value="Tester">Tester</option>
+                        </select>
+                    </div>
+                   
+                </div>
+                <div class="modal-footer">
+                    <button id="guardarInformacion" type="submit" class="btn btn-success bi bi-save btn-grad btn-sm"> Guardar </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Editar -->
+<div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content " style="width:100%">
+            <div class="modal-header ">
+                <h5 class="modal-title ">Veterinarios</h5>
+                <div class="d-flex align-items-end flex-column">
+                    <button type="button" style="color: black" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+            </div>
+            <form asp-action="GuardaryEditarInfo">
+
+                <div class="modal-body " style="font-family: 'Young Serif', sans-serif; font-weight: bold;">
+
+                    <div class="form-outline mb-4" hidden>
+                        <label class="" for="raza">Id</label>
+                        <input type="text" asp-for="@Model.id" class="form-control form-control-lg  " id="idVet2" placeholder="">
+
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class="" for="raza">Nombres *</label>
+                        <input type="text" asp-for="@Model.nombres" class="form-control form-control-lg  " id="nameVet2" placeholder="Ingrese el nombre" required>
+
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class=" " for="raza">Telefono</label>
+                        <input type="text" asp-for="@Model.telefono" class="form-control form-control-lg  " onkeypress="return solo10Numeros(event)" id="celVet2" placeholder="Ingrese el telefono">
+
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class=" " for="raza">Correo</label>
+                        <input type="text" asp-for="@Model.correo" class="form-control form-control-lg  " id="correoVet2" placeholder="Ingrese el correo">
+
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class=" " for="raza">Identificación *</label>
+                        <input type="text" asp-for="@Model.identificacion" class="form-control form-control-lg  " onkeypress="return solo10Numeros(event)" id="identificacionVet2" placeholder="Ingrese la identificación" required>
+
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class=" " for="raza">Rol *</label>
+                        <select asp-for="@Model.rol" class="form-control" id="rolVet2" required>
+                            <option value="">Seleccione</option>
+                            <option value="Admin">Administrador</option>
+                            <option value="Planta">Planta</option>
+                            <option value="Tester">Tester</option>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button id="guardarInfo2" type="submit" class="bi bi-pen btn btn-primary  btn-sm"> Editar </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Modal Eliminar -->
+<div class="modal fade" id="eliminarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content " style="width:100%">
+            <div class="modal-header ">
+                <h5 class="modal-title ">Animal Place</h5>
+                <div class="d-flex align-items-end flex-column">
+                    <button type="button" style="color: black" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+            </div>
+            <form asp-action="DeleteInformacion">
+
+
+                <div class="modal-body ">
+                    <div hidden class="form-outline mb-4">
+                        <label class="form-label btn-color-info TMSlabelText">Id</label>
+                        <input type="text" asp-for="@Model.id" id="idVetEliminar" class="form-control form-control-lg  " />
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label btn-color-info TMSlabelText" style="margin-top:28px; font-size:13px">¿Está seguro de querer eliminar este veterinario?</label>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button id="eliminarInfoData" style="padding:10px; width:50px;" type="submit" class=" btn btn-success  btn-sm">Sí </button>
+                    <button id="eliminarInfoDatos" style="padding:10px; width:50px;" data-bs-dismiss="modal" aria-label="Cerrar" type="button" class=" btn btn-danger  btn-sm">No </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="row" style="font-size: 13px !important;">
+    <div class="col-md-12">
+        <div class="widget">
+            <header class="widget-header" style="padding-bottom: 5px !important;">
+                <div class="row">
+                    <h4 class="widget-title col-md-12" id="letrero">Veterinarios</h4>
+                </div>
+            </header>
+            <div class="loader"> </div>
+            <hr class="widget-separator" style="margin-top:2px !important">
+            <div class="widget-body">
+                <div class="btn-group" role="group" aria-label="Basic mixed styles example" style="margin-bottom:5px !important;">
+                    <button id="btnNuevo" type="button" class="btn btn-primary btn-sm bi bi-clipboard-plus" data-bs-toggle="modal" onclick="nuevo()" data-bs-target="#exampleModal">   Nuevo </button>
+                </div>
+                <div class="table-responsive" style="font-family: 'Young Serif', sans-serif; ">
+                    <table class="table table-bordered table-sm  dataTable table-striped" id="tablaMascotas">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Id
+                                </th>
+                                <th>
+                                    Nombres
+                                </th>
+                                <th>
+                                    Telefono
+                                </th>
+                                <th>
+                                    Correo
+                                </th>
+                                <th>
+                                    Identificación
+                                </th>
+                                <th>
+                                    Rol
+                                </th>
+
+                                <th>
+                                    Acciones
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.ItemVeterinarios != null)
+                            {
+
+                                @foreach (var item in Model.ItemVeterinarios)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(model => item.id)
+                                        </td>
+                                       
+                                        <td>
+                                            @Html.DisplayFor(model => item.nombres)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => item.telefono)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => item.correo)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => item.identificacion)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => item.rol)
+                                        </td>
+                                        
+                                        <td>
+                                            <button title="Editar Vet" class="btn p-v-sm btn-success btn-sm" id="btnEditar" data-bs-toggle="modal" data-bs-target="#editarModal" onclick="editar({id:'@item.id' ,nombres:'@item.nombres' ,telefono:'@item.telefono',correo:'@item.correo',identificacion:'@item.identificacion',rol:'@item.rol'});">
+                                                <i class="bi bi-pen"></i>
+                                            </button>
+
+                                            <button title="Eliminar Vet" class="btn p-v-sm btn-danger btn-sm" id="btnEliminar" data-bs-toggle="modal" data-bs-target="#eliminarModal" onclick="eliminarPais({id:'@item.id'});">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+
+                                        </td>
+                                    </tr>
+                                }
+
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td>-</td>
+                                    <td>No hay Datos que Mostrar</td>
+                                    <td>-</td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                           
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@section Scripts {
+    <script src="~/Content/jquery-2.2.4.js"></script>
+    <script src="~/Content/bootstrap.js"></script>
+    <script src="~/Content/modernizr-2.8.3.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    <script type="text/javascript">
+        function solo10Numeros(e) {
+            let tecla = (document.all) ? e.keyCode : e.which;
+
+            // Permitir la tecla de retroceso (backspace)
+            if (tecla == 8) return true;
+
+            let patron = /[0-9]/;
+            let te = String.fromCharCode(tecla);
+
+            // Verificar si es un número y la longitud es menor o igual a 10
+            if (patron.test(te) && e.target.value.length < 10) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        function editar(Pais) {
+            console.log("one:" , Pais);
+            $('#idVet2').val(Pais.id);
+            $('#nameVet2').val(Pais.nombres);
+            $('#celVet2').val(Pais.telefono);
+            $('#correoVet2').val(Pais.correo);
+            $('#identificacionVet2').val(Pais.identificacion);
+            $('#rolVet2').val(Pais.rol);
+           
+        }
+
+
+
+
+        $("#btnNuevo").click(function () {
+
+            $('#nameVet').val("");
+            $('#celVet').val("");
+            $('#correoVet').val("");
+            $('#identificacionVet').val("");
+            $('#rolVet').val("");
+
+        });
+
+
+
+
+        function eliminarPais(guia) {
+            console.log(guia);
+
+            $("#idVetEliminar").val(guia.id);
+
+        }
+        //   $("#eliminarModal").modal({ backdrop: 'static', keyboard: false });
+
+
+    </script>
+}
+
+
+
+
+
+
+
+
+
+
+

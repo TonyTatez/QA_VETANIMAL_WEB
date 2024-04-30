@@ -52,6 +52,7 @@
                 <div class="m-5">
                     <!-- Primer input y botón -->
                     <div class="input-group mb-3">
+                        
                         <input type="text" class="form-control" placeholder="Ingrese Identificación del Cliente" id="CI" onkeypress="return solo10Numeros(event)" required>
                         <div class="input-group-append">
                             <button class="btn btn-primary" type="button" onclick="buscarCliente2()"><i class="bi bi-search"></i></button>
@@ -71,8 +72,8 @@
                     <div class="form-row">
 
                         <div class="form-group col-md-6">
-                            <label for="">Nombre</label>
-                            <input type="text" asp-for="@Model.nombreMascota" class="form-control" id="verificarname" placeholder="Ingrese Nombre Mascota">
+                            <label for="">Nombre *</label>
+                            <input type="text" asp-for="@Model.nombreMascota" class="form-control" id="verificarname" placeholder="Ingrese Nombre Mascota" required>
                         </div>
                         <div class="form-group col-md-6">
                             <label for="">Dueño</label>
@@ -86,8 +87,8 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="">Peso (kg)</label>
-                            <input type="text" asp-for="@Model.peso" class="form-control" id="verificarpeso" placeholder="Ingrese Peso (kg) Mascota" onkeypress="return soloNumeros(event)">
+                            <label for="">Peso (kg) *</label>
+                            <input type="text" asp-for="@Model.peso" class="form-control" id="verificarpeso" placeholder="Ingrese Peso (kg) Mascota" onkeypress="return soloNumeros(event)" required>
                         </div>
 
 
@@ -102,8 +103,8 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="">Sexo</label>
-                            <select asp-for="@Model.sexo" class="form-control" id="verificarsexo">
+                            <label for="">Sexo *</label>
+                            <select asp-for="@Model.sexo" class="form-control" id="verificarsexo" required>
                                 <option value="">Seleccione</option>
                                 <option value="Macho">Macho</option>
                                 <option value="Hembra">Hembra</option>
@@ -111,7 +112,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label for="">Fecha de Nacimiento</label>
-                            <input class="form-control" asp-for="@Model.fechaNacimiento" name="fechaNacimiento" style="width: 89%;" max="2029-11-11" type="date" oninput="validarFecha()">
+                            <input class="form-control" asp-for="@Model.fechaNacimiento" name="fechaNacimiento" style="width: 89%;" type="date" oninput="validarFecha()">
                         </div>
                     </div>
 
@@ -173,8 +174,8 @@
                         </div>
 
                         <div class="form-group col-md-6">
-                            <label for="">Nombre</label>
-                            <input type="text" asp-for="@Model.nombreMascota" style="color: blue;font-size: 16px;" class="form-control" id="editNombre" placeholder="Ingrese Nombre Mascota">
+                            <label for="">Nombre *</label>
+                            <input type="text" asp-for="@Model.nombreMascota" style="color: blue;font-size: 16px;" class="form-control" id="editNombre" placeholder="Ingrese Nombre Mascota" required>
                         </div>
                         <div class="form-group col-md-6">
                             <label for="">Dueño</label>
@@ -188,7 +189,7 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="">Peso (kg)</label>
+                            <label for="">Peso (kg) *</label>
                             <input type="text" asp-for="@Model.peso" style="color: blue;font-size: 16px;" class="form-control" id="editPeso" placeholder="Ingrese Peso (kg) Mascota" onkeypress="return soloNumeros(event)" required>
                         </div>
 
@@ -204,7 +205,7 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="">Sexo</label>
+                            <label for="">Sexo *</label>
                             <select asp-for="@Model.sexo" class="form-control" id="editSexo" style="color: blue;font-size: 16px;" required>
                                 <option value="">Seleccione</option>
                                 <option value="Macho">Macho</option>
@@ -213,7 +214,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label for="">Fecha de Nacimiento</label>
-                            <input style="color: blue;font-size: 16px;" class="form-control" id="editFecha2" asp-for=" @Model.fechaNacimiento" name="fechaNacimiento" style="width: 89%;" max="2029-12-31" type="date" oninput="validarFecha()">
+                            <input style="color: blue;font-size: 16px;" class="form-control" id="editFecha2" asp-for=" @Model.fechaNacimiento" name="fechaNacimiento" style="width: 89%;" type="text" oninput="validarFecha()">
                         </div>
                     </div>
 
@@ -795,26 +796,23 @@
             $('#idMascota2').val(Mascota.idMascota);
             $('#editSexo').val(Mascota.sexo);
             $('#hcficha').val(Mascota.idHistoriaClinica);
-            // Parsear la cadena de fecha y crear una instancia de Date
-            const partesFecha = Mascota.fechaNacimiento.split(/[\/ :]/);
-            const fechaNacimiento = new Date(
-                partesFecha[2],
-                partesFecha[1] - 1,
-                partesFecha[0],
-                partesFecha[3],
-                partesFecha[4],
-                partesFecha[5]
-            );
+            // Obtener la fecha de nacimiento y formatearla
+            var fechaNacimiento = "";
+            if (Mascota.fechaNacimiento) {
+                // Dividir la cadena de fecha en partes (dd/mm/aaaa hh:mm:ss)
+                var partesFecha = Mascota.fechaNacimiento.split(" ");
+                var partesFechaNum = partesFecha[0].split("/");
 
-            // Verificar si la fecha es válida
-            if (!isNaN(fechaNacimiento.getTime())) {
-                // Formatear la fecha a 'YYYY-MM-DD' para asignarla al input
-                const fechaFormateada = fechaNacimiento.toISOString().split('T')[0];
-                $("#editFecha2").val(fechaFormateada);
-                console.log("Fecha de nacimiento en el modal:", fechaFormateada);
-            } else {
-                console.error('Fecha de nacimiento no válida');
+                // Crear un objeto Date con las partes de la fecha
+                var fecha = new Date(partesFechaNum[2], partesFechaNum[1] - 1, partesFechaNum[0]);
+
+                // Formatear la fecha según el formato deseado (yyyy-MM-dd)
+                fechaNacimiento = fecha.getFullYear() + "-" +
+                    ("0" + (fecha.getMonth() + 1)).slice(-2) + "-" +
+                    ("0" + fecha.getDate()).slice(-2);
             }
+
+            $("#editFecha2").val(fechaNacimiento);
         }
 
         function FichaMascota(Mascota) {

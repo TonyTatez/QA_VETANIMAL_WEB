@@ -29,12 +29,12 @@
 
 
                             <div class="form-group col-md-12">
-                                <label for="nombreCliente">Nombres</label>
-                                <input type="text" asp-for="@Model.nombres" style="color: blue;font-size: 14px;" id="nombreCliente" class="form-control" placeholder="Ingrese nombres del cliente" />
+                                <label for="nombreCliente">Nombres *</label>
+                                <input type="text" asp-for="@Model.nombres" style="color: blue;font-size: 14px;" id="nombreCliente" class="form-control" placeholder="Ingrese nombres del cliente" / required>
                             </div>
 
                             <div class="form-group col-md-12">
-                                <label for="tipoIdentificacion">Tipo de Identificación</label>
+                                <label for="tipoIdentificacion">Tipo de Identificación *</label>
                                 <select id="tipoIdentificacion" class="form-control" style="color: blue; font-size: 14px;width: 50%" onchange="actualizarCampos()">
                                     <option value="Cedula">-</option>
                                     <option value="Cedula">Cédula</option>
@@ -60,7 +60,7 @@
                             </div>
 
                             <div class="form-group col-md-12">
-                                <label for="correoCliente">Correo</label>
+                                <label for="correoCliente">Correo *</label>
                                 <input type="text" asp-for="@Model.correo" onkeypress="return validarCorreoElectronico(event)" style="color: blue;font-size: 14px;" id="correoCliente" class="form-control" placeholder="Ingrese correo del cliente" required />
                             </div>
 
@@ -101,7 +101,7 @@
 
                 <div class="row col-lg-8 col-md-10 col-sm-12 mx-auto" style="margin-top: 2%; font-family: 'Young Serif', sans-serif;">
                     <div class="form-group col-md-12" hidden>
-                        <label for="nombreCliente">Nombres</label>
+                        <label for="nombreCliente">Nombres *</label>
                         <input type="text" asp-for="@Model.idCliente" style="color: blue;font-size: 14px;" id="idCliente2" class="form-control" placeholder="Ingrese nombres del cliente" />
                     </div>
 
@@ -113,7 +113,7 @@
 
 
                     <div class="form-group col-md-12">
-                        <label for="cedCliente">Identificación</label>
+                        <label for="cedCliente">Identificación *</label>
                         <input type="text" asp-for="@Model.identificacion" onkeypress="return solo10Numeros(event)" style="color: blue;font-size: 14px;" onkeypress="return solo10Numeros(event)" id="cedCliente2" class="form-control" placeholder="Ingrese cédula del cliente" required />
                     </div>
 
@@ -123,7 +123,7 @@
                     </div>
 
                     <div class="form-group col-md-12">
-                        <label for="correoCliente">Correo</label>
+                        <label for="correoCliente">Correo *</label>
                         <input type="text" asp-for="@Model.correo" style="color: blue;font-size: 14px;" id="correoCliente2" class="form-control" placeholder="Ingrese correo del cliente" required />
                     </div>
 
